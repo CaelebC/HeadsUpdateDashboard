@@ -6,8 +6,17 @@ void main() {
   ));
 }
 
-class NinjaCard extends StatelessWidget {
+class NinjaCard extends StatefulWidget {
   const NinjaCard({Key? key}) : super(key: key);
+
+  @override
+  State<NinjaCard> createState() => _NinjaCardState();
+}
+
+
+class _NinjaCardState extends State<NinjaCard> {
+
+  int characterLevel = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +28,16 @@ class NinjaCard extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.purple[900],
         elevation: 0.0,
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            characterLevel += 1;
+          });
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.purple[800],
       ),
 
       body: Padding(
@@ -47,7 +66,7 @@ class NinjaCard extends StatelessWidget {
 
             Text('LEVEL', style: TextStyle(color: Colors.white, letterSpacing: 2.0,), ),
             SizedBox(height: 10.0),
-            Text('35', style: TextStyle(color: Colors.purple[800], letterSpacing: 2.0, fontSize: 28.0, fontWeight: FontWeight.bold,), ),
+            Text('$characterLevel', style: TextStyle(color: Colors.purple[800], letterSpacing: 2.0, fontSize: 28.0, fontWeight: FontWeight.bold,), ),
 
             SizedBox(height: 30.0),
 
