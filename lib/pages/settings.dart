@@ -6,20 +6,21 @@ Color? primaryColor = Colors.purple[900];
 Color? accentColor = Colors.purple[700];
 
 
-class FollowList extends StatefulWidget {
-  const FollowList({Key? key}) : super(key: key);
+class Settings extends StatefulWidget {
+  const Settings({Key? key}) : super(key: key);
 
   @override
-  State<FollowList> createState() => _FollowListState();
+  State<Settings> createState() => _SettingsState();
 }
 
-class _FollowListState extends State<FollowList> {
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      body: Center(child: Text('Home', style: TextStyle(fontSize: 64.0),)),
-
+      body: Center(
+        child: Text('SETTINGS PAGE'),
+      )
     );
   }
 }
