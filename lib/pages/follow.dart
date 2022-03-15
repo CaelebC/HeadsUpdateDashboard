@@ -32,6 +32,14 @@ class _FollowListState extends State<FollowList> {
     return Scaffold(
       backgroundColor: bgColor,
       
+      // appBar: AppBar(
+      //   title: Text('Follow List'),
+      //   backgroundColor: primaryColor,
+      //   centerTitle: true,
+      //   toolbarHeight: 40,
+      //   titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      // ),
+
       body: Container(
         child: FutureBuilder<GameModel>(
           future: _gameModel,
@@ -42,60 +50,79 @@ class _FollowListState extends State<FollowList> {
                   itemCount: snapshot.data.results.length,
                   
                   itemBuilder: (context, index) {
-                    var game = snapshot.data.results[index];
-                    
+                    var game = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
+
                     return Container(
-                      height: 100,
-                      margin: const EdgeInsets.all(8),
+                      height: 80,
+                      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
                       
                       child: Row(
                         children: <Widget>[
                           Card(
                             clipBehavior: Clip.antiAlias,
                             
+                            // This changes the shape that the image is in
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),  
                             
+                            // This displays the image
                             child: AspectRatio(
                                 aspectRatio: 1,
                                 child: Image.network(
                                   game.backgroundImage,
                                   fit: BoxFit.cover,
-                                )),
+                                )),   
                           ),
                           
-                          SizedBox(width: 16),
+                          SizedBox(width: 8),  // Spacer between image and game title
                           
                           Flexible(
-                            child: Column(
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               
+                              // Game Title
                               children: <Widget>[
-                                Text(
-                                  game.name,
-                                  
-                                  overflow: TextOverflow.ellipsis,
-                                  
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                Flexible(
+                                  child: Text(
+                                    game.name,
+                                    // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
+                                    
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                    ),
+
+                                  ),
+
                                 ),
+
                               ],
+
                             ),
+
                           ),
+
                         ],
+
                       ),
+
                     );
+                    
                   });
             
             } else
               return Center(child: CircularProgressIndicator());
               
           },
+
         ),
+
       ),
+
     );
+
   }
 }
 

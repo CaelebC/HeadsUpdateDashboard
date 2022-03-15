@@ -48,28 +48,28 @@ class _MainTemplateState extends State<MainTemplate> {
             items: [
 
               BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard_customize_outlined),
+                icon: Icon(Icons.dashboard_customize_outlined, color: Colors.white54),
                 activeIcon: Icon(Icons.dashboard_customize),
                 label: 'Follow',
                 backgroundColor: primaryColor,
               ),  // Follow List Icon
 
               BottomNavigationBarItem(
-                icon: Icon(Icons.my_library_books_outlined),
+                icon: Icon(Icons.my_library_books_outlined, color: Colors.white54),
                 activeIcon: Icon(Icons.my_library_books),
                 label: 'News',
                 backgroundColor: primaryColor,
               ),  // News Feed Icon
 
               BottomNavigationBarItem(
-                icon: Icon(Icons.discount_outlined),
+                icon: Icon(Icons.discount_outlined, color: Colors.white54),
                 activeIcon: Icon(Icons.discount),
                 label: 'Sale',
                 backgroundColor: primaryColor,
               ),  // Sale Feed Icon
 
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined),
+                icon: Icon(Icons.settings_outlined, color: Colors.white54),
                 activeIcon: Icon(Icons.settings),
                 label: 'Settings',
                 backgroundColor: primaryColor,
