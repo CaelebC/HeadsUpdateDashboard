@@ -32,6 +32,14 @@ class _FollowListState extends State<FollowList> {
     return Scaffold(
       backgroundColor: bgColor,
       
+      appBar: AppBar(
+        title: Text('Follow List'),
+        backgroundColor: primaryColor,
+        centerTitle: true,
+        toolbarHeight: 40,
+        titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      ),
+
       body: Container(
         child: FutureBuilder<GameModel>(
           future: _gameModel,
