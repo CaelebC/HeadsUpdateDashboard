@@ -35,6 +35,7 @@ class _FollowListState extends State<FollowList> {
       body: Container(
         child: FutureBuilder<GameModel>(
           future: _gameModel,
+          
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -73,7 +74,9 @@ class _FollowListState extends State<FollowList> {
                               children: <Widget>[
                                 Text(
                                   game.name,
+                                  
                                   overflow: TextOverflow.ellipsis,
+                                  
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
@@ -85,8 +88,10 @@ class _FollowListState extends State<FollowList> {
                       ),
                     );
                   });
+            
             } else
               return Center(child: CircularProgressIndicator());
+              
           },
         ),
       ),
