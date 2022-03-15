@@ -19,11 +19,20 @@ class FollowList extends StatefulWidget {
 
 class _FollowListState extends State<FollowList> {
   Future<GameModel>? _gameModel;
+  Icon customIcon = const Icon(Icons.search);
+  Widget customSearchBar = const Text('Games!');
+  final searchInputController = new TextEditingController();
+  var searchInputString;
 
   @override
   void initState() {
-    _gameModel = API_Manager().getGames();
+    _gameModel = API_Manager().getGames('Warhammer');
     super.initState();
+  }
+
+  void callGames(String input){
+    _gameModel = API_Manager().getGames(input);
+    //Refresh or setstate() here to refresh the games list.
   }
   
   
@@ -32,13 +41,47 @@ class _FollowListState extends State<FollowList> {
     return Scaffold(
       backgroundColor: bgColor,
       
-      // appBar: AppBar(
-      //   title: Text('Follow List'),
-      //   backgroundColor: primaryColor,
-      //   centerTitle: true,
-      //   toolbarHeight: 40,
-      //   titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      // ),
+      appBar: AppBar(
+        title: customSearchBar,
+        backgroundColor: primaryColor,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: (){
+                setState(() {
+                  if (customIcon.icon == Icons.search) {
+                    customIcon = const Icon(Icons.cancel);
+                    customSearchBar = const ListTile(
+                      leading: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      title: TextField(
+                        //textFieldController
+                        //Onsubmitted: callGames(TextFieldController.text)
+                        //then call setstate to refresh the games list!
+                        decoration: InputDecoration(
+                          hintText: 'ex. Hades',
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                }
+                );},
+              icon: customIcon)
+        ]
+      ),
 
       body: Container(
         child: FutureBuilder<GameModel>(
@@ -127,10 +170,14 @@ class _FollowListState extends State<FollowList> {
 }
 
 class API_Manager {
-  Future<GameModel> getGames() async {
+  Future<GameModel> getGames(String gameName) async {
     var client = http.Client();
     var gameModel;
-    var uri = Uri.parse('https://api.rawg.io/api/games?search=overcooked&key=88457281eae8421b8395d12d3df566ad&page_size=10');
+    String rawUrl = 'https://api.rawg.io/api/games?search=';
+    String urlEnders = '&key=88457281eae8421b8395d12d3df566ad&page_size=10';
+    String urlSearchTerms = gameName.trim().toLowerCase().replaceAll(' ','%20');
+    String finalURL = rawUrl + urlSearchTerms + urlEnders;
+    var uri = Uri.parse(finalURL);
 
     var response = await client.get(uri);
     if (response.statusCode == 200) {
