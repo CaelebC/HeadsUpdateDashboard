@@ -20,27 +20,40 @@ class FollowList extends StatefulWidget {
 class _FollowListState extends State<FollowList> {
   Future<GameModel>? _gameModel;
   Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = const Text('Games!');
-  final searchInputController = new TextEditingController();
-  var searchInputString;
+  Widget customSearchBar = Text('Games!');
+  TextEditingController searchInputController = TextEditingController();
+  String searchInputString = '';
+  bool isLoading = false;
+  var currentFocus;
 
   @override
   void initState() {
-    _gameModel = API_Manager().getGames('Warhammer');
+    _gameModel = API_Manager().getGames('Halo');
     super.initState();
   }
 
   void callGames(String input){
     _gameModel = API_Manager().getGames(input);
+    setState(() {
+
+    });
+    // isLoading = true;
     //Refresh or setstate() here to refresh the games list.
   }
-  
-  
+
+  unfocus() {
+    currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      
+
       appBar: AppBar(
         title: customSearchBar,
         backgroundColor: primaryColor,
@@ -52,20 +65,22 @@ class _FollowListState extends State<FollowList> {
                 setState(() {
                   if (customIcon.icon == Icons.search) {
                     customIcon = const Icon(Icons.cancel);
-                    customSearchBar = const ListTile(
+                    customSearchBar = ListTile(
                       leading: Icon(
                         Icons.search,
                         color: Colors.white,
                         size: 28,
                       ),
                       title: TextField(
-                        //textFieldController
-                        //Onsubmitted: callGames(TextFieldController.text)
+                        controller: searchInputController,
+                        onSubmitted: (String value) { callGames(value);
+                          unfocus();
+                        },
                         //then call setstate to refresh the games list!
                         decoration: InputDecoration(
                           hintText: 'ex. Hades',
                           hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
                           ),
@@ -76,6 +91,12 @@ class _FollowListState extends State<FollowList> {
                         ),
                       ),
                     );
+                  } else if (customIcon.icon == Icons.cancel){
+                      searchInputController.clear();
+                      unfocus();
+                      //return title to games, swap icon back to search
+                      customSearchBar = Text('Games!');
+                      customIcon = const Icon(Icons.search);
                   }
                 }
                 );},
@@ -89,6 +110,7 @@ class _FollowListState extends State<FollowList> {
           
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
+              isLoading = false;
               return ListView.builder(
                   itemCount: snapshot.data.results.length,
                   
@@ -157,7 +179,6 @@ class _FollowListState extends State<FollowList> {
             
             } else
               return Center(child: CircularProgressIndicator());
-              
           },
 
         ),
@@ -173,10 +194,19 @@ class API_Manager {
   Future<GameModel> getGames(String gameName) async {
     var client = http.Client();
     var gameModel;
-    String rawUrl = 'https://api.rawg.io/api/games?search=';
-    String urlEnders = '&key=88457281eae8421b8395d12d3df566ad&page_size=10';
-    String urlSearchTerms = gameName.trim().toLowerCase().replaceAll(' ','%20');
-    String finalURL = rawUrl + urlSearchTerms + urlEnders;
+    String baseURL = 'https://api.rawg.io/api/games?';
+    String searchParam = 'search=';
+    String urlSearchTerms = gameName.trim().toLowerCase().replaceAll(' ','-');
+    String pageSize = '&page_size=10';
+    String apiKey = '&key=88457281eae8421b8395d12d3df566ad';
+    String finalURL = '';
+
+    if (gameName == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
+      finalURL = baseURL + apiKey + pageSize;
+    } else { //otherwise attempt the search
+      finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize;
+    }
+
     var uri = Uri.parse(finalURL);
 
     var response = await client.get(uri);
