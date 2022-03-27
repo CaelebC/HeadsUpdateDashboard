@@ -3,24 +3,24 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:hud/models/platformModel.dart';
+import 'package:hud/models/genreModel.dart';
 
 Color? bgColor = Colors.grey[900];
 Color? primaryColor = Colors.purple[900];
 Color? accentColor = Colors.purple[700];
 
 
-class FollowPlatformList extends StatefulWidget {
-  const FollowPlatformList({Key? key}) : super(key: key);
+class FollowGenreList extends StatefulWidget {
+  const FollowGenreList({Key? key}) : super(key: key);
 
   @override
-  State<FollowPlatformList> createState() => _FollowPlatformListState();
+  State<FollowGenreList> createState() => _FollowGenreListState();
 }
 
-class _FollowPlatformListState extends State<FollowPlatformList> {
-  Future<PlatformModel>? _platformModel;
+class _FollowGenreListState extends State<FollowGenreList> {
+  Future<GenreModel>? _genreModel;
   Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = Text('Platforms');
+  Widget customSearchBar = Text('Genres');
   TextEditingController searchInputController = TextEditingController();
   String searchInputString = '';
   bool isLoading = false;
@@ -28,12 +28,12 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
 
   @override
   void initState() {
-    _platformModel = API_Manager().getPlatforms('PC');
+    _genreModel = API_Manager().getGenres('Indie');
     super.initState();
   }
 
-  void callPlatforms(String input){
-    _platformModel = API_Manager().getPlatforms(input);
+  void callGenres(String input){
+    _genreModel = API_Manager().getGenres(input);
     setState(() {
 
     });
@@ -73,12 +73,12 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                         ),
                         title: TextField(
                           controller: searchInputController,
-                          onSubmitted: (String value) { callPlatforms(value);
+                          onSubmitted: (String value) { callGenres(value);
                           unfocus();
                           },
                           //then call setstate to refresh the games list!
                           decoration: InputDecoration(
-                            hintText: 'ex. PC',
+                            hintText: 'ex. Indie',
                             hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 18,
@@ -95,7 +95,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                       searchInputController.clear();
                       unfocus();
                       //return title to games, swap icon back to search
-                      customSearchBar = Text('Platforms');
+                      customSearchBar = Text('Genres');
                       customIcon = const Icon(Icons.search);
                     }
                   }
@@ -105,8 +105,8 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
       ),
 
       body: Container(
-        child: FutureBuilder<PlatformModel>(
-          future: _platformModel,
+        child: FutureBuilder<GenreModel>(
+          future: _genreModel,
 
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
@@ -115,7 +115,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                   itemCount: snapshot.data.results.length,
 
                   itemBuilder: (context, index) {
-                    var platform = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
+                    var genre = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
                     return Container(
                       height: 80,
@@ -135,7 +135,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                             child: AspectRatio(
                                 aspectRatio: 1,
                                 child: Image.network(
-                                  platform.backgroundImage,
+                                  genre.backgroundImage,
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -150,7 +150,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                               children: <Widget>[
                                 Flexible(
                                   child: Text(
-                                    platform.name,
+                                    genre.name,
                                     // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
 
                                     style: TextStyle(
@@ -191,17 +191,17 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
 }
 
 class API_Manager {
-  Future<PlatformModel> getPlatforms(String platformName) async {
+  Future<GenreModel> getGenres(String genreName) async {
     var client = http.Client();
-    var platformModel;
-    String baseURL = 'https://api.rawg.io/api/platforms?';
+    var genreModel;
+    String baseURL = 'https://api.rawg.io/api/genres?';
     String searchParam = 'search=';
-    String urlSearchTerms = platformName.trim().toLowerCase().replaceAll(' ','-');
-    String pageSize = '&page_size=10';
+    String urlSearchTerms = genreName.trim().toLowerCase().replaceAll(' ','-');
+    String pageSize = '&page_size=20';
     String apiKey = '&key=88457281eae8421b8395d12d3df566ad';
     String finalURL = '';
 
-    if (platformName == ''){ //if theres no platform searched, just return a list of popular platforms, DOES NOT CURRENTLY WORK
+    if (genreName == ''){ //if theres no platform searched, just return a list of popular platforms, DOES NOT CURRENTLY WORK
       finalURL = baseURL + apiKey + pageSize;
     } else { //otherwise attempt the search
       finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize;
@@ -214,8 +214,8 @@ class API_Manager {
       var json = response.body;
       var jsonMap = jsonDecode(json);
 
-      platformModel = PlatformModel.fromJson(jsonMap);
+      genreModel = GenreModel.fromJson(jsonMap);
     }
-    return platformModel;
+    return genreModel;
   }
 }

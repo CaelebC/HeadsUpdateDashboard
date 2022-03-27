@@ -95,7 +95,7 @@ class _FollowStoreListState extends State<FollowStoreList> {
                       searchInputController.clear();
                       unfocus();
                       //return title to games, swap icon back to search
-                      customSearchBar = Text('Games!');
+                      customSearchBar = Text('Stores');
                       customIcon = const Icon(Icons.search);
                     }
                   }
@@ -194,7 +194,7 @@ class API_Manager {
   Future<StoreModel> getStores(String storeName) async {
     var client = http.Client();
     var storeModel;
-    String baseURL = 'https://api.rawg.io/api/platforms?';
+    String baseURL = 'https://api.rawg.io/api/stores?';
     String searchParam = 'search=';
     String urlSearchTerms = storeName.trim().toLowerCase().replaceAll(' ','-');
     String pageSize = '&page_size=10';
