@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
 
-class FollowMyList extends StatefulWidget {
-  const FollowMyList({ Key? key }) : super(key: key);
+class FollowGenres extends StatefulWidget {
+  const FollowGenres({ Key? key }) : super(key: key);
 
   @override
-  State<FollowMyList> createState() => _FollowMyListState();
+  State<FollowGenres> createState() => _FollowGenresState();
 }
 
-class _FollowMyListState extends State<FollowMyList> {
+class _FollowGenresState extends State<FollowGenres> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
       
       appBar: AppBar(
-        title: Text('My List'),
+        title: Text('Genres'),
         actions: [
           IconButton(
             icon: Icon(Icons.arrow_back_outlined),
@@ -27,7 +27,7 @@ class _FollowMyListState extends State<FollowMyList> {
       ),
 
       body: Center(
-        child: Text('FOLLOW MY LIST PAGE'),
+        child: Text('FOLLOW GENRES PAGE'),
       ),
     );
   }

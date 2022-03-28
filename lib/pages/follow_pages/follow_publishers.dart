@@ -13,6 +13,19 @@ class _FollowPublishersState extends State<FollowPublishers> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
+      
+      appBar: AppBar(
+        title: Text('Publishers'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_outlined),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+          )
+        ]
+      ),
+
       body: Center(
         child: Text('FOLLOW PUBLISHERS PAGE'),
       ),
