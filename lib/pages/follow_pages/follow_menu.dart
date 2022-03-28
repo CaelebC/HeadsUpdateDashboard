@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
 import 'package:hud/pages/follow_pages/follow_games.dart';
 import 'package:hud/pages/follow_pages/follow_publishers.dart';
+import 'package:hud/pages/follow_pages/follow_genres.dart';
+import 'package:hud/pages/follow_pages/follow_platforms.dart';
+import 'package:hud/pages/follow_pages/follow_stores.dart';
 import 'package:hud/pages/follow_pages/follow_MyList.dart';
 
 // Declaring routes
@@ -56,6 +59,36 @@ class _FollowMenuState extends State<FollowMenu> {
             ),
 
             ElevatedButton(
+              child: Text('Genres'), 
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => FollowGenres())
+                );
+              } 
+            ),
+
+            ElevatedButton(
+              child: Text('Platforms'), 
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => FollowPlatforms())
+                );
+              } 
+            ),
+
+            ElevatedButton(
+              child: Text('Stores'), 
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => FollowStores())
+                );
+              } 
+            ),
+
+            ElevatedButton(
               child: Text('My List'), 
               onPressed: () {
                 Navigator.push(
@@ -64,6 +97,7 @@ class _FollowMenuState extends State<FollowMenu> {
                 );
               } 
             ),
+
           ],
         ),
     

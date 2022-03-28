@@ -98,7 +98,15 @@ class _FollowGamesState extends State<FollowGames> {
                   }
                 }
                 );},
-              icon: customIcon)
+              icon: customIcon),
+
+          IconButton(
+            icon: Icon(Icons.arrow_back_outlined),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+          )
+          
         ]
       ),
 
