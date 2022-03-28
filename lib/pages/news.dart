@@ -28,6 +28,7 @@ class _NewsFeedState extends State<NewsFeed> {
 
   @override
   void initState() {
+    //TODO: replace this initial _newsmodel. when loading page, initial search param is 'q=' plus follow game names (each separated by the || OR operator,  abd formatted to replace spaces with '-'
     _newsModel = API_Manager().getNews('');
     super.initState();
   }
@@ -205,6 +206,7 @@ class API_Manager {
     String finalURL = '';
 
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
+      //TODO: replace the empty/default news search with follow list based one. if follow list is empty, change default search to news from common gaming sites like polygon, ign, kotaku, etc.
       finalURL = baseURL + searchParam  + 'elden-ring' + otherParams + apiKey + pageSize;
     } else { //otherwise attempt the search
       finalURL = baseURL + searchParam + urlSearchTerms + otherParams+ apiKey + pageSize;

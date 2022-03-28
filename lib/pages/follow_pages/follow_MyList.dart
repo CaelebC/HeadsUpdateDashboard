@@ -8,6 +8,10 @@ class FollowMyList extends StatefulWidget {
   State<FollowMyList> createState() => _FollowMyListState();
 }
 
+//TODO: rename this to something else, maybe "My Followed Games?" (alternativelly just, 'Following')
+// TODO: Query the followedGames database/tables, and list those games here (in a similar format to the followGames page.
+//TODO: add an unfollow button next to each game in this list, if pressed, delete the corresponding row from the database.
+
 class _FollowMyListState extends State<FollowMyList> {
   @override
   Widget build(BuildContext context) {

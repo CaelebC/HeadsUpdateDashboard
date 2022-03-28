@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
 import 'package:hud/pages/follow_pages/follow_games.dart';
-// import 'package:hud/pages/follow_pages/follow_publishers.dart';
+import 'package:hud/pages/follow_pages/followPublishers.dart';
 import 'package:hud/pages/follow_pages/followGenres.dart';
 import 'package:hud/pages/follow_pages/followPlatforms.dart';
 import 'package:hud/pages/follow_pages/followStores.dart';
@@ -54,10 +54,10 @@ class _FollowMenuState extends State<FollowMenu> {
             ElevatedButton(
               child: Text('Publishers'), 
               onPressed: () {
-                //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(builder: (context) => FollowPublishers())
-                //);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FollowPublisherList())
+                );
               } 
             ),
 

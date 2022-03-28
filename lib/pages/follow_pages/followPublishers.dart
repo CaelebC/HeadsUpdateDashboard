@@ -3,24 +3,24 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:hud/models/platformModel.dart';
+import 'package:hud/models/publisherModel.dart';
 
 Color? bgColor = Colors.grey[900];
 Color? primaryColor = Colors.purple[900];
 Color? accentColor = Colors.purple[700];
 
 
-class FollowPlatformList extends StatefulWidget {
-  const FollowPlatformList({Key? key}) : super(key: key);
+class FollowPublisherList extends StatefulWidget {
+  const FollowPublisherList({Key? key}) : super(key: key);
 
   @override
-  State<FollowPlatformList> createState() => _FollowPlatformListState();
+  State<FollowPublisherList> createState() => _FollowPublisherListState();
 }
 
-class _FollowPlatformListState extends State<FollowPlatformList> {
-  Future<PlatformModel>? _platformModel;
+class _FollowPublisherListState extends State<FollowPublisherList> {
+  Future<PublisherModel>? _publisherModel;
   Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = Text('Platforms');
+  Widget customSearchBar = Text('Publishers');
   TextEditingController searchInputController = TextEditingController();
   String searchInputString = '';
   bool isLoading = false;
@@ -28,12 +28,13 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
 
   @override
   void initState() {
-    _platformModel = API_Manager().getPlatforms('PC');
+    _publisherModel = API_Manager().getPublishers('');
+    //TODO: fix: using the search param for publishers returns a different json format than without the search param, and causes and infinite load due to mismatched models.
     super.initState();
   }
 
   void callPlatforms(String input){
-    _platformModel = API_Manager().getPlatforms(input);
+    _publisherModel = API_Manager().getPublishers(input);
     setState(() {
 
     });
@@ -63,7 +64,6 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
             IconButton(
                 onPressed: (){
                   setState(() {
-                    //TODO: remove search functionality from followPlatforms, search param doesnt do anything!
                     if (customIcon.icon == Icons.search) {
                       customIcon = const Icon(Icons.cancel);
                       customSearchBar = ListTile(
@@ -79,7 +79,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                           },
                           //then call setstate to refresh the games list!
                           decoration: InputDecoration(
-                            hintText: 'ex. PC',
+                            hintText: 'ex. Devolver Digital',
                             hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 18,
@@ -96,7 +96,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                       searchInputController.clear();
                       unfocus();
                       //return title to games, swap icon back to search
-                      customSearchBar = Text('Platforms');
+                      customSearchBar = Text('Publishers');
                       customIcon = const Icon(Icons.search);
                     }
                   }
@@ -106,8 +106,8 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
       ),
 
       body: Container(
-        child: FutureBuilder<PlatformModel>(
-          future: _platformModel,
+        child: FutureBuilder<PublisherModel>(
+          future: _publisherModel,
 
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
@@ -116,7 +116,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                   itemCount: snapshot.data.results.length,
 
                   itemBuilder: (context, index) {
-                    var platform = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
+                    var publisher = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
                     return Container(
                       height: 80,
@@ -136,7 +136,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                             child: AspectRatio(
                                 aspectRatio: 1,
                                 child: Image.network(
-                                  platform.imageBackground,
+                                  publisher.imageBackground,
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -151,7 +151,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                               children: <Widget>[
                                 Flexible(
                                   child: Text(
-                                    platform.name,
+                                    publisher.name,
                                     // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
 
                                     style: TextStyle(
@@ -192,17 +192,17 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
 }
 
 class API_Manager {
-  Future<PlatformModel> getPlatforms(String platformName) async {
+  Future<PublisherModel> getPublishers(String publisherName) async {
     var client = http.Client();
-    var platformModel;
-    String baseURL = 'https://api.rawg.io/api/platforms?';
+    var publisherModel;
+    String baseURL = 'https://api.rawg.io/api/publishers?';
     String searchParam = 'search=';
-    String urlSearchTerms = platformName.trim().toLowerCase().replaceAll(' ','-');
+    String urlSearchTerms = publisherName.trim().toLowerCase().replaceAll(' ','-');
     String pageSize = '&page_size=10';
     String apiKey = '&key=88457281eae8421b8395d12d3df566ad';
     String finalURL = '';
 
-    if (platformName == ''){ //if theres no platform searched, just return a list of popular platforms, DOES NOT CURRENTLY WORK
+    if (publisherName == ''){ //if theres no publisher searched, just return a list of popular publishers, DOES NOT CURRENTLY WORK
       finalURL = baseURL + apiKey + pageSize;
     } else { //otherwise attempt the search
       finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize;
@@ -215,8 +215,8 @@ class API_Manager {
       var json = response.body;
       var jsonMap = jsonDecode(json);
 
-      platformModel = PlatformModel.fromJson(jsonMap);
+      publisherModel = PublisherModel.fromJson(jsonMap);
     }
-    return platformModel;
+    return publisherModel;
   }
 }

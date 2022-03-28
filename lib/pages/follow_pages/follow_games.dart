@@ -117,6 +117,7 @@ class _FollowGamesState extends State<FollowGames> {
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               isLoading = false;
+              //TODO: add a follow button to the side of each list<game>, onPressed/onFollow: insert important data from that context into the database (i.e game.name, game.background image, etc.)
               return ListView.builder(
                   itemCount: snapshot.data.results.length,
                   

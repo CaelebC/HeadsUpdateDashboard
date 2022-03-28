@@ -63,6 +63,7 @@ class _FollowGenreListState extends State<FollowGenreList> {
             IconButton(
                 onPressed: (){
                   setState(() {
+                    //TODO: remove search functionality from followGenres, search param does nothing!
                     if (customIcon.icon == Icons.search) {
                       customIcon = const Icon(Icons.cancel);
                       customSearchBar = ListTile(
