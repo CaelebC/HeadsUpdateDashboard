@@ -1,13 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:hud/config/style.dart';
+
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'package:hud/models/platformModel.dart';
-
-Color? bgColor = Colors.grey[900];
-Color? primaryColor = Colors.purple[900];
-Color? accentColor = Colors.purple[700];
 
 
 class FollowPlatformList extends StatefulWidget {

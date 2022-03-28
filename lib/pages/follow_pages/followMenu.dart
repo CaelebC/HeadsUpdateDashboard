@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
-import 'package:hud/pages/follow_pages/follow_games.dart';
+
+import 'package:hud/pages/follow_pages/followGames.dart';
 // import 'package:hud/pages/follow_pages/follow_publishers.dart';
 import 'package:hud/pages/follow_pages/followGenres.dart';
 import 'package:hud/pages/follow_pages/followPlatforms.dart';
 import 'package:hud/pages/follow_pages/followStores.dart';
-import 'package:hud/pages/follow_pages/follow_MyList.dart';
+import 'package:hud/pages/follow_pages/followMyList.dart';
 
 // Declaring routes
 const routeMenu = '/';
 const routeGames = '/games';
 const routePublishers = '/publishers';
 const routeMyList = '/my_list';
-
-Color? bgColor = Colors.grey[900];
-Color? primaryColor = Colors.purple[900];
-Color? accentColor = Colors.purple[700];
 
 class FollowMenu extends StatefulWidget {
   const FollowMenu({ Key? key }) : super(key: key);

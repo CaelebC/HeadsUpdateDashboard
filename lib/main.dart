@@ -5,25 +5,24 @@ import 'package:hud/pages/loading.dart';
 import 'package:hud/pages/news.dart';
 
 // Follow pages
-import 'package:hud/pages/follow_pages/follow_games.dart';
-import 'package:hud/pages/follow_pages/follow_MyList.dart';
+import 'package:hud/pages/follow_pages/followGames.dart';
+import 'package:hud/pages/follow_pages/followMyList.dart';
 //import 'package:hud/pages/follow_pages/follow_publishers.dart';
-import 'package:hud/pages/follow_pages/follow_menu.dart';
+import 'package:hud/pages/follow_pages/followMenu.dart';
+import 'package:hud/pages/follow_pages/followGenres.dart';
+import 'package:hud/pages/follow_pages/followPlatforms.dart';
+import 'package:hud/pages/follow_pages/followStores.dart';
 
 // Sale Pages
 import 'package:hud/pages/sale.dart';
 
+// Model Imports
+import 'package:hud/models/gameModel.dart';
+
 // Misc. Imports
 import 'package:hud/config/style.dart';
 import 'package:hud/pages/settings.dart';
-import 'package:hud/pages/follow_pages/followGenres.dart';
-import 'package:hud/pages/follow_pages/followPlatforms.dart';
-import 'package:hud/pages/follow_pages/followStores.dart';
-import 'package:hud/models/gameModel.dart';
 
-Color? bgColor = Colors.grey[900];
-Color? primaryColor = Colors.purple[900];
-Color? accentColor = Colors.purple[700];
 
 void main() {
   runApp(MaterialApp(
