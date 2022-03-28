@@ -57,6 +57,18 @@ class _FollowPublisherListState extends State<FollowPublisherList> {
           backgroundColor: primaryColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
+
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                  icon: Icon(Icons.arrow_back_outlined),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }
+              );
+            },
+          ),
+
           actions: [
             IconButton(
                 onPressed: (){
