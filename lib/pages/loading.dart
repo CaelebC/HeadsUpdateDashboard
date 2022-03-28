@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hud/config/palette.dart';
+import 'package:hud/config/style.dart';
 
 
 const spinkit = SpinKitDualRing(

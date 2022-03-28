@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:hud/config/style.dart';
+
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'package:hud/models/gameModel.dart';
-import 'package:hud/config/palette.dart';
 
 
 class FollowGames extends StatefulWidget {

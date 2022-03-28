@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hud/config/palette.dart';
+import 'package:hud/config/style.dart';
 
 // Declaring routes
 const routeMenu = '/';
@@ -19,10 +19,36 @@ class _FollowMenuState extends State<FollowMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
-      body: Center(
-        child: Text('FOLLOW MENU PAGE'),
-      ),
+        backgroundColor: bgColor,
+
+        appBar: AppBar(
+          title: Text('Menu'),
+          backgroundColor: primaryColor,
+          centerTitle: true,
+        ),
+        
+        body: ListView(
+          padding: EdgeInsets.symmetric(vertical: 40, horizontal: 80),
+          
+          
+          children: [
+            ElevatedButton(
+              child: Text('Games'), 
+              onPressed: () {} 
+            ),
+
+            ElevatedButton(
+              child: Text('Publishers'), 
+              onPressed: () {} 
+            ),
+
+            ElevatedButton(
+              child: Text('My List'), 
+              onPressed: () {} 
+            ),
+          ],
+        ),
+    
     );
   }
 }

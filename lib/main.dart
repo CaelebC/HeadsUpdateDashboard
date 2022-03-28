@@ -6,7 +6,7 @@ import 'package:hud/pages/news.dart';
 
 // Follow pages
 import 'package:hud/pages/follow_pages/follow_games.dart';
-import 'package:hud/pages/follow_pages/follow_list.dart';
+import 'package:hud/pages/follow_pages/follow_MyList.dart';
 import 'package:hud/pages/follow_pages/follow_publisher.dart';
 import 'package:hud/pages/follow_pages/follow_menu.dart';
 
@@ -14,7 +14,7 @@ import 'package:hud/pages/follow_pages/follow_menu.dart';
 import 'package:hud/pages/sale.dart';
 
 // Misc. Imports
-import 'package:hud/config/palette.dart';
+import 'package:hud/config/style.dart';
 import 'package:hud/pages/settings.dart';
 import 'package:hud/models/gameModel.dart';
 

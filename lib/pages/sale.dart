@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hud/config/palette.dart';
+import 'package:hud/config/style.dart';
 
 
 class Sale extends StatefulWidget {
