@@ -20,12 +20,25 @@ class _FollowMyListState extends State<FollowMyList> {
       
       appBar: AppBar(
         title: Text('My List'),
+        backgroundColor: primaryColor,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.arrow_back_outlined),
+              onPressed: () {
+                Navigator.pop(context);
+              }
+            );
+          },
+        ),
+        
         actions: [
           IconButton(
-            icon: Icon(Icons.arrow_back_outlined),
-            onPressed: () {
-              Navigator.pop(context);
-            }
+            icon: Icon(Icons.search),
+            onPressed: () {}
           )
         ]
       ),

@@ -1,13 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:hud/config/style.dart';
+
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'package:hud/models/storeModel.dart';
-
-Color? bgColor = Colors.grey[900];
-Color? primaryColor = Colors.purple[900];
-Color? accentColor = Colors.purple[700];
 
 
 class FollowStoreList extends StatefulWidget {
@@ -59,6 +57,18 @@ class _FollowStoreListState extends State<FollowStoreList> {
           backgroundColor: primaryColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
+          
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Icon(Icons.arrow_back_outlined),
+                onPressed: () {
+                  Navigator.pop(context);
+                }
+              );
+            },
+          ),
+          
           actions: [
             IconButton(
                 onPressed: (){
@@ -100,7 +110,7 @@ class _FollowStoreListState extends State<FollowStoreList> {
                     }
                   }
                   );},
-                icon: customIcon)
+                icon: customIcon),
           ]
       ),
 

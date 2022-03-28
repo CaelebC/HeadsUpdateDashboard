@@ -18,7 +18,7 @@ class FollowGames extends StatefulWidget {
 class _FollowGamesState extends State<FollowGames> {
   Future<GameModel>? _gameModel;
   Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = Text('Games!');
+  Widget customSearchBar = Text('Games');
   TextEditingController searchInputController = TextEditingController();
   String searchInputString = '';
   bool isLoading = false;
@@ -57,6 +57,18 @@ class _FollowGamesState extends State<FollowGames> {
         backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
         centerTitle: true,
+        
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.arrow_back_outlined),
+              onPressed: () {
+                Navigator.pop(context);
+              }
+            );
+          },
+        ),
+        
         actions: [
           IconButton(
               onPressed: (){
@@ -93,20 +105,12 @@ class _FollowGamesState extends State<FollowGames> {
                       searchInputController.clear();
                       unfocus();
                       //return title to games, swap icon back to search
-                      customSearchBar = Text('Games!');
+                      customSearchBar = Text('Games');
                       customIcon = const Icon(Icons.search);
                   }
                 }
                 );},
               icon: customIcon),
-
-          IconButton(
-            icon: Icon(Icons.arrow_back_outlined),
-            onPressed: () {
-              Navigator.pop(context);
-            }
-          )
-          
         ]
       ),
 
