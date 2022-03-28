@@ -2,6 +2,11 @@
 //
 //     final gameModel = gameModelFromJson(jsonString);
 
+
+//NOTE: This gameModel is not 1:1 exact with the jSON data thats being received,
+//some fields were cut to try and combat flutter null safet,y but you can def just
+// refresh this with all the original complete fields if that begins causing problems.
+
 import 'package:meta/meta.dart';
 import 'dart:convert';
 

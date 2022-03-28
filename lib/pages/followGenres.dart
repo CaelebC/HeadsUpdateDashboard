@@ -3,20 +3,24 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:hud/config/style.dart';
+import 'package:hud/models/genreModel.dart';
+
+Color? bgColor = Colors.grey[900];
+Color? primaryColor = Colors.purple[900];
+Color? accentColor = Colors.purple[700];
 
 
-class NewsFeed extends StatefulWidget {
-  const NewsFeed({Key? key}) : super(key: key);
+class FollowGenreList extends StatefulWidget {
+  const FollowGenreList({Key? key}) : super(key: key);
 
   @override
-  State<NewsFeed> createState() => _NewsFeedState();
+  State<FollowGenreList> createState() => _FollowGenreListState();
 }
 
-class _NewsFeedState extends State<NewsFeed> {
-  Future<NewsModel>? _newsModel;
+class _FollowGenreListState extends State<FollowGenreList> {
+  Future<GenreModel>? _genreModel;
   Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = Text('News');
+  Widget customSearchBar = Text('Genres');
   TextEditingController searchInputController = TextEditingController();
   String searchInputString = '';
   bool isLoading = false;
@@ -24,12 +28,12 @@ class _NewsFeedState extends State<NewsFeed> {
 
   @override
   void initState() {
-    _newsModel = API_Manager().getNews('');
+    _genreModel = API_Manager().getGenres('Indie');
     super.initState();
   }
 
-  void callNews(String input){
-    _newsModel = API_Manager().getNews(input);
+  void callGenres(String input){
+    _genreModel = API_Manager().getGenres(input);
     setState(() {
 
     });
@@ -69,12 +73,12 @@ class _NewsFeedState extends State<NewsFeed> {
                         ),
                         title: TextField(
                           controller: searchInputController,
-                          onSubmitted: (String value) { callNews(value);
+                          onSubmitted: (String value) { callGenres(value);
                           unfocus();
                           },
                           //then call setstate to refresh the games list!
                           decoration: InputDecoration(
-                            hintText: 'ex. Polygon',
+                            hintText: 'ex. Indie',
                             hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 18,
@@ -91,7 +95,7 @@ class _NewsFeedState extends State<NewsFeed> {
                       searchInputController.clear();
                       unfocus();
                       //return title to games, swap icon back to search
-                      customSearchBar = Text('News');
+                      customSearchBar = Text('Genres');
                       customIcon = const Icon(Icons.search);
                     }
                   }
@@ -101,17 +105,17 @@ class _NewsFeedState extends State<NewsFeed> {
       ),
 
       body: Container(
-        child: FutureBuilder<NewsModel>(
-          future: _newsModel,
+        child: FutureBuilder<GenreModel>(
+          future: _genreModel,
 
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               isLoading = false;
               return ListView.builder(
-                  itemCount: snapshot.data.articles.length,
-                  // TODO: if data.articles.length == 0, return title: 'No articles found!'
+                  itemCount: snapshot.data.results.length,
+
                   itemBuilder: (context, index) {
-                    var news = snapshot.data.articles[index];  // This is responsible for going through the querried items from the API
+                    var genre = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
                     return Container(
                       height: 80,
@@ -131,7 +135,7 @@ class _NewsFeedState extends State<NewsFeed> {
                             child: AspectRatio(
                                 aspectRatio: 1,
                                 child: Image.network(
-                                  news.urlToImage,
+                                  genre.backgroundImage,
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -146,17 +150,16 @@ class _NewsFeedState extends State<NewsFeed> {
                               children: <Widget>[
                                 Flexible(
                                   child: Text(
-                                    news.title,
+                                    genre.name,
                                     // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
-                                    //TODO: add article description to this list preview using news.description
+
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
 
                                   ),
-
 
                                 ),
 
@@ -188,35 +191,31 @@ class _NewsFeedState extends State<NewsFeed> {
 }
 
 class API_Manager {
-  Future<NewsModel> getNews(String searchTerm) async {
+  Future<GenreModel> getGenres(String genreName) async {
     var client = http.Client();
-    var newsModel;
-    // https://newsapi.org/v2/everything?q=elden-ring&apiKey=d4baf1f0866e4cf4931479d8dedfadf1
-    String baseURL = 'https://newsapi.org/v2/everything?';
-    String searchParam = 'q=';
-    String urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','-');
-    String pageSize = '&page_size=10';
-    String apiKey = '&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
-    String otherParams = '&searchIn=title,content';
+    var genreModel;
+    String baseURL = 'https://api.rawg.io/api/genres?';
+    String searchParam = 'search=';
+    String urlSearchTerms = genreName.trim().toLowerCase().replaceAll(' ','-');
+    String pageSize = '&page_size=20';
+    String apiKey = '&key=88457281eae8421b8395d12d3df566ad';
     String finalURL = '';
 
-    if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
-      finalURL = baseURL + searchParam  + 'elden-ring' + otherParams + apiKey + pageSize;
+    if (genreName == ''){ //if theres no platform searched, just return a list of popular platforms, DOES NOT CURRENTLY WORK
+      finalURL = baseURL + apiKey + pageSize;
     } else { //otherwise attempt the search
-      finalURL = baseURL + searchParam + urlSearchTerms + otherParams+ apiKey + pageSize;
+      finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize;
     }
 
     var uri = Uri.parse(finalURL);
-    print(finalURL);
+
     var response = await client.get(uri);
     if (response.statusCode == 200) {
-      print ('response ok!');
       var json = response.body;
       var jsonMap = jsonDecode(json);
 
-      newsModel = NewsModel.fromJson(jsonMap);
-      print(newsModel);
+      genreModel = GenreModel.fromJson(jsonMap);
     }
-    return newsModel;
+    return genreModel;
   }
 }

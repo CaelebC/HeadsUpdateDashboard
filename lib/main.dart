@@ -16,6 +16,9 @@ import 'package:hud/pages/sale.dart';
 // Misc. Imports
 import 'package:hud/config/style.dart';
 import 'package:hud/pages/settings.dart';
+import 'package:hud/pages/followGenres.dart';
+import 'package:hud/pages/followPlatforms.dart';
+import 'package:hud/pages/followStores.dart'; 
 import 'package:hud/models/gameModel.dart';
 
 
