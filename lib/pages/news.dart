@@ -4,7 +4,11 @@ import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
+import 'package:hud/models/newsModel.dart';
 
+Color? bgColor = Colors.grey[900];
+Color? primaryColor = Colors.purple[900];
+Color? accentColor = Colors.purple[700];
 
 class NewsFeed extends StatefulWidget {
   const NewsFeed({Key? key}) : super(key: key);
@@ -112,7 +116,7 @@ class _NewsFeedState extends State<NewsFeed> {
                   // TODO: if data.articles.length == 0, return title: 'No articles found!'
                   itemBuilder: (context, index) {
                     var news = snapshot.data.articles[index];  // This is responsible for going through the querried items from the API
-
+                    //TODO: turn each list item into a button, on press tries to open articles.url in the default browser! (with appropriate popup)
                     return Container(
                       height: 80,
                       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item

@@ -7,7 +7,7 @@ import 'package:hud/pages/news.dart';
 // Follow pages
 import 'package:hud/pages/follow_pages/follow_games.dart';
 import 'package:hud/pages/follow_pages/follow_MyList.dart';
-import 'package:hud/pages/follow_pages/follow_publishers.dart';
+//import 'package:hud/pages/follow_pages/follow_publishers.dart';
 import 'package:hud/pages/follow_pages/follow_menu.dart';
 
 // Sale Pages
@@ -16,11 +16,14 @@ import 'package:hud/pages/sale.dart';
 // Misc. Imports
 import 'package:hud/config/style.dart';
 import 'package:hud/pages/settings.dart';
-import 'package:hud/pages/followGenres.dart';
-import 'package:hud/pages/followPlatforms.dart';
-import 'package:hud/pages/followStores.dart'; 
+import 'package:hud/pages/follow_pages/followGenres.dart';
+import 'package:hud/pages/follow_pages/followPlatforms.dart';
+import 'package:hud/pages/follow_pages/followStores.dart';
 import 'package:hud/models/gameModel.dart';
 
+Color? bgColor = Colors.grey[900];
+Color? primaryColor = Colors.purple[900];
+Color? accentColor = Colors.purple[700];
 
 void main() {
   runApp(MaterialApp(

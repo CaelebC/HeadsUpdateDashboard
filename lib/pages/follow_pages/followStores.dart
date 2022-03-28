@@ -115,7 +115,7 @@ class _FollowStoreListState extends State<FollowStoreList> {
                   itemCount: snapshot.data.results.length,
 
                   itemBuilder: (context, index) {
-                    var platform = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
+                    var store = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
                     return Container(
                       height: 80,
@@ -135,7 +135,7 @@ class _FollowStoreListState extends State<FollowStoreList> {
                             child: AspectRatio(
                                 aspectRatio: 1,
                                 child: Image.network(
-                                  platform.backgroundImage,
+                                  store.imageBackground,
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -150,7 +150,7 @@ class _FollowStoreListState extends State<FollowStoreList> {
                               children: <Widget>[
                                 Flexible(
                                   child: Text(
-                                    platform.name,
+                                    store.name,
                                     // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
 
                                     style: TextStyle(

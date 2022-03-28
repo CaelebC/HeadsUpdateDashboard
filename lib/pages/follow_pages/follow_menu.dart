@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
 import 'package:hud/pages/follow_pages/follow_games.dart';
-import 'package:hud/pages/follow_pages/follow_publishers.dart';
-import 'package:hud/pages/follow_pages/follow_genres.dart';
-import 'package:hud/pages/follow_pages/follow_platforms.dart';
-import 'package:hud/pages/follow_pages/follow_stores.dart';
+// import 'package:hud/pages/follow_pages/follow_publishers.dart';
+import 'package:hud/pages/follow_pages/followGenres.dart';
+import 'package:hud/pages/follow_pages/followPlatforms.dart';
+import 'package:hud/pages/follow_pages/followStores.dart';
 import 'package:hud/pages/follow_pages/follow_MyList.dart';
 
 // Declaring routes
@@ -13,6 +13,9 @@ const routeGames = '/games';
 const routePublishers = '/publishers';
 const routeMyList = '/my_list';
 
+Color? bgColor = Colors.grey[900];
+Color? primaryColor = Colors.purple[900];
+Color? accentColor = Colors.purple[700];
 
 class FollowMenu extends StatefulWidget {
   const FollowMenu({ Key? key }) : super(key: key);
@@ -51,10 +54,10 @@ class _FollowMenuState extends State<FollowMenu> {
             ElevatedButton(
               child: Text('Publishers'), 
               onPressed: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => FollowPublishers())
-                );
+                //Navigator.push(
+                  //context,
+                  //MaterialPageRoute(builder: (context) => FollowPublishers())
+                //);
               } 
             ),
 
@@ -63,7 +66,7 @@ class _FollowMenuState extends State<FollowMenu> {
               onPressed: () {
                 Navigator.push(
                   context, 
-                  MaterialPageRoute(builder: (context) => FollowGenres())
+                  MaterialPageRoute(builder: (context) => FollowGenreList())
                 );
               } 
             ),
@@ -73,7 +76,7 @@ class _FollowMenuState extends State<FollowMenu> {
               onPressed: () {
                 Navigator.push(
                   context, 
-                  MaterialPageRoute(builder: (context) => FollowPlatforms())
+                  MaterialPageRoute(builder: (context) => FollowPlatformList())
                 );
               } 
             ),
@@ -83,7 +86,7 @@ class _FollowMenuState extends State<FollowMenu> {
               onPressed: () {
                 Navigator.push(
                   context, 
-                  MaterialPageRoute(builder: (context) => FollowStores())
+                  MaterialPageRoute(builder: (context) => FollowStoreList())
                 );
               } 
             ),
