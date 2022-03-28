@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
+import 'package:hud/pages/follow_pages/follow_games.dart';
+import 'package:hud/pages/follow_pages/follow_publishers.dart';
+import 'package:hud/pages/follow_pages/follow_MyList.dart';
 
 // Declaring routes
 const routeMenu = '/';
@@ -29,22 +32,37 @@ class _FollowMenuState extends State<FollowMenu> {
         
         body: ListView(
           padding: EdgeInsets.symmetric(vertical: 40, horizontal: 80),
-          
+
           
           children: [
             ElevatedButton(
               child: Text('Games'), 
-              onPressed: () {} 
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => FollowGames())
+                );
+              } 
             ),
 
             ElevatedButton(
               child: Text('Publishers'), 
-              onPressed: () {} 
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => FollowPublishers())
+                );
+              } 
             ),
 
             ElevatedButton(
               child: Text('My List'), 
-              onPressed: () {} 
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => FollowMyList())
+                );
+              } 
             ),
           ],
         ),

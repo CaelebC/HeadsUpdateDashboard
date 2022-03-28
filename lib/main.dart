@@ -7,7 +7,7 @@ import 'package:hud/pages/news.dart';
 // Follow pages
 import 'package:hud/pages/follow_pages/follow_games.dart';
 import 'package:hud/pages/follow_pages/follow_MyList.dart';
-import 'package:hud/pages/follow_pages/follow_publisher.dart';
+import 'package:hud/pages/follow_pages/follow_publishers.dart';
 import 'package:hud/pages/follow_pages/follow_menu.dart';
 
 // Sale Pages
