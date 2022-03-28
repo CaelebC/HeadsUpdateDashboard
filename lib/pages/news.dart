@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-
-Color? bgColor = Colors.grey[900];
-Color? primaryColor = Colors.purple[900];
-Color? accentColor = Colors.purple[700];
+import 'package:hud/config/palette.dart';
 
 
 class NewsFeed extends StatefulWidget {

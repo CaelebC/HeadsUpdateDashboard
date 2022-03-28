@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:hud/pages/loading.dart';
+
+// News Page
 import 'package:hud/pages/news.dart';
-import 'package:hud/pages/follow.dart';
+
+// Follow pages
+import 'package:hud/pages/follow_pages/follow_games.dart';
+import 'package:hud/pages/follow_pages/follow_list.dart';
+import 'package:hud/pages/follow_pages/follow_publisher.dart';
+import 'package:hud/pages/follow_pages/follow_menu.dart';
+
+// Sale Pages
 import 'package:hud/pages/sale.dart';
+
+// Misc. Imports
+import 'package:hud/config/palette.dart';
 import 'package:hud/pages/settings.dart';
 import 'package:hud/models/gameModel.dart';
-
-
-Color? bgColor = Colors.grey[900];
-Color? primaryColor = Colors.purple[900];
-Color? accentColor = Colors.purple[700];
 
 
 void main() {
@@ -28,7 +35,7 @@ class MainTemplate extends StatefulWidget {
 class _MainTemplateState extends State<MainTemplate> {
   int currentIndex = 0;
   final screens = [
-    FollowList(),
+    FollowMenu(),
     NewsFeed(),
     Sale(),
     Settings(),

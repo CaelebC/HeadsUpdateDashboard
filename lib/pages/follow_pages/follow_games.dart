@@ -4,20 +4,17 @@ import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hud/models/gameModel.dart';
-
-Color? bgColor = Colors.grey[900];
-Color? primaryColor = Colors.purple[900];
-Color? accentColor = Colors.purple[700];
+import 'package:hud/config/palette.dart';
 
 
-class FollowList extends StatefulWidget {
-  const FollowList({Key? key}) : super(key: key);
+class FollowGames extends StatefulWidget {
+  const FollowGames({Key? key}) : super(key: key);
 
   @override
-  State<FollowList> createState() => _FollowListState();
+  State<FollowGames> createState() => _FollowGamesState();
 }
 
-class _FollowListState extends State<FollowList> {
+class _FollowGamesState extends State<FollowGames> {
   Future<GameModel>? _gameModel;
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBar = Text('Games!');

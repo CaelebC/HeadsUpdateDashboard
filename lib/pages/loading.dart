@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-Color? bgColor = Colors.grey[900];
-Color? primaryColor = Colors.purple[900];
+import 'package:hud/config/palette.dart';
 
 
 const spinkit = SpinKitDualRing(
