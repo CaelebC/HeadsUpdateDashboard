@@ -36,10 +36,10 @@ class _FollowMenuState extends State<FollowMenu> {
         body: ListView(
           padding: EdgeInsets.symmetric(vertical: 40, horizontal: 80),
 
-          
           children: [
             ElevatedButton(
-              child: Text('Games'), 
+              child: Text('Games'),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
               onPressed: () {
                 Navigator.push(
                   context, 
@@ -49,7 +49,8 @@ class _FollowMenuState extends State<FollowMenu> {
             ),
 
             ElevatedButton(
-              child: Text('Publishers'), 
+              child: Text('Publishers'),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
               onPressed: () {
                 //Navigator.push(
                   //context,
@@ -59,7 +60,8 @@ class _FollowMenuState extends State<FollowMenu> {
             ),
 
             ElevatedButton(
-              child: Text('Genres'), 
+              child: Text('Genres'),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
               onPressed: () {
                 Navigator.push(
                   context, 
@@ -69,7 +71,8 @@ class _FollowMenuState extends State<FollowMenu> {
             ),
 
             ElevatedButton(
-              child: Text('Platforms'), 
+              child: Text('Platforms'),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
               onPressed: () {
                 Navigator.push(
                   context, 
@@ -79,7 +82,8 @@ class _FollowMenuState extends State<FollowMenu> {
             ),
 
             ElevatedButton(
-              child: Text('Stores'), 
+              child: Text('Stores'),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
               onPressed: () {
                 Navigator.push(
                   context, 
@@ -89,7 +93,8 @@ class _FollowMenuState extends State<FollowMenu> {
             ),
 
             ElevatedButton(
-              child: Text('My List'), 
+              child: Text('My List'),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
               onPressed: () {
                 Navigator.push(
                   context, 

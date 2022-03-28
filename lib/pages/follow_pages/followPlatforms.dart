@@ -57,6 +57,18 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
           backgroundColor: primaryColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
+
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Icon(Icons.arrow_back_outlined),
+                onPressed: () {
+                  Navigator.pop(context);
+                }
+              );
+            },
+          ),
+
           actions: [
             IconButton(
                 onPressed: (){
@@ -98,7 +110,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                     }
                   }
                   );},
-                icon: customIcon)
+                icon: customIcon),
           ]
       ),
 
