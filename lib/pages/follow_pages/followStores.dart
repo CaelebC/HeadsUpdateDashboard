@@ -6,6 +6,7 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:hud/models/storeModel.dart';
+import 'package:like_button/like_button.dart';
 
 
 class FollowStoreList extends StatefulWidget {
@@ -178,6 +179,14 @@ class _FollowStoreListState extends State<FollowStoreList> {
                             ),
 
                           ),
+
+                          // LikeButton is an imported package widget to make a like/follow button (duh)
+                          LikeButton(
+                            size: 24,
+                            isLiked: false,
+                            animationDuration: const Duration(milliseconds: 500),
+                            bubblesSize: 0,
+                          )
 
                         ],
 
