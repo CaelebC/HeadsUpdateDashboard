@@ -6,6 +6,7 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:hud/models/gameModel.dart';
+import 'package:like_button/like_button.dart';
 
 
 class FollowGames extends StatefulWidget {
@@ -101,6 +102,7 @@ class _FollowGamesState extends State<FollowGames> {
                         ),
                       ),
                     );
+                  
                   } else if (customIcon.icon == Icons.cancel){
                       searchInputController.clear();
                       unfocus();
@@ -134,6 +136,7 @@ class _FollowGamesState extends State<FollowGames> {
                       
                       child: Row(
                         children: <Widget>[
+                          // Card widget displays the image
                           Card(
                             clipBehavior: Clip.antiAlias,
                             
@@ -151,8 +154,10 @@ class _FollowGamesState extends State<FollowGames> {
                                 )),   
                           ),
                           
-                          SizedBox(width: 8),  // Spacer between image and game title
+                          // SizedBox widget acts as a spacer between image and game title
+                          SizedBox(width: 8),
                           
+                          // Flexible widget to print out game titles
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,6 +184,14 @@ class _FollowGamesState extends State<FollowGames> {
                             ),
 
                           ),
+
+                          // LikeButton is an imported package widget to make a like/follow button (duh)
+                          LikeButton(
+                            size: 24,
+                            isLiked: false,
+                            animationDuration: const Duration(milliseconds: 500),
+                            bubblesSize: 0,
+                          )
 
                         ],
 
