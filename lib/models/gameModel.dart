@@ -10,6 +10,8 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+final String followedGames = 'games';
+
 GameModel gameModelFromJson(String str) => GameModel.fromJson(json.decode(str));
 
 String gameModelToJson(GameModel data) => json.encode(data.toJson());
@@ -38,6 +40,26 @@ class GameModel {
     };
 }
 
+class gameFields
+{
+    static final List<String> values =
+    [
+        slug, name, platforms, stores, released,
+        tba, backgroundImage, rating, parentPlatforms, genres
+    ];
+
+    static final String slug = 'slug';
+    static final String name = 'name';
+    static final String platforms = 'platforms';
+    static final String stores = 'stores';
+    static final String released = 'released';
+    static final String tba = 'tba';
+    static final String backgroundImage = 'backgroundImage';
+    static final String rating = 'rating';
+    static final String parentPlatforms = 'parentPlatforms';
+    static final String genres = 'genres';
+}
+
 class Result {
     Result({
         required this.slug,
@@ -62,6 +84,31 @@ class Result {
     double rating;
     List<Platform> parentPlatforms;
     List<Genre> genres;
+
+    Result copy({
+        String? slug,
+        String? name,
+        List<Platform>? platforms,
+        List<Store>? stores,
+        DateTime? released,
+        bool? tba,
+        String? backgroundImage,
+        double? rating,
+        List<Platform>? parentPlatforms,
+        List<Genre>? genres
+})=>
+    Result(
+        slug: slug ?? this.slug,
+        name: name ?? this.name,
+        platforms: platforms ?? this.platforms,
+        stores: stores ?? this.stores,
+        released: released ?? this.released,
+        tba: tba ?? this.tba,
+        backgroundImage: backgroundImage ?? this.backgroundImage,
+        rating: rating ?? this.rating,
+        parentPlatforms: parentPlatforms ?? this.parentPlatforms,
+        genres: genres ?? this.genres,
+    );
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
         slug: json["slug"],
