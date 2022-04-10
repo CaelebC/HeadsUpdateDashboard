@@ -8,60 +8,72 @@ class FollowedGames
   static Database? _database;
   FollowedGames.init();
 
-  Future<Database> get database async
-  {
+  Future<Database> get database async {
     if(_database != null) return _database!;
     _database = await _initDB('games.db');
     return _database!;
   }
 
-  Future<Database> _initDB(String filePath) async
-  {
+  Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  Future _createDB(Database db, int version) async //
-  {
+  Future _createDB(Database db, int version) async{
     final textType = 'TEXT NOT NULL';
     final boolType = 'BOOLEAN NOT NULL';
-    final doubleType = 'DOUBLE NOT NULL';
-    //need Type for lists, unsure
-    await db.execute(//ff is SQL statements
+    final idType = 'INTEGER NOT NULL AUTOINCREMENT';
+
+    await db.execute(
       '''CREATE TABLE $followedGames
       (
-        ${gameFields.slug} &textType,
-        ${gameFields.name} &textType,
-        ${gameFields.platforms} &textType,      //change to list type
-        ${gameFields.stores} &textType,         //change to list type
-        ${gameFields.released} &textType,
-        ${gameFields.tba} &boolType,
-        ${gameFields.backgroundImage} &textType,
-        ${gameFields.rating} &doubleType,
-        ${gameFields.parentPlatforms} &textType, //change to list type
-        ${gameFields.genres} &textType,          //change to list type
+        ${GameFields.name} &textType,
+        ${GameFields.backgroundImage} &textType,
+        ${GameFields.genres} &textType
+        ${GameFields.platforms} &textType,
+        ${GameFields.stores} &textType,
+      )'''
+    );
+    await db.execute(
+      '''CREATE TABLE $gameGenres
+      (
+        ${GenreFields.id} &idType,
+        ${GenreFields.name} &textType,
+      )
+      '''
+    );
+    await db.execute(
+      '''CREATE TABLE $gamePlatforms
+      (
+        ${PlatformFields.id} &idType,
+        ${PlatformFields.name} &textType
+      )'''
+    );
+    await db.execute(
+      '''CREATE TABLE $gameStores
+      (
+      ${StoreFields.id} &idType,
+      ${StoreFields.name} &textType
       )'''
     );
   }
 
-  Future<Result> createResult(Result game) async
-  {
+  Future<Result> createResult(Result game) async {
     final db = await instance.database;
 
     final id = await db.insert(followedGames, game.toJson());
     return game.copy();
   }
 
-  Future<Result> readResult(String name) async
-  {
+  Future<Result> readResult(String name) async {
     final db = await instance.database;
     final maps = await db.query
       (
       followedGames,
-      columns: gameFields.values,
-        where: '${gameFields.name} = ?',
+      columns: GameFields.values,
+        where: '${GameFields.name} = ?',
         whereArgs: [name],
     );
 
@@ -75,27 +87,24 @@ class FollowedGames
       }
   }
 
-  Future<List<Result>> readAllResults() async
-  {
+  Future<List<Result>> readAllResults() async {
     final db = await instance.database;
-    final orderBy = '${gameFields.name} DESC';
+    final orderBy = '${GameFields.name} DESC';
     final result = await db.query(followedGames, orderBy: orderBy);
     return result.map((json)=> Result.fromJson(json)).toList();
   }
 
-  Future<int> delete(String name) async
-  {
+  Future<int> delete(String name) async {
     final db = await instance.database;
     return db.delete
       (
       followedGames,
-      where: '${gameFields.name} = ?',
+      where: '${GameFields.name} = ?',
       whereArgs: [name]
     );
   }
 
-  Future close() async
-  {
+  Future close() async {
     final db = await instance.database;
     db.close();
   }
