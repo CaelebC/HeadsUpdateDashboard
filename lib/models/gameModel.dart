@@ -191,9 +191,9 @@ class Platform {
 
     //incredibly unsure of this
     Platform copy({
-        Genre? genre
+        Genre? platform
     })=>Platform(
-        platform: genre ?? this.platform
+        platform: platform ?? this.platform
     );
 
     factory Platform.fromJson(Map<String, dynamic> json) => Platform(
@@ -225,9 +225,9 @@ class Store {
 
     //??????
     Store copy({
-        Genre? genre
+        Genre? store
     })=>Store(
-        store: genre ?? this.store
+        store: store ?? this.store
     );
 
     factory Store.fromJson(Map<String, dynamic> json) => Store(
