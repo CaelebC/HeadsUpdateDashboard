@@ -23,7 +23,6 @@ class FollowedGames
 
   Future _createDB(Database db, int version) async{
     final textType = 'TEXT NOT NULL';
-    final boolType = 'BOOLEAN NOT NULL';
     final idType = 'INTEGER NOT NULL AUTOINCREMENT';
 
     await db.execute(
@@ -168,8 +167,7 @@ class FollowedGames
 
   Future<int> delete(String name) async {
     final db = await instance.database;
-    return db.delete
-      (
+    return db.delete(
       followedGames,
       where: '${GameFields.name} = ?',
       whereArgs: [name]

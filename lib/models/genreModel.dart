@@ -5,6 +5,9 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+final String followedGenres = 'genres';
+final String genreGames = 'games';
+
 GenreModel genreModelFromJson(String str) => GenreModel.fromJson(json.decode(str));
 
 String genreModelToJson(GenreModel data) => json.encode(data.toJson());
@@ -54,6 +57,22 @@ class Result {
   String imageBackground;
   List<Game> games;
 
+  Result copy({
+    int? id,
+    String? name,
+    String? slug,
+    int? gamesCount,
+    String? imageBackground,
+    List<Game>? games
+  })=>Result(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    slug: slug ?? this.slug,
+    gamesCount: gamesCount ?? this.gamesCount,
+    imageBackground: imageBackground ?? this.imageBackground,
+    games: games ?? this.games
+  );
+
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     id: json["id"],
     name: json["name"],
@@ -71,6 +90,20 @@ class Result {
     "image_background": imageBackground,
     "games": List<dynamic>.from(games.map((x) => x.toJson())),
   };
+}
+
+class GenreFields{
+  static final List<String> values =
+      [
+        id, name, slug,
+        gamesCount, imageBackground, games
+      ];
+  static final String id = '_id';
+  static final String name = 'name';
+  static final String slug = 'slug';
+  static final String gamesCount = 'gamesCount';
+  static final String imageBackground = 'imageBackground';
+  static final String games = 'games';
 }
 
 class Game {
