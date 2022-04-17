@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:convert';
 import 'dart:core';
@@ -117,8 +118,9 @@ class _NewsFeedState extends State<NewsFeed> {
                     var news = snapshot.data.articles[index];  // This is responsible for going through the querried items from the API
                     //TODO: turn each list item into a button, on press tries to open articles.url in the default browser! (with appropriate popup)
                     return InkWell(
+                      // This is where the links are opened using the 'url_launcher' package
                       onTap: () {
-                        print("wow this works");
+                        launch(news.url);
                       },
 
                       child: Column(
