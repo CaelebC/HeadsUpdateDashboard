@@ -116,7 +116,8 @@ class _NewsFeedState extends State<NewsFeed> {
                   // TODO: if data.articles.length == 0, return title: 'No articles found!'
                   itemBuilder: (context, index) {
                     var news = snapshot.data.articles[index];  // This is responsible for going through the querried items from the API
-                    //TODO: turn each list item into a button, on press tries to open articles.url in the default browser! (with appropriate popup)
+                    
+                    // InkWell is a widget that lets the whole widget be interactable (touched), essentially making whatever the widget holds a button.
                     return InkWell(
                       // This is where the links are opened using the 'url_launcher' package
                       onTap: () {
