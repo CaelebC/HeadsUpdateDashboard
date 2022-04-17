@@ -23,7 +23,6 @@ class FollowedGames
 
   Future _createDB(Database db, int version) async{
     final textType = 'TEXT NOT NULL';
-    final idType = 'INTEGER NOT NULL AUTOINCREMENT';
 
     await db.execute(
       '''CREATE TABLE $followedGames
@@ -33,31 +32,6 @@ class FollowedGames
         ${GameFields.genres} &textType
         ${GameFields.platforms} &textType,
         ${GameFields.stores} &textType,
-        "FOREIGN KEY (GameFields.genres) REFERENCES gameGenres (name) ON DELETE NO ACTION ON UPDATE NO ACTION"
-        "FOREIGN KEY (GameFields.platforms) REFERENCES gamePlatforms (name) ON DELETE NO ACTION ON UPDATE NO ACTION"
-        "FOREIGN KEY (GameFields.stores) REFERENCES gameStores (name) ON DELETE NO ACTION ON UPDATE NO ACTION"
-      )'''
-    );
-    await db.execute(
-      '''CREATE TABLE $gameGenres
-      (
-        ${GenreFields.id} &idType,
-        ${GenreFields.name} &textType,
-      )
-      '''
-    );
-    await db.execute(
-      '''CREATE TABLE $gamePlatforms
-      (
-        ${PlatformFields.id} &idType,
-        ${PlatformFields.name} &textType
-      )'''
-    );
-    await db.execute(
-      '''CREATE TABLE $gameStores
-      (
-        ${StoreFields.id} &idType,
-        ${StoreFields.name} &textType
       )'''
     );
   }
@@ -65,30 +39,35 @@ class FollowedGames
   //Create Functions
   Future<Result> createResult(Result game) async {
     final db = await instance.database;
+    final json = game.toJson();
+    String allGenres = "";
+    String allPlatforms = "";
+    String allStores = "";
 
-    final id = await db.insert(followedGames, game.toJson());
+    //converting to string
+    for(var i in game.genres) {
+      allGenres = allGenres + " " + i.name;
+    }
+    for(var i in game.platforms) {
+      allPlatforms = allPlatforms + " " + i.platform.name;
+    }
+    for(var i in game.stores) {
+      allGenres = allStores + " " + i.store.name;
+    }
+
+    //DOUBLE CHECK VALUES; NOT ENTIRELY CLEAR ON THAT YET
+    final columns =
+        '${GameFields.name}, ${GameFields.backgroundImage},'
+        '${GameFields.genres}, ${GameFields.platforms}, ${GameFields.stores}';
+    final values =
+        '${json[GameFields.name]}, ${json[GameFields.backgroundImage]},'
+        '${json[allGenres]}, ${json[allPlatforms]}, ${json[allStores]}';
+    final id = await db
+      .rawInsert('INSERT INTO followedGames ($columns) VALUES ($values)');
+
     return game.copy();
   }
 
-  Future<Genre> createGenre(Genre genre) async{
-    final db = await instance.database;
-    final id = await db.insert(gameGenres, genre.toJson());
-    return genre.copy();
-  }
-
-  Future<Platform> createPlatform(Platform platform) async{
-    final db = await instance.database;
-    final id = await db.insert(gamePlatforms, platform.toJson());
-    return platform.copy();
-  }
-
-  Future<Store> createStore(Store store) async{
-    final db = await instance.database;
-    final id = await db.insert(gameStores, store.toJson());
-    return store.copy();
-  }
-
-  //Read Functions
   Future<Result> readResult(String name) async {
     final db = await instance.database;
     final maps = await db.query(
@@ -105,58 +84,6 @@ class FollowedGames
         throw Exception('Title not found');
       }
   }
-
-  Future<Genre> readGenre(String name) async{
-    final db = await instance.database;
-    final maps = await db.query(
-      gameGenres,
-      columns: GenreFields.values,
-      where: '${GenreFields.name} = ?',
-      whereArgs: [name],
-    );
-
-    if(maps.isNotEmpty){
-        return Genre.fromJson(maps.first);
-      }
-    else{
-        throw Exception('Genre not found');
-      }
-  }
-
-  Future<Platform> readPlatform(String name) async{
-    final db = await instance.database;
-    final maps = await db.query(
-      gamePlatforms,
-      columns: PlatformFields.values,
-      where: '${PlatformFields.name} = ?',
-      whereArgs: [name],
-    );
-
-    if(maps.isNotEmpty){
-      return Platform.fromJson(maps.first);
-    }
-    else{
-      throw Exception('Platform not found');
-    }
-  }
-
-  Future<Store> readStore(String name) async{
-    final db = await instance.database;
-    final maps = await db.query(
-      gameStores,
-      columns: StoreFields.values,
-      where: '${StoreFields.name} = ?',
-      whereArgs: [name],
-    );
-
-    if(maps.isNotEmpty){
-      return Store.fromJson(maps.first);
-    }
-    else{
-      throw Exception('Store not found');
-    }
-  }
-
 
   Future<List<Result>> readAllResults() async {
     final db = await instance.database;

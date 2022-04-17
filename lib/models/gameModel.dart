@@ -172,16 +172,6 @@ class Genre {
     };
 }
 
-class GenreFields{
-    static final List<String> values =
-        [
-            id, name, slug
-        ];
-    static final String id = '_id';
-    static final String name = 'name';
-    static final String slug ='slug';
-}
-
 class Platform {
     Platform({
         required this.platform,
@@ -205,17 +195,6 @@ class Platform {
     };
 }
 
-class PlatformFields{
-    static final List<String> values =
-        [
-          id, name, slug
-        ];
-
-    static final String id = '_id';
-    static final String name = 'name';
-    static final String slug = 'slug';
-}
-
 class Store {
     Store({
         required this.store,
@@ -237,14 +216,4 @@ class Store {
     Map<String, dynamic> toJson() => {
         "store": store.toJson(),
     };
-}
-
-class StoreFields {
-    static final List<String> values =
-        [
-            id, name, slug
-        ];
-    static final String id = '_id';
-    static final String name = 'name';
-    static final String slug = 'slug';
 }
