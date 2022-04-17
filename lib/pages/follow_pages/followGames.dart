@@ -185,13 +185,11 @@ class _FollowGamesState extends State<FollowGames> {
 
                           ),
 
-                          // LikeButton is an imported package widget to make a like/follow button (duh)
-                          LikeButton(
-                            size: 24,
-                            isLiked: false,
-                            animationDuration: const Duration(milliseconds: 500),
-                            bubblesSize: 0,
-                          )
+                          IconButton(
+                            icon: const Icon(Icons.favorite),
+                            color: accentColor,
+                            onPressed: () {}, 
+                          ),
 
                         ],
 
