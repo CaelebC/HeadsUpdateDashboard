@@ -1,16 +1,16 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:hud/models/genreModel.dart';
+import 'package:hud/models/publisherModel.dart';
 
-class FollowedGenres
+class FollowedPublishers
 {
-  static final FollowedGenres instance = FollowedGenres.init();
+  static final FollowedPublishers instance = FollowedPublishers.init();
   static Database? _database;
-  FollowedGenres.init();
+  FollowedPublishers.init();
 
   Future<Database> get database async{
     if(_database != null) return _database!;
-    _database = await _initDB('genre.db');
+    _database = await _initDB('publisher.db');
     return _database!;
   }
 
@@ -26,28 +26,28 @@ class FollowedGenres
     final idType = 'INTEGER NOT NULL AUTOINCREMENT';
 
     await db.execute(
-      '''CREATE TABLE $followedGenres
+      '''CREATE TABLE $followedPublishers
       (
-        ${GenreFields.id} &idType,
-        ${GenreFields.name} &textType,
-        ${GenreFields.games} &textType
+        ${PublisherFields.id} &idType,
+        ${PublisherFields.name} &idType,
+        ${PublisherFields.games} &textType
       )'''
     );
   }
 
-  Future<Result> followGenre(Result genre) async{
+  Future<Result> followPublisher(Result publisher) async{
     final db = await instance.database;
 
-    final id = await db.insert(followedGenres, genre.toJson());
-    return genre.copy();
+    final id = await db.insert(followedPublishers, publisher.toJson());
+    return publisher.copy();
   }
 
   Future<Result> readFollowed(String name) async{
     final db = await instance.database;
     final maps = await db.query(
-      followedGenres,
-      columns: GenreFields.values,
-        where: '${GenreFields.name} = ?',
+      followedPublishers,
+      columns: PublisherFields.values,
+        where: '${PublisherFields.name} = ?',
         whereArgs: [name]
     );
 
@@ -61,16 +61,16 @@ class FollowedGenres
 
   Future<List<Result>> readAllFollowed() async{
     final db = await instance.database;
-    final orderBy = '${GenreFields.name} DESC';
-    final result = await db.query(followedGenres, orderBy: orderBy);
+    final orderBy = '${PublisherFields.name} DESC';
+    final result = await db.query(followedPublishers, orderBy: orderBy);
     return result.map((json)=>Result.fromJson(json)).toList();
   }
 
   Future<int> unfollow(String name) async{
     final db = await instance.database;
     return db.delete(
-      followedGenres,
-        where: '${GenreFields.name} = ?',
+        followedPublishers,
+        where: '${PublisherFields.name} = ?',
         whereArgs: [name]
     );
   }

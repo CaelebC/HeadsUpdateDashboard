@@ -6,7 +6,6 @@ import 'package:meta/meta.dart';
 import 'dart:convert';
 
 final String followedGenres = 'genres';
-final String genreGames = 'games';
 
 GenreModel genreModelFromJson(String str) => GenreModel.fromJson(json.decode(str));
 

@@ -5,6 +5,9 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+final String followedPlatforms = 'platforms';
+final String platformGames = 'games';
+
 PlatformModel platformModelFromJson(String str) => PlatformModel.fromJson(json.decode(str));
 
 String platformModelToJson(PlatformModel data) => json.encode(data.toJson());
@@ -60,6 +63,28 @@ class Result {
   dynamic? yearEnd;
   List<Game> games;
 
+  Result copy({
+    int? id,
+    String? name,
+    String? slug,
+    int? gamesCount,
+    String? imageBackground,
+    dynamic? image,
+    int? yearStart,
+    dynamic? yearEnd,
+    List<Game>? games,
+  })=>Result(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    slug: slug ?? this.slug,
+    gamesCount: gamesCount ?? this.gamesCount,
+    imageBackground: imageBackground ?? this.imageBackground,
+    image: image ?? this.image,
+    yearStart: yearStart ?? this.yearStart,
+    yearEnd: yearEnd ?? this.yearEnd,
+    games: games ?? this.games
+  );
+
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     id: json["id"],
     name: json["name"],
@@ -83,6 +108,22 @@ class Result {
     "year_end": yearEnd,
     "games": List<dynamic>.from(games.map((x) => x.toJson())),
   };
+}
+
+class PlatformFields{
+  static final List<String> values =
+      [
+        id, name, slug, gamesCount,
+        image, yearStart, yearEnd, games
+      ];
+  static final String id = '_id';
+  static final String name = 'name';
+  static final String slug = 'slug';
+  static final String gamesCount= 'gamesCount';
+  static final String image = 'image';
+  static final String yearStart = 'yearStart';
+  static final String yearEnd = 'yearEnd';
+  static final String games = 'games';
 }
 
 class Game {
