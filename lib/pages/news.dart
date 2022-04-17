@@ -116,37 +116,44 @@ class _NewsFeedState extends State<NewsFeed> {
                   itemBuilder: (context, index) {
                     var news = snapshot.data.articles[index];  // This is responsible for going through the querried items from the API
                     //TODO: turn each list item into a button, on press tries to open articles.url in the default browser! (with appropriate popup)
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Image of each article
-                        Column(
-                          children: <Widget>[
-                            Image.network(
-                              news.urlToImage,
-                              fit: BoxFit.cover,
-                            )
-                          ]
-                        ),
+                    return InkWell(
+                      onTap: () {
+                        print("wow this works");
+                      },
 
-                        // Text of each article
-                        Container(
-                          child: Text(
-                            news.title,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: textColor,
-                            )
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Image of each article
+                          Column(
+                            children: <Widget>[
+                              Image.network(
+                                news.urlToImage,
+                                fit: BoxFit.cover,
+                                // width: 300,
+                              )
+                            ]
                           ),
-                        ),
 
-                        SizedBox(height: 12.0),
+                          // Text of each article
+                          Container(
+                            child: Text(
+                              news.title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: textColor,
+                              )
+                            ),
+                          ),
 
-                      ],
+                          SizedBox(height: 12.0),
+
+                        ],
+                      )
                     );
-
+                    
                   });
 
             } else
