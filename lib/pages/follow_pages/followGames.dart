@@ -24,6 +24,8 @@ class _FollowGamesState extends State<FollowGames> {
   String searchInputString = '';
   bool isLoading = false;
   var currentFocus;
+  var isSelected = false;
+  var icon = Icons.favorite_border;
 
   @override
   void initState() {
@@ -185,10 +187,16 @@ class _FollowGamesState extends State<FollowGames> {
 
                           ),
 
+                          // Follow button
                           IconButton(
-                            icon: const Icon(Icons.favorite),
+                            icon: Icon(icon),
                             color: accentColor,
-                            onPressed: () {}, 
+                            onPressed: () {
+                              setState( () {
+                                isSelected = !isSelected;
+                                icon = isSelected ? Icons.favorite : Icons.favorite_border;
+                              });
+                            }, 
                           ),
 
                         ],
