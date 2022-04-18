@@ -81,7 +81,7 @@ class _FollowGamesState extends State<FollowGames> {
                     customSearchBar = ListTile(
                       leading: Icon(
                         Icons.search,
-                        color: Colors.white,
+                        color: textColor,
                         size: 28,
                       ),
                       title: TextField(
@@ -93,14 +93,14 @@ class _FollowGamesState extends State<FollowGames> {
                         decoration: InputDecoration(
                           hintText: 'ex. Hades',
                           hintStyle: TextStyle(
-                            color: Colors.grey,
+                            color: unselectedColor,
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
                           ),
                           border: InputBorder.none,
                         ),
                         style: TextStyle(
-                          color: Colors.white,
+                          color: textColor,
                         ),
                       ),
                     );
@@ -171,11 +171,7 @@ class _FollowGamesState extends State<FollowGames> {
                                     game.name,
                                     // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
                                     
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                    ),
+                                    style: listTextStyle,
 
                                   ),
 

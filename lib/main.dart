@@ -1,30 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:hud/pages/loading.dart';
+import 'package:flutter/widgets.dart';
+import 'dart:async';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 // News Page
 import 'package:hud/pages/news.dart';
 
 // Follow pages
-import 'package:hud/pages/follow_pages/followGames.dart';
-import 'package:hud/pages/follow_pages/followMyList.dart';
-//import 'package:hud/pages/follow_pages/follow_publishers.dart';
-import 'package:hud/pages/follow_pages/followMenu.dart';
-import 'package:hud/pages/follow_pages/followGenres.dart';
-import 'package:hud/pages/follow_pages/followPlatforms.dart';
-import 'package:hud/pages/follow_pages/followStores.dart';
+import 'package:hud/pages/followMenu.dart';
+
 
 // Sale Pages
 import 'package:hud/pages/sale.dart';
 
-// Model Imports
-import 'package:hud/models/gameModel.dart';
+// Database Imports
+import 'package:hud/db/gameDB.dart';
+import 'package:hud/db/genreDB.dart';
+import 'package:hud/db/platformDB.dart';
+import 'package:hud/db/publisherDB.dart';
+import 'package:hud/db/storeDB.dart';
 
 // Misc. Imports
 import 'package:hud/config/style.dart';
 import 'package:hud/pages/settings.dart';
+import 'package:hud/pages/loading.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final database = openDatabase(
+    join(await getDatabasesPath(), 'game_database.db'),
+  );
+  
   runApp(MaterialApp(
     home: MainTemplate(),
   ));
@@ -38,13 +46,14 @@ class MainTemplate extends StatefulWidget {
 }
 
 class _MainTemplateState extends State<MainTemplate> {
+  // The 'screens' array needs to be in the same order as the navbar or else things routing will be wrong
   int currentIndex = 0;
   final screens = [
     FollowMenu(),
     NewsFeed(),
     Sale(),
     Settings(),
-  ];  // It really needs to be in the same order as the navbar or else things routing will be wrong
+  ];  
 
   @override
   Widget build(BuildContext context) {
@@ -60,28 +69,28 @@ class _MainTemplateState extends State<MainTemplate> {
             items: [
 
               BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard_customize_outlined, color: Colors.white54),
+                icon: Icon(Icons.dashboard_customize_outlined, color: unselectedColor),
                 activeIcon: Icon(Icons.dashboard_customize),
                 label: 'Follow',
                 backgroundColor: primaryColor,
               ),  // Follow List Icon
 
               BottomNavigationBarItem(
-                icon: Icon(Icons.my_library_books_outlined, color: Colors.white54),
+                icon: Icon(Icons.my_library_books_outlined, color: unselectedColor),
                 activeIcon: Icon(Icons.my_library_books),
                 label: 'News',
                 backgroundColor: primaryColor,
               ),  // News Feed Icon
 
               BottomNavigationBarItem(
-                icon: Icon(Icons.discount_outlined, color: Colors.white54),
+                icon: Icon(Icons.discount_outlined, color: unselectedColor),
                 activeIcon: Icon(Icons.discount),
                 label: 'Sale',
                 backgroundColor: primaryColor,
               ),  // Sale Feed Icon
 
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined, color: Colors.white54),
+                icon: Icon(Icons.settings_outlined, color: unselectedColor),
                 activeIcon: Icon(Icons.settings),
                 label: 'Settings',
                 backgroundColor: primaryColor,
