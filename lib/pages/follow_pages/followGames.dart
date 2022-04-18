@@ -187,12 +187,17 @@ class _FollowGamesState extends State<FollowGames> {
                           IconButton(
                             icon: Icon(icon),
                             color: accentColor,
+
                             onPressed: () {
+                              
                               setState( () {
                                 isSelected = !isSelected;
                                 icon = isSelected ? Icons.favorite : Icons.favorite_border;
                               });
-                            }, 
+
+                              print(game.name);
+                            },
+
                           ),
 
                         ],

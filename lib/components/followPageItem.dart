@@ -3,22 +3,21 @@ import 'package:hud/config/style.dart';
 
 import 'dart:convert';
 import 'dart:core';
-import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:hud/models/gameModel.dart';
 import 'package:like_button/like_button.dart';
 
 // --------READ ME! READ ME!--------
 // Currently makes errors because a lot of changes are needed for this to be re-useable.
-// The whole FollowEntities class will be commented out until it can be properly used in the follow_pages files
+// The whole FollowItem class will be commented out until it can be properly used in the follow_pages files
 // This video can be used for reference: https://www.youtube.com/watch?v=jAxNZYX7mHM
 // This as well, though I haven't watched this and it only has 1 like and 500 views: https://youtu.be/TQVzZZnYkTo 
 
-// class FollowEntities extends StatelessWidget {
-//   // const FollowEntities({ Key? key }) : super(key: key);
+// class FollowItem extends StatelessWidget {
+//   // const FollowItem({ Key? key }) : super(key: key);
 
-//   final Entity entity;
-//   FollowEntities ({ this.entity });
+//   final Item item;
+//   FollowItem ({ this.item });
 
 
 //   @override
@@ -42,7 +41,7 @@ import 'package:like_button/like_button.dart';
 //             child: AspectRatio(
 //                 aspectRatio: 1,
 //                 child: Image.network(
-//                   entity.backgroundImage,
+//                   item.backgroundImage,
 //                   fit: BoxFit.cover,
 //                 )),   
 //           ),
@@ -59,7 +58,7 @@ import 'package:like_button/like_button.dart';
 //               children: <Widget>[
 //                 Flexible(
 //                   child: Text(
-//                     entity.name,
+//                     item.name,
 //                     // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
                     
 //                     style: listTextStyle,
