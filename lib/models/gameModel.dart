@@ -11,6 +11,9 @@ import 'package:meta/meta.dart';
 import 'dart:convert';
 
 final String followedGames = 'games';
+final String gameGenres = 'genres';
+final String gamePlatforms = 'platforms';
+final String gameStores = 'stores';
 
 GameModel gameModelFromJson(String str) => GameModel.fromJson(json.decode(str));
 
@@ -38,26 +41,6 @@ class GameModel {
         "results": List<dynamic>.from(results.map((x) => x.toJson())),
         "user_platforms": userPlatforms,
     };
-}
-
-class gameFields
-{
-    static final List<String> values =
-    [
-        slug, name, platforms, stores, released,
-        tba, backgroundImage, rating, parentPlatforms, genres
-    ];
-
-    static final String slug = 'slug';
-    static final String name = 'name';
-    static final String platforms = 'platforms';
-    static final String stores = 'stores';
-    static final String released = 'released';
-    static final String tba = 'tba';
-    static final String backgroundImage = 'backgroundImage';
-    static final String rating = 'rating';
-    static final String parentPlatforms = 'parentPlatforms';
-    static final String genres = 'genres';
 }
 
 class Result {
@@ -96,8 +79,7 @@ class Result {
         double? rating,
         List<Platform>? parentPlatforms,
         List<Genre>? genres
-})=>
-    Result(
+    })=>Result(
         slug: slug ?? this.slug,
         name: name ?? this.name,
         platforms: platforms ?? this.platforms,
@@ -137,6 +119,25 @@ class Result {
     };
 }
 
+class GameFields {
+    static final List<String> values =
+    [
+        slug, name, platforms, stores, released,
+        tba, backgroundImage, rating, parentPlatforms, genres
+    ];
+
+    static final String slug = 'slug';
+    static final String name = 'name';
+    static final String platforms = 'platforms';
+    static final String stores = 'stores';
+    static final String released = 'released';
+    static final String tba = 'tba';
+    static final String backgroundImage = 'backgroundImage';
+    static final String rating = 'rating';
+    static final String parentPlatforms = 'parentPlatforms';
+    static final String genres = 'genres';
+}
+
 class Genre {
     Genre({
         required this.id,
@@ -147,6 +148,16 @@ class Genre {
     int id;
     String name;
     String slug;
+
+    Genre copy({
+        int? id,
+        String? name,
+        String? slug
+    })=>Genre(
+        id: id ?? this.id,
+        name : name ?? this.name,
+        slug: slug ?? this.slug
+    );
 
     factory Genre.fromJson(Map<String, dynamic> json) => Genre(
         id: json["id"],
@@ -168,6 +179,13 @@ class Platform {
 
     Genre platform;
 
+    //incredibly unsure of this
+    Platform copy({
+        Genre? platform
+    })=>Platform(
+        platform: platform ?? this.platform
+    );
+
     factory Platform.fromJson(Map<String, dynamic> json) => Platform(
         platform: Genre.fromJson(json["platform"]),
     );
@@ -183,6 +201,13 @@ class Store {
     });
 
     Genre store;
+
+    //??????
+    Store copy({
+        Genre? store
+    })=>Store(
+        store: store ?? this.store
+    );
 
     factory Store.fromJson(Map<String, dynamic> json) => Store(
         store: Genre.fromJson(json["store"]),

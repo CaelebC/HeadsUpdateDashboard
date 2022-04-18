@@ -5,6 +5,8 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+final String followedStores = 'stores';
+
 StoreModel storeModelFromJson(String str) => StoreModel.fromJson(json.decode(str));
 
 String storeModelToJson(StoreModel data) => json.encode(data.toJson());
@@ -56,6 +58,24 @@ class Result {
   String imageBackground;
   List<Game> games;
 
+  Result copy({
+    int? id,
+    String? name,
+    String? domain,
+    String? slug,
+    int? gamesCount,
+    String? imageBackground,
+    List<Game>? games
+  })=>Result(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      domain: domain ?? this.domain,
+      slug: slug ?? this.slug,
+      gamesCount: gamesCount ?? this.gamesCount,
+      imageBackground: imageBackground ?? this.imageBackground,
+      games: games ?? this.games
+  );
+
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     id: json["id"],
     name: json["name"],
@@ -75,6 +95,20 @@ class Result {
     "image_background": imageBackground,
     "games": List<dynamic>.from(games.map((x) => x.toJson())),
   };
+}
+
+class StoreFields{
+  static final List<String> values =
+  [
+    id, name, slug,
+    gamesCount, imageBackground, games
+  ];
+  static final String id = '_id';
+  static final String name = 'name';
+  static final String slug = 'slug';
+  static final String gamesCount = 'gamesCount';
+  static final String imageBackground = 'imageBackground';
+  static final String games = 'games';
 }
 
 class Game {
