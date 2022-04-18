@@ -61,7 +61,7 @@ class FollowedGames
         '${GameFields.genres}, ${GameFields.platforms}, ${GameFields.stores}';
     final values =
         '${json[GameFields.name]}, ${json[GameFields.backgroundImage]},'
-        '${json[allGenres]}, ${json[allPlatforms]}, ${json[allStores]}';
+        '$allGenres, $allPlatforms, $allStores';
     final id = await db
       .rawInsert('INSERT INTO followedGames ($columns) VALUES ($values)');
 
