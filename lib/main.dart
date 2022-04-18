@@ -28,10 +28,16 @@ import 'package:hud/pages/loading.dart';
 
 
 void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  final database = openDatabase(
-    join(await getDatabasesPath(), 'game_database.db'),
-  );
+  // WidgetsFlutterBinding.ensureInitialized();
+  // final database = openDatabase(
+  //   join(await getDatabasesPath(), 'game_database.db'),
+  // );
+
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
   
   runApp(MaterialApp(
     home: MainTemplate(),

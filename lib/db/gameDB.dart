@@ -27,11 +27,11 @@ class FollowedGames
     await db.execute(
       '''CREATE TABLE $followedGames
       (
-        ${GameFields.name} &textType,
-        ${GameFields.backgroundImage} &textType,
-        ${GameFields.genres} &textType
-        ${GameFields.platforms} &textType,
-        ${GameFields.stores} &textType,
+        ${GameFields.name} $textType, 
+        ${GameFields.backgroundImage} $textType, 
+        ${GameFields.genres} $textType, 
+        ${GameFields.platforms} $textType, 
+        ${GameFields.stores} $textType
       )'''
     );
   }
@@ -52,18 +52,20 @@ class FollowedGames
       allPlatforms = allPlatforms + " " + i.platform.name;
     }
     for(var i in game.stores) {
-      allGenres = allStores + " " + i.store.name;
+      allStores = allStores + " " + i.store.name;
     }
 
     //DOUBLE CHECK VALUES; NOT ENTIRELY CLEAR ON THAT YET
     final columns =
-        '${GameFields.name}, ${GameFields.backgroundImage},'
+        '${GameFields.name}, ${GameFields.backgroundImage}, '
         '${GameFields.genres}, ${GameFields.platforms}, ${GameFields.stores}';
     final values =
-        '${json[GameFields.name]}, ${json[GameFields.backgroundImage]},'
+        '${json[GameFields.name]}, ${json[GameFields.backgroundImage]}, '
         '$allGenres, $allPlatforms, $allStores';
+    print(columns);
+    print(values);
     final id = await db
-      .rawInsert('INSERT INTO followedGames ($columns) VALUES ($values)');
+      .rawInsert('INSERT INTO $followedGames ($columns) VALUES ($values)');
 
     return game.copy();
   }

@@ -3,10 +3,10 @@ import 'package:hud/config/style.dart';
 
 import 'dart:convert';
 import 'dart:core';
-import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:hud/models/gameModel.dart';
-import 'package:like_button/like_button.dart';
+
+import 'package:hud/db/gameDB.dart';
 
 
 class FollowGames extends StatefulWidget {
@@ -189,13 +189,27 @@ class _FollowGamesState extends State<FollowGames> {
                             color: accentColor,
 
                             onPressed: () {
+                              print(game.name);
+                              print(game.backgroundImage);
+                              for (var x in game.genres){
+                                print(x.name);
+                              }
+                              for (var x in game.platforms){
+                                print(x.platform.name);
+                              }
+                              for (var x in game.stores){
+                                print(x.store.name);
+                              }
+                              print("-----spacer------");
+                              print(game);
+                              followGame(game);
                               
                               setState( () {
                                 isSelected = !isSelected;
                                 icon = isSelected ? Icons.favorite : Icons.favorite_border;
                               });
 
-                              print(game.name);
+                              print('test');
                             },
 
                           ),
@@ -218,6 +232,10 @@ class _FollowGamesState extends State<FollowGames> {
 
     );
 
+  }
+
+  Future followGame(var game) async {
+    await FollowedGames.instance.createResult(game);
   }
 }
 
