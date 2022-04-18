@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:convert';
 import 'dart:core';
@@ -115,66 +116,63 @@ class _NewsFeedState extends State<NewsFeed> {
                   // TODO: if data.articles.length == 0, return title: 'No articles found!'
                   itemBuilder: (context, index) {
                     var news = snapshot.data.articles[index];  // This is responsible for going through the querried items from the API
-                    //TODO: turn each list item into a button, on press tries to open articles.url in the default browser! (with appropriate popup)
-                    return Container(
-                      height: 80,
-                      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
+                    
+                    // InkWell is a widget that lets the whole widget be interactable (touched), essentially making whatever the widget holds a button.
+                    return InkWell(
+                      // This is where the links are opened using the 'url_launcher' package
+                      onTap: () {
+                        launch(news.url);
+                      },
 
-                      child: Row(
-                        children: <Widget>[
-                          Card(
-                            clipBehavior: Clip.antiAlias,
+                      child: Container(
+                        margin: EdgeInsets.all(12.0),
+                        padding: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          color: bgColorAccent,
+                          borderRadius: BorderRadius.circular(8.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 3.0,
+                            ),
+                          ]
+                        ),
 
-                            // This changes the shape that the image is in
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Image of each article
+                            Container(
+                              height: 200.0,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(news.urlToImage), 
+                                  fit: BoxFit.cover
+                                )
+                              ),
                             ),
 
-                            // This displays the image
-                            child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Image.network(
-                                  news.urlToImage,
-                                  fit: BoxFit.cover,
-                                )),
-                          ),
+                            SizedBox(height: 8.0),
 
-                          SizedBox(width: 8),  // Spacer between image and game title
-
-                          Flexible(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-
-                              // Game Title
-                              children: <Widget>[
-                                Flexible(
-                                  child: Text(
-                                    news.title,
-                                    // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
-                                    //TODO: add article description to this list preview using news.description
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-
-                                  ),
-
-
-                                ),
-
-                              ],
-
+                            // Text of each article
+                            Container(
+                              child: Text(
+                                news.title,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: textColor,
+                                )
+                              ),
                             ),
 
-                          ),
-
-                        ],
-
-                      ),
-
+                          ],
+                        ),
+                      )
                     );
-
+                    
                   });
 
             } else
@@ -205,7 +203,7 @@ class API_Manager {
 
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
       //TODO: replace the empty/default news search with follow list based one. if follow list is empty, change default search to news from common gaming sites like polygon, ign, kotaku, etc.
-      finalURL = baseURL + searchParam  + 'elden-ring' + otherParams + apiKey + pageSize;
+      finalURL = baseURL + searchParam  + 'overcooked' + otherParams + apiKey + pageSize;
     } else { //otherwise attempt the search
       finalURL = baseURL + searchParam + urlSearchTerms + otherParams+ apiKey + pageSize;
     }
