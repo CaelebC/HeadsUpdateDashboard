@@ -124,36 +124,52 @@ class _NewsFeedState extends State<NewsFeed> {
                         launch(news.url);
                       },
 
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Image of each article
-                          Column(
-                            children: <Widget>[
-                              Image.network(
-                                news.urlToImage,
-                                fit: BoxFit.cover,
-                                // width: 300,
-                              )
-                            ]
-                          ),
-
-                          // Text of each article
-                          Container(
-                            child: Text(
-                              news.title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: textColor,
-                              )
+                      child: Container(
+                        margin: EdgeInsets.all(12.0),
+                        padding: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          color: bgColorAccent,
+                          borderRadius: BorderRadius.circular(8.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 3.0,
                             ),
-                          ),
+                          ]
+                        ),
 
-                          SizedBox(height: 12.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Image of each article
+                            Container(
+                              height: 200.0,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(news.urlToImage), 
+                                  fit: BoxFit.cover
+                                )
+                              ),
+                            ),
 
-                        ],
+                            SizedBox(height: 8.0),
+
+                            // Text of each article
+                            Container(
+                              child: Text(
+                                news.title,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: textColor,
+                                )
+                              ),
+                            ),
+
+                          ],
+                        ),
                       )
                     );
                     
