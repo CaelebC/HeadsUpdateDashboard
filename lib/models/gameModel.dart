@@ -11,9 +11,6 @@ import 'package:meta/meta.dart';
 import 'dart:convert';
 
 final String followedGames = 'games';
-final String gameGenres = 'genres';
-final String gamePlatforms = 'platforms';
-final String gameStores = 'stores';
 
 GameModel gameModelFromJson(String str) => GameModel.fromJson(json.decode(str));
 
