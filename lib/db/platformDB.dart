@@ -23,14 +23,14 @@ class FollowedPlatforms
 
   Future _createDB(Database db, int version) async{
     final textType = 'TEXT NOT NULL';
-    final idType = 'INTEGER NOT NULL AUTOINCREMENT';
+    final idType = 'INTEGER NOT NULL';
 
     await db.execute(
       '''CREATE TABLE $followedPlatforms
       (
-      ${PlatformFields.id} &idType,
-      ${PlatformFields.name} &textType,
-      ${PlatformFields.games} &textType
+      ${PlatformFields.id} $idType,
+      ${PlatformFields.name} $textType,
+      ${PlatformFields.games} $textType
       )'''
     );
   }

@@ -3,10 +3,11 @@ import 'package:hud/config/style.dart';
 
 import 'dart:convert';
 import 'dart:core';
-import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:hud/models/gameModel.dart';
 import 'package:like_button/like_button.dart';
+
+import 'package:hud/db/gameDB.dart';
 
 
 class FollowGames extends StatefulWidget {
@@ -24,8 +25,9 @@ class _FollowGamesState extends State<FollowGames> {
   String searchInputString = '';
   bool isLoading = false;
   var currentFocus;
-  var isSelected = false;
-  var icon = Icons.favorite_border;
+  var favoriteStatusIcon = Icons.favorite_border;
+  bool isSelected = false;
+
 
   @override
   void initState() {
@@ -52,6 +54,7 @@ class _FollowGamesState extends State<FollowGames> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: bgColor,
 
@@ -81,7 +84,7 @@ class _FollowGamesState extends State<FollowGames> {
                     customSearchBar = ListTile(
                       leading: Icon(
                         Icons.search,
-                        color: Colors.white,
+                        color: textColor,
                         size: 28,
                       ),
                       title: TextField(
@@ -93,14 +96,14 @@ class _FollowGamesState extends State<FollowGames> {
                         decoration: InputDecoration(
                           hintText: 'ex. Hades',
                           hintStyle: TextStyle(
-                            color: Colors.grey,
+                            color: unselectedColor,
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
                           ),
                           border: InputBorder.none,
                         ),
                         style: TextStyle(
-                          color: Colors.white,
+                          color: textColor,
                         ),
                       ),
                     );
@@ -168,36 +171,56 @@ class _FollowGamesState extends State<FollowGames> {
                               children: <Widget>[
                                 Flexible(
                                   child: Text(
-                                    game.name,
-                                    // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
-                                    
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                    ),
-
+                                    game.name,                                    
+                                    style: listTextStyle,
                                   ),
 
                                 ),
 
                               ],
-
                             ),
-
                           ),
 
-                          // Follow button
-                          IconButton(
-                            icon: Icon(icon),
-                            color: accentColor,
-                            onPressed: () {
-                              setState( () {
-                                isSelected = !isSelected;
-                                icon = isSelected ? Icons.favorite : Icons.favorite_border;
-                              });
-                            }, 
-                          ),
+                          // LikeButton is an imported package widget to make a like/follow button (duh)
+                          LikeButton(
+                            size: 24,
+                            isLiked: isSelected,
+                            animationDuration: const Duration(milliseconds: 500),
+                            bubblesSize: 0,
+                            onTap: (isSelected) async{
+                              print(game.name);
+                              followGame(game);
+                              //searchForResult(game.name);
+                              //#TODO
+                              return !isSelected;
+                            },
+                          )
+
+                          // Follow button using IconButton
+                          // IconButton(
+                          //   color: accentColor,
+                          //   icon: Icon(favoriteStatusIcon),
+                          //   onPressed: () {
+                          //     print(game.name);
+                          //     // print(game.backgroundImage);
+                          //     // for (var x in game.genres){
+                          //     //   print(x.name);
+                          //     // }
+                          //     // for (var x in game.platforms){
+                          //     //   print(x.platform.name);
+                          //     // }
+                          //     // for (var x in game.stores){
+                          //     //   print(x.store.name);
+                          //     // }
+                          //     // print("-----spacer------");
+                          //     // print(game);
+                          //     // followGame(game);
+                          //     setState( () {
+                          //       isSelected = !isSelected;
+                          //       favoriteStatusIcon = isSelected ? Icons.favorite : Icons.favorite_border;
+                          //     });
+                          //   },
+                          // ),
 
                         ],
 
@@ -217,6 +240,14 @@ class _FollowGamesState extends State<FollowGames> {
 
     );
 
+  }
+
+  Future followGame(var game) async {
+    await FollowedGames.instance.createResult(game);
+  }
+
+  Future searchForResult(var gameName) async {
+    await FollowedGames.instance.readAllResults();
   }
 }
 

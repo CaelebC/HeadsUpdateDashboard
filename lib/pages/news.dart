@@ -128,7 +128,7 @@ class _NewsFeedState extends State<NewsFeed> {
                         margin: EdgeInsets.all(12.0),
                         padding: EdgeInsets.all(12.0),
                         decoration: BoxDecoration(
-                          color: bgColorAccent,
+                          color: bgAccentColor,
                           borderRadius: BorderRadius.circular(8.0),
                           boxShadow: [
                             BoxShadow(
@@ -160,11 +160,7 @@ class _NewsFeedState extends State<NewsFeed> {
                             Container(
                               child: Text(
                                 news.title,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: textColor,
-                                )
+                                style: listTextStyle
                               ),
                             ),
 

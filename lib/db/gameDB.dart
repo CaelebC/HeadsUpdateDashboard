@@ -4,34 +4,38 @@ import 'package:hud/models/gameModel.dart';
 
 class FollowedGames
 {
-  static final FollowedGames instance = FollowedGames.init();
+  static final FollowedGames instance = FollowedGames._init();
+
   static Database? _database;
-  FollowedGames.init();
+
+  FollowedGames._init();
 
   Future<Database> get database async {
     if(_database != null) return _database!;
+
     _database = await _initDB('games.db');
+    print('running database');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-
+    print(path);
+    print('initializing database');
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async{
-    final textType = 'TEXT NOT NULL';
-
-    await db.execute(
-      '''CREATE TABLE $followedGames
+    print('database created');
+    await db.execute('''
+    CREATE TABLE $followedGames
       (
-        ${GameFields.name} &textType,
-        ${GameFields.backgroundImage} &textType,
-        ${GameFields.genres} &textType
-        ${GameFields.platforms} &textType,
-        ${GameFields.stores} &textType,
+        name TEXT NOT NULL, 
+        backgroundImage TEXT, 
+        genres TEXT, 
+        platforms TEXT, 
+        stores TEXT
       )'''
     );
   }
@@ -46,50 +50,53 @@ class FollowedGames
 
     //converting to string
     for(var i in game.genres) {
-      allGenres = allGenres + " " + i.name;
+      allGenres = allGenres + i.name;
     }
     for(var i in game.platforms) {
-      allPlatforms = allPlatforms + " " + i.platform.name;
+      allPlatforms = allPlatforms + i.platform.name;
     }
     for(var i in game.stores) {
-      allGenres = allStores + " " + i.store.name;
+      allStores = allStores + i.store.name;
     }
 
     //DOUBLE CHECK VALUES; NOT ENTIRELY CLEAR ON THAT YET
     final columns =
-        '${GameFields.name}, ${GameFields.backgroundImage},'
+        '${GameFields.name}, ${GameFields.backgroundImage}, '
         '${GameFields.genres}, ${GameFields.platforms}, ${GameFields.stores}';
     final values =
-        '${json[GameFields.name]}, ${json[GameFields.backgroundImage]},'
-        '$allGenres, $allPlatforms, $allStores';
-    final id = await db
-      .rawInsert('INSERT INTO followedGames ($columns) VALUES ($values)');
-
+        ['${json[GameFields.name]}, ${json[game.backgroundImage]}, '
+        '$allGenres, $allPlatforms, $allStores'];
+    print(followedGames);
+    print(columns);
+    print(values);
+    final id = await db.rawInsert('INSERT INTO $followedGames($columns) VALUES'
+        '(?, ?, ?, ?, ?)', values);
+    print('Game followed');
     return game.copy();
   }
 
-  Future<Result> readResult(String name) async {
+  Future<GameOutput> readResult(String name) async {
     final db = await instance.database;
     final maps = await db.query(
       followedGames,
       columns: GameFields.values,
-        where: '${GameFields.name} = ?',
-        whereArgs: [name],
+      where: '${GameFields.name} = ?',
+      whereArgs: [name],
     );
-
+    print('Looking for game');
     if(maps.isNotEmpty){
-        return Result.fromJson(maps.first);
+        return GameOutput.fromJson(maps.first);
       }
     else{
         throw Exception('Title not found');
       }
   }
 
-  Future<List<Result>> readAllResults() async {
+  Future<List<GameOutput>> readAllResults() async {
     final db = await instance.database;
     final orderBy = '${GameFields.name} DESC';
     final result = await db.query(followedGames, orderBy: orderBy);
-    return result.map((json)=> Result.fromJson(json)).toList();
+    return result.map((json)=> GameOutput.fromJson(json)).toList();
   }
 
   Future<int> delete(String name) async {
