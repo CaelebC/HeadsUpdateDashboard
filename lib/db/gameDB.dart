@@ -57,15 +57,14 @@ class FollowedGames
 
     //DOUBLE CHECK VALUES; NOT ENTIRELY CLEAR ON THAT YET
     final columns =
-        '${GameFields.name}, ${GameFields.backgroundImage}, '
-        '${GameFields.genres}, ${GameFields.platforms}, ${GameFields.stores}';
-    final values =
         '${json[GameFields.name]}, ${json[GameFields.backgroundImage]}, '
+        '$allGenres, $allPlatforms, $allStores';
+    final values =
+        '${json[GameFields.name]}, ${json[GameFields.name]}, '
         '$allGenres, $allPlatforms, $allStores';
     print(columns);
     print(values);
-    final id = await db
-      .rawInsert('INSERT INTO $followedGames ($columns) VALUES ($values)');
+    final id = await db.rawInsert('INSERT INTO games(name, backgroundImage, genres, platforms, stores) VALUES(?, ?, ?, ?, ?)', [{json[GameFields.name]}, {json[GameFields.name]}, allGenres, allPlatforms, allStores]);
 
     return game.copy();
   }
