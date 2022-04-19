@@ -71,7 +71,7 @@ class FollowedGames
     print(values);
     final id = await db.rawInsert('INSERT INTO $followedGames($columns) VALUES'
         '(?, ?, ?, ?, ?)', values);
-
+    
     return game.copy();
   }
 

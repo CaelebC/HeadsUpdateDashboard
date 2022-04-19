@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:hud/models/gameModel.dart';
+import 'package:like_button/like_button.dart';
 
 import 'package:hud/db/gameDB.dart';
 
@@ -24,8 +25,9 @@ class _FollowGamesState extends State<FollowGames> {
   String searchInputString = '';
   bool isLoading = false;
   var currentFocus;
-  var isSelected = false;
-  var icon = Icons.favorite_border;
+  var favoriteStatusIcon = Icons.favorite_border;
+  bool isSelected = false;
+
 
   @override
   void initState() {
@@ -52,6 +54,7 @@ class _FollowGamesState extends State<FollowGames> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: bgColor,
 
@@ -168,51 +171,54 @@ class _FollowGamesState extends State<FollowGames> {
                               children: <Widget>[
                                 Flexible(
                                   child: Text(
-                                    game.name,
-                                    // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
-                                    
+                                    game.name,                                    
                                     style: listTextStyle,
-
                                   ),
 
                                 ),
 
                               ],
-
                             ),
-
                           ),
 
-                          // Follow button
-                          IconButton(
-                            icon: Icon(icon),
-                            color: accentColor,
-
-                            onPressed: () {
+                          // LikeButton is an imported package widget to make a like/follow button (duh)
+                          LikeButton(
+                            size: 24,
+                            isLiked: isSelected,
+                            animationDuration: const Duration(milliseconds: 500),
+                            bubblesSize: 0,
+                            onTap: (isSelected) async{
                               print(game.name);
-                              print(game.backgroundImage);
-                              for (var x in game.genres){
-                                print(x.name);
-                              }
-                              for (var x in game.platforms){
-                                print(x.platform.name);
-                              }
-                              for (var x in game.stores){
-                                print(x.store.name);
-                              }
-                              print("-----spacer------");
-                              print(game);
-                              followGame(game);
-                              
-                              setState( () {
-                                isSelected = !isSelected;
-                                icon = isSelected ? Icons.favorite : Icons.favorite_border;
-                              });
-
-                              print('test');
+                              // followGame(game);
+                              return !isSelected;
                             },
+                          )
 
-                          ),
+                          // Follow button using IconButton
+                          // IconButton(
+                          //   color: accentColor,
+                          //   icon: Icon(favoriteStatusIcon),
+                          //   onPressed: () {
+                          //     print(game.name);
+                          //     // print(game.backgroundImage);
+                          //     // for (var x in game.genres){
+                          //     //   print(x.name);
+                          //     // }
+                          //     // for (var x in game.platforms){
+                          //     //   print(x.platform.name);
+                          //     // }
+                          //     // for (var x in game.stores){
+                          //     //   print(x.store.name);
+                          //     // }
+                          //     // print("-----spacer------");
+                          //     // print(game);
+                          //     // followGame(game);
+                          //     setState( () {
+                          //       isSelected = !isSelected;
+                          //       favoriteStatusIcon = isSelected ? Icons.favorite : Icons.favorite_border;
+                          //     });
+                          //   },
+                          // ),
 
                         ],
 
