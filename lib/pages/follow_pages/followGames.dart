@@ -189,7 +189,8 @@ class _FollowGamesState extends State<FollowGames> {
                             bubblesSize: 0,
                             onTap: (isSelected) async{
                               print(game.name);
-                              // followGame(game);
+                              followGame(game);
+                              readAllResults();
                               return !isSelected;
                             },
                           )
@@ -242,6 +243,10 @@ class _FollowGamesState extends State<FollowGames> {
 
   Future followGame(var game) async {
     await FollowedGames.instance.createResult(game);
+  }
+
+  Future readAllResults() async {
+    await FollowedGames.instance.readAllResults();
   }
 }
 
