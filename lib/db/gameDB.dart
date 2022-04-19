@@ -28,7 +28,6 @@ class FollowedGames
 
   Future _createDB(Database db, int version) async{
     print('database created');
-    await db.execute('''DROP TABLE IF EXISTS games''');
     await db.execute('''
     CREATE TABLE $followedGames
       (
