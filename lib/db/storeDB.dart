@@ -28,9 +28,9 @@ class FollowedStores
     await db.execute(
         '''CREATE TABLE $followedStores
       (
-        ${StoreFields.id} &idType,
-        ${StoreFields.name} &textType,
-        ${StoreFields.games} &textType
+        ${StoreFields.id} $idType,
+        ${StoreFields.name} $textType,
+        ${StoreFields.games} $textType
       )'''
     );
   }
