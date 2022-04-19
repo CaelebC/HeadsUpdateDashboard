@@ -192,9 +192,9 @@ class API_Manager {
     String baseURL = 'https://newsapi.org/v2/everything?';
     String searchParam = 'q=';
     String urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','-');
-    String pageSize = '&page_size=10';
+    String pageSize = '&page_size=20';
     String apiKey = '&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
-    String otherParams = '&searchIn=title,content';
+    String otherParams = '&sortBy=relevancy&language=en';
     String finalURL = '';
 
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
