@@ -190,7 +190,8 @@ class _FollowGamesState extends State<FollowGames> {
                             onTap: (isSelected) async{
                               print(game.name);
                               followGame(game);
-                              readAllResults();
+                              //searchForResult(game.name);
+                              //#TODO
                               return !isSelected;
                             },
                           )
@@ -245,7 +246,7 @@ class _FollowGamesState extends State<FollowGames> {
     await FollowedGames.instance.createResult(game);
   }
 
-  Future readAllResults() async {
+  Future searchForResult(var gameName) async {
     await FollowedGames.instance.readAllResults();
   }
 }

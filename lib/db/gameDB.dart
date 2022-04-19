@@ -71,32 +71,32 @@ class FollowedGames
     print(values);
     final id = await db.rawInsert('INSERT INTO $followedGames($columns) VALUES'
         '(?, ?, ?, ?, ?)', values);
-    
+    print('Game followed');
     return game.copy();
   }
 
-  Future<Result> readResult(String name) async {
+  Future<GameOutput> readResult(String name) async {
     final db = await instance.database;
     final maps = await db.query(
       followedGames,
       columns: GameFields.values,
-        where: '${GameFields.name} = ?',
-        whereArgs: [name],
+      where: '${GameFields.name} = ?',
+      whereArgs: [name],
     );
-
+    print('Looking for game');
     if(maps.isNotEmpty){
-        return Result.fromJson(maps.first);
+        return GameOutput.fromJson(maps.first);
       }
     else{
         throw Exception('Title not found');
       }
   }
 
-  Future<List<Result>> readAllResults() async {
+  Future<List<GameOutput>> readAllResults() async {
     final db = await instance.database;
     final orderBy = '${GameFields.name} DESC';
     final result = await db.query(followedGames, orderBy: orderBy);
-    return result.map((json)=> Result.fromJson(json)).toList();
+    return result.map((json)=> GameOutput.fromJson(json)).toList();
   }
 
   Future<int> delete(String name) async {

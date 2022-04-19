@@ -119,20 +119,15 @@ class Result {
 class GameFields {
     static final List<String> values =
     [
-        slug, name, platforms, stores, released,
-        tba, backgroundImage, rating, parentPlatforms, genres
+        name, backgroundImage,
+        genres, platforms, stores
     ];
 
-    static final String slug = 'slug';
     static final String name = 'name';
+    static final String backgroundImage = 'backgroundImage';
+    static final String genres = 'genres';
     static final String platforms = 'platforms';
     static final String stores = 'stores';
-    static final String released = 'released';
-    static final String tba = 'tba';
-    static final String backgroundImage = 'backgroundImage';
-    static final String rating = 'rating';
-    static final String parentPlatforms = 'parentPlatforms';
-    static final String genres = 'genres';
 }
 
 class Genre {
@@ -213,4 +208,27 @@ class Store {
     Map<String, dynamic> toJson() => {
         "store": store.toJson(),
     };
+}
+
+class GameOutput{
+    GameOutput({
+        required this.name,
+        required this.backgroundImage,
+        required this.genres,
+        required this.platforms,
+        required this.stores
+    });
+    String name;
+    String backgroundImage;
+    String genres;
+    String platforms;
+    String stores;
+
+    factory GameOutput.fromJson(Map<String, dynamic> json) => GameOutput(
+        name: json["name"],
+        backgroundImage: json["backgroundImage"],
+        genres: json["genres"],
+        platforms: json["platforms"],
+        stores: json["stores"],
+    );
 }
