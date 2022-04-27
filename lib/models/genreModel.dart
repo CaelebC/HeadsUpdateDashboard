@@ -45,7 +45,7 @@ class Result {
     required this.name,
     required this.slug,
     required this.gamesCount,
-    required this.imageBackground,
+    required this.backgroundImage,
     required this.games,
   });
 
@@ -53,7 +53,7 @@ class Result {
   String name;
   String slug;
   int gamesCount;
-  String imageBackground;
+  String backgroundImage;
   List<Game> games;
 
   Result copy({
@@ -61,14 +61,14 @@ class Result {
     String? name,
     String? slug,
     int? gamesCount,
-    String? imageBackground,
+    String? backgroundImage,
     List<Game>? games
   })=>Result(
     id: id ?? this.id,
     name: name ?? this.name,
     slug: slug ?? this.slug,
     gamesCount: gamesCount ?? this.gamesCount,
-    imageBackground: imageBackground ?? this.imageBackground,
+    backgroundImage: backgroundImage ?? this.backgroundImage,
     games: games ?? this.games
   );
 
@@ -77,7 +77,7 @@ class Result {
     name: json["name"],
     slug: json["slug"],
     gamesCount: json["games_count"],
-    imageBackground: json["image_background"],
+    backgroundImage: json["image_background"],
     games: List<Game>.from(json["games"].map((x) => Game.fromJson(x))),
   );
 
@@ -86,7 +86,7 @@ class Result {
     "name": name,
     "slug": slug,
     "games_count": gamesCount,
-    "image_background": imageBackground,
+    "image_background": backgroundImage,
     "games": List<dynamic>.from(games.map((x) => x.toJson())),
   };
 }
@@ -95,13 +95,13 @@ class GenreFields{
   static final List<String> values =
       [
         id, name, slug,
-        gamesCount, imageBackground, games
+        gamesCount, backgroundImage, games
       ];
   static final String id = '_id';
   static final String name = 'name';
   static final String slug = 'slug';
   static final String gamesCount = 'gamesCount';
-  static final String imageBackground = 'imageBackground';
+  static final String backgroundImage = 'backgroundImage';
   static final String games = 'games';
 }
 
