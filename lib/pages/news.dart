@@ -23,19 +23,21 @@ class _NewsFeedState extends State<NewsFeed> {
   Widget customSearchBar = Text('News');
   TextEditingController searchInputController = TextEditingController();
   String searchInputString = '';
-  String newsSortParam = '&sortBy=relevancy';
+  String? newsSortBy = 'relevancy';
+  List<String> newsSortByOptions = ['relevancy', 'popularity', 'publishedAt'];
   bool isLoading = false;
   var currentFocus;
 
   @override
   void initState() {
     //TODO: replace this initial _newsmodel. when loading page, initial search param is 'q=' plus follow game names (each separated by the || OR operator,  abd formatted to replace spaces with '-'
-    _newsModel = API_Manager().getNews('', newsSortParam);
+    _newsModel = API_Manager().getNews('', newsSortBy);
     super.initState();
   }
 
-  void callNews(String input){
-    _newsModel = API_Manager().getNews(input, newsSortParam);
+  void callNews(){
+    _newsModel = API_Manager().getNews(searchInputString, newsSortBy);
+    print(searchInputString);
     setState(() {
 
     });
@@ -61,6 +63,7 @@ class _NewsFeedState extends State<NewsFeed> {
           backgroundColor: primaryColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
+
           actions: [
             IconButton(
                 onPressed: (){
@@ -75,7 +78,9 @@ class _NewsFeedState extends State<NewsFeed> {
                         ),
                         title: TextField(
                           controller: searchInputController,
-                          onSubmitted: (String value) { callNews(value);
+                          onSubmitted: (String value) {
+                            searchInputString = value;
+                            callNews();
                           unfocus();
                           },
                           //then call setstate to refresh the games list!
@@ -103,13 +108,12 @@ class _NewsFeedState extends State<NewsFeed> {
                   }
                   );},
                 icon: customIcon)
-          ]
+          ],
       ),
 
       body: Container(
         child: FutureBuilder<NewsModel>(
           future: _newsModel,
-
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               isLoading = false;
@@ -135,16 +139,17 @@ class _NewsFeedState extends State<NewsFeed> {
 }
 
 class API_Manager {
-  Future<NewsModel> getNews(String searchTerm, String newsSortParam) async {
+  Future<NewsModel> getNews(String searchTerm, String? newsSortBy) async {
     var client = http.Client();
     var newsModel;
     // https://newsapi.org/v2/everything?q=elden-ring&apiKey=d4baf1f0866e4cf4931479d8dedfadf1
     String baseURL = 'https://newsapi.org/v2/everything?';
     String searchParam = 'q=';
-    String urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','-');
+    String urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','%20');
     String pageSize = '&page_size=20';
     String apiKey = '&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
-    String languageParam = 'y&language=en';
+    String languageParam = '&language=en';
+    String newsSortParam = '&sortBy=' + newsSortBy!;
     String finalURL = '';
 
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK

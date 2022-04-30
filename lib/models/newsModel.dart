@@ -36,21 +36,21 @@ class NewsModel {
 class Article {
   Article({
     required this.source,
-    required this.author,
+    this.author,
     required this.title,
     required this.description,
     required this.url,
-    required this.urlToImage,
+    this.urlToImage,
     required this.publishedAt,
     required this.content,
   });
 
   Source source;
-  String author;
+  String? author;
   String title;
   String description;
   String url;
-  String urlToImage;
+  String? urlToImage;
   DateTime publishedAt;
   String content;
 
@@ -60,7 +60,7 @@ class Article {
     title: json["title"],
     description: json["description"],
     url: json["url"],
-    urlToImage: json["urlToImage"],
+    urlToImage: json["urlToImage"] == null ? null : json["urlToImage"],
     publishedAt: DateTime.parse(json["publishedAt"]),
     content: json["content"],
   );

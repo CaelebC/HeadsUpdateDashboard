@@ -40,7 +40,8 @@ Widget newsPageItem (news, BuildContext context){
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(news.urlToImage), 
+                image: NetworkImage(news.urlToImage),
+                // TODO: The news page breaks if the article has a null urlToImage String! Need to add an if null condition, if possible!
                 fit: BoxFit.cover
               )
             ),
