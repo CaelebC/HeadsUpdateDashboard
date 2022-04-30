@@ -23,18 +23,19 @@ class _NewsFeedState extends State<NewsFeed> {
   Widget customSearchBar = Text('News');
   TextEditingController searchInputController = TextEditingController();
   String searchInputString = '';
+  String newsSortParam = '&sortBy=relevancy';
   bool isLoading = false;
   var currentFocus;
 
   @override
   void initState() {
     //TODO: replace this initial _newsmodel. when loading page, initial search param is 'q=' plus follow game names (each separated by the || OR operator,  abd formatted to replace spaces with '-'
-    _newsModel = API_Manager().getNews('');
+    _newsModel = API_Manager().getNews('', newsSortParam);
     super.initState();
   }
 
   void callNews(String input){
-    _newsModel = API_Manager().getNews(input);
+    _newsModel = API_Manager().getNews(input, newsSortParam);
     setState(() {
 
     });
@@ -134,7 +135,7 @@ class _NewsFeedState extends State<NewsFeed> {
 }
 
 class API_Manager {
-  Future<NewsModel> getNews(String searchTerm) async {
+  Future<NewsModel> getNews(String searchTerm, String newsSortParam) async {
     var client = http.Client();
     var newsModel;
     // https://newsapi.org/v2/everything?q=elden-ring&apiKey=d4baf1f0866e4cf4931479d8dedfadf1
@@ -143,14 +144,14 @@ class API_Manager {
     String urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','-');
     String pageSize = '&page_size=20';
     String apiKey = '&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
-    String otherParams = '&sortBy=relevancy&language=en';
+    String languageParam = 'y&language=en';
     String finalURL = '';
 
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
       //TODO: replace the empty/default news search with follow list based one. if follow list is empty, change default search to news from common gaming sites like polygon, ign, kotaku, etc.
-      finalURL = baseURL + searchParam  + 'overcooked' + otherParams + apiKey + pageSize;
+      finalURL = baseURL + searchParam  + 'overcooked' + languageParam + newsSortParam + apiKey + pageSize;
     } else { //otherwise attempt the search
-      finalURL = baseURL + searchParam + urlSearchTerms + otherParams+ apiKey + pageSize;
+      finalURL = baseURL + searchParam + urlSearchTerms + languageParam + newsSortParam + apiKey + pageSize;
     }
 
     var uri = Uri.parse(finalURL);

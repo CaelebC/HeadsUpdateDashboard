@@ -23,7 +23,7 @@ import 'package:hud/db/storeDB.dart';
 
 // Misc. Imports
 import 'package:hud/config/style.dart';
-import 'package:hud/pages/settings.dart';
+import 'package:hud/pages/freeGames.dart';
 import 'package:hud/pages/loading.dart';
 
 
@@ -58,7 +58,7 @@ class _MainTemplateState extends State<MainTemplate> {
     FollowMenu(),
     NewsFeed(),
     Sale(),
-    Settings(),
+    FreeGameList(),
   ];  
 
   @override
