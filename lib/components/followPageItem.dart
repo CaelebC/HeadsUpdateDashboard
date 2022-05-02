@@ -30,7 +30,8 @@ Future searchForResult(var name) async {
   print(game.name);
 }
 Future searchForAllResults() async {
-  await FollowedGames.instance.readAllResults();
+  final games = await FollowedGames.instance.readAllResults();
+  print(games);
 }
 
 // // Game DB functions
@@ -40,8 +41,6 @@ Future searchForAllResults() async {
 
 
 Widget followPageItem (item, itemType, BuildContext context){
-
-  
 
   return Container(
     height: 80,

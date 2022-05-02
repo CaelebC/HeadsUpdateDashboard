@@ -8,6 +8,12 @@ import 'package:http/http.dart' as http;
 import 'package:hud/models/newsModel.dart';
 import 'package:hud/components/newsPageItem.dart';
 
+import 'package:hud/db/gameDB.dart';
+import 'package:hud/db/genreDB.dart';
+import 'package:hud/db/platformDB.dart';
+import 'package:hud/db/publisherDB.dart';
+import 'package:hud/db/storeDB.dart';
+
 
 class NewsFeed extends StatefulWidget {
   const NewsFeed({Key? key}) : super(key: key);
@@ -27,10 +33,16 @@ class _NewsFeedState extends State<NewsFeed> {
   bool isLoading = false;
   var currentFocus;
 
+  // Future<List<GameOutput>> refreshGames() async {
+  //   List<GameOutput> games = await FollowedGames.instance.readAllResults();
+  //   return games;
+  // }
+
   @override
   void initState() {
     //TODO: replace this initial _newsmodel. when loading page, initial search param is 'q=' plus follow game names (each separated by the || OR operator,  abd formatted to replace spaces with '-'
     _newsModel = API_Manager().getNews('', newsSortBy);
+    searchForAllResults();
     super.initState();
   }
 
@@ -137,14 +149,32 @@ class _NewsFeedState extends State<NewsFeed> {
   }
 }
 
+Future<List<String>> searchForAllResults() async {
+  final games = await FollowedGames.instance.readAllResults();
+  List<String> gameNames = [];
+    for (var game in games) {
+      String temp = game.name!;
+      temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
+      temp = temp.trim().toLowerCase().replaceAll(' ','%20');
+      gameNames.add(temp);
+    }
+    List<String> distinctGameNames = gameNames.toSet().toList();
+  return distinctGameNames;
+}
+
+
 class API_Manager {
   Future<NewsModel> getNews(String searchTerm, String? newsSortBy) async {
     var client = http.Client();
     var newsModel;
     // https://newsapi.org/v2/everything?q=elden-ring&apiKey=d4baf1f0866e4cf4931479d8dedfadf1
     String baseURL = 'https://newsapi.org/v2/everything?';
+    List<String> searchGameNames = await searchForAllResults();
+    String searchGameNamesConcat = await searchGameNames.join(" ");
+    print(searchGameNamesConcat);
     String searchParam = 'q=';
-    String urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','%20');
+    String urlSearchTerms;
+    // SAMPLE: https://newsapi.org/v2/everything?   q=hades%20AND%20halo    &apiKey=d4baf1f0866e4cf4931479d8dedfadf1
     String pageSize = '&page_size=20';
     String apiKey = '&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
     String languageParam = '&language=en';
@@ -153,8 +183,10 @@ class API_Manager {
 
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
       //TODO: replace the empty/default news search with follow list based one. if follow list is empty, change default search to news from common gaming sites like polygon, ign, kotaku, etc.
-      finalURL = baseURL + searchParam  + 'overcooked' + languageParam + newsSortParam + apiKey + pageSize;
+      urlSearchTerms = searchGameNamesConcat.trim().toLowerCase().replaceAll(' ','%20OR%20');
+      finalURL = baseURL + searchParam  + urlSearchTerms + languageParam + newsSortParam + apiKey + pageSize;
     } else { //otherwise attempt the search
+      urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','%20');
       finalURL = baseURL + searchParam + urlSearchTerms + languageParam + newsSortParam + apiKey + pageSize;
     }
 
