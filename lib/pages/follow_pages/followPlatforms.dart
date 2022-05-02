@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hud/components/followPageItem.dart';
 import 'package:hud/config/style.dart';
 
 import 'dart:convert';
@@ -129,71 +130,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                   itemBuilder: (context, index) {
                     var platform = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
-                    return Container(
-                      height: 80,
-                      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
-
-                      child: Row(
-                        children: <Widget>[
-                          Card(
-                            clipBehavior: Clip.antiAlias,
-
-                            // This changes the shape that the image is in
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-
-                            // This displays the image
-                            child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Image.network(
-                                  platform.imageBackground,
-                                  fit: BoxFit.cover,
-                                )),
-                          ),
-
-                          SizedBox(width: 8),  // Spacer between image and game title
-
-                          Flexible(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-
-                              // Game Title
-                              children: <Widget>[
-                                Flexible(
-                                  child: Text(
-                                    platform.name,
-                                    // overflow: TextOverflow.ellipsis,  // This is to make the 2nd line of the name turned into ... instead of showing everything. Commented it out for now since it looks ugly.
-
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-
-                                  ),
-
-                                ),
-
-                              ],
-
-                            ),
-
-                          ),
-
-                          // LikeButton is an imported package widget to make a like/follow button (duh)
-                          LikeButton(
-                            size: 24,
-                            isLiked: false,
-                            animationDuration: const Duration(milliseconds: 500),
-                            bubblesSize: 0,
-                          )
-
-                        ],
-
-                      ),
-
-                    );
+                    return followPageItem(platform, context);
 
                   });
 

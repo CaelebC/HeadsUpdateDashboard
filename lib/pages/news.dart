@@ -4,9 +4,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:convert';
 import 'dart:core';
-import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:hud/models/newsModel.dart';
+import 'package:hud/components/newsPageItem.dart';
 
 
 class NewsFeed extends StatefulWidget {
@@ -22,18 +22,21 @@ class _NewsFeedState extends State<NewsFeed> {
   Widget customSearchBar = Text('News');
   TextEditingController searchInputController = TextEditingController();
   String searchInputString = '';
+  String? newsSortBy = 'relevancy';
+  List<String> newsSortByOptions = ['relevancy', 'popularity', 'publishedAt'];
   bool isLoading = false;
   var currentFocus;
 
   @override
   void initState() {
     //TODO: replace this initial _newsmodel. when loading page, initial search param is 'q=' plus follow game names (each separated by the || OR operator,  abd formatted to replace spaces with '-'
-    _newsModel = API_Manager().getNews('');
+    _newsModel = API_Manager().getNews('', newsSortBy);
     super.initState();
   }
 
-  void callNews(String input){
-    _newsModel = API_Manager().getNews(input);
+  void callNews(){
+    _newsModel = API_Manager().getNews(searchInputString, newsSortBy);
+    print(searchInputString);
     setState(() {
 
     });
@@ -59,6 +62,7 @@ class _NewsFeedState extends State<NewsFeed> {
           backgroundColor: primaryColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
+
           actions: [
             IconButton(
                 onPressed: (){
@@ -73,7 +77,9 @@ class _NewsFeedState extends State<NewsFeed> {
                         ),
                         title: TextField(
                           controller: searchInputController,
-                          onSubmitted: (String value) { callNews(value);
+                          onSubmitted: (String value) {
+                            searchInputString = value;
+                            callNews();
                           unfocus();
                           },
                           //then call setstate to refresh the games list!
@@ -101,13 +107,12 @@ class _NewsFeedState extends State<NewsFeed> {
                   }
                   );},
                 icon: customIcon)
-          ]
+          ],
       ),
 
       body: Container(
         child: FutureBuilder<NewsModel>(
           future: _newsModel,
-
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               isLoading = false;
@@ -116,59 +121,7 @@ class _NewsFeedState extends State<NewsFeed> {
                   // TODO: if data.articles.length == 0, return title: 'No articles found!'
                   itemBuilder: (context, index) {
                     var news = snapshot.data.articles[index];  // This is responsible for going through the querried items from the API
-                    
-                    // InkWell is a widget that lets the whole widget be interactable (touched), essentially making whatever the widget holds a button.
-                    return InkWell(
-                      // This is where the links are opened using the 'url_launcher' package
-                      onTap: () {
-                        launch(news.url);
-                      },
-
-                      child: Container(
-                        margin: EdgeInsets.all(12.0),
-                        padding: EdgeInsets.all(12.0),
-                        decoration: BoxDecoration(
-                          color: bgAccentColor,
-                          borderRadius: BorderRadius.circular(8.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 3.0,
-                            ),
-                          ]
-                        ),
-
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Image of each article
-                            Container(
-                              height: 200.0,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(news.urlToImage), 
-                                  fit: BoxFit.cover
-                                )
-                              ),
-                            ),
-
-                            SizedBox(height: 8.0),
-
-                            // Text of each article
-                            Container(
-                              child: Text(
-                                news.title,
-                                style: listTextStyle
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      )
-                    );
-                    
+                    return newsPageItem(news, context);
                   });
 
             } else
@@ -185,23 +138,24 @@ class _NewsFeedState extends State<NewsFeed> {
 }
 
 class API_Manager {
-  Future<NewsModel> getNews(String searchTerm) async {
+  Future<NewsModel> getNews(String searchTerm, String? newsSortBy) async {
     var client = http.Client();
     var newsModel;
     // https://newsapi.org/v2/everything?q=elden-ring&apiKey=d4baf1f0866e4cf4931479d8dedfadf1
     String baseURL = 'https://newsapi.org/v2/everything?';
     String searchParam = 'q=';
-    String urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','-');
+    String urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','%20');
     String pageSize = '&page_size=20';
     String apiKey = '&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
-    String otherParams = '&sortBy=relevancy&language=en';
+    String languageParam = '&language=en';
+    String newsSortParam = '&sortBy=' + newsSortBy!;
     String finalURL = '';
 
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
       //TODO: replace the empty/default news search with follow list based one. if follow list is empty, change default search to news from common gaming sites like polygon, ign, kotaku, etc.
-      finalURL = baseURL + searchParam  + 'overcooked' + otherParams + apiKey + pageSize;
+      finalURL = baseURL + searchParam  + 'overcooked' + languageParam + newsSortParam + apiKey + pageSize;
     } else { //otherwise attempt the search
-      finalURL = baseURL + searchParam + urlSearchTerms + otherParams+ apiKey + pageSize;
+      finalURL = baseURL + searchParam + urlSearchTerms + languageParam + newsSortParam + apiKey + pageSize;
     }
 
     var uri = Uri.parse(finalURL);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
-import 'package:hud/components/steamSaleCountdown.dart';
+import 'package:hud/pages/sale_pages/steamSaleCountdown.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-import 'dart:convert';
+import 'package:hud/pages/sale_pages/steamSaleCountdown.dart';
+import 'package:hud/components/customTextIconButton.dart';
+import 'package:hud/pages/sale_pages/freeGames.dart';
 import 'dart:core';
-import 'package:http/http.dart' as http;
 
 
 class Sale extends StatefulWidget {
@@ -19,16 +19,39 @@ class _SaleState extends State<Sale> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: bgColor,
+
       appBar: AppBar(
-        title: Text('Steam Sale Countdown'),
+        title: Text('Sales'),
         backgroundColor: primaryColor,
-        automaticallyImplyLeading: false,
         centerTitle: true,
       ),
-      body: WebView(
-        initialUrl: 'https://steamdb.info/sales/history/',
-        javascriptMode: JavascriptMode.unrestricted,
-      )
+
+      body: Flex(
+        direction: Axis.horizontal,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Free Games Button
+          customTextIconButton(
+            'Free Games', 
+            Icons.redeem_outlined, 
+            FreeGameList(),
+            context
+          ),
+
+          SizedBox(width: 16.0),
+
+          // Steam Sale Countdown button
+          customTextIconButton(
+            'Steam Sale Countdown', 
+            Icons.access_alarm_outlined, 
+            SteamSaleCountdown(),
+            context
+          ),
+
+        ],
+      ),
+
     );
   }
 }
