@@ -7,13 +7,42 @@ import 'package:http/http.dart' as http;
 import 'package:hud/models/gameModel.dart';
 import 'package:like_button/like_button.dart';
 
+import 'package:hud/db/gameDB.dart';
+import 'package:hud/db/genreDB.dart';
+import 'package:hud/db/platformDB.dart';
+import 'package:hud/db/publisherDB.dart';
+import 'package:hud/db/storeDB.dart';
+
 // --------READ ME! READ ME!--------
 // Currently makes errors because a lot of changes are needed for this to be re-useable.
 // The whole FollowItem class will be commented out until it can be properly used in the follow_pages files
 // This video can be used for reference: https://www.youtube.com/watch?v=jAxNZYX7mHM
 // This as well, though I haven't watched this and it only has 1 like and 500 views: https://youtu.be/TQVzZZnYkTo 
 
-Widget followPageItem (item, BuildContext context){
+
+// Game DB functions
+Future followGame(var game) async {
+  await FollowedGames.instance.createResult(game);
+}
+
+Future searchForResult(var name) async {
+  final game = await FollowedGames.instance.readResult(name);
+  print(game.name);
+}
+Future searchForAllResults() async {
+  await FollowedGames.instance.readAllResults();
+}
+
+// // Game DB functions
+// Future followGenre(var game) async {
+//   await FollowedGenres.instance.createResult(game);
+// }
+
+
+Widget followPageItem (item, itemType, BuildContext context){
+
+  
+
   return Container(
     height: 80,
     margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
@@ -69,9 +98,55 @@ Widget followPageItem (item, BuildContext context){
         // LikeButton is an imported package widget to make a like/follow button (duh)
         LikeButton(
           size: 24,
-          isLiked: false,
           animationDuration: const Duration(milliseconds: 500),
           bubblesSize: 0,
+          onTap: (isSelected) async{
+            print(item.name);
+            
+            switch(itemType){
+              case "game": {
+                followGame(item);
+                searchForResult(item.name);
+                print('game switch statement reached');
+              }
+              break;
+
+              case "genre": {
+                // followGame(item);
+                // searchForResult(item.name);
+                print('genre switch statement reached');
+              }
+              break;
+
+              case "platform": {
+                // followGame(item);
+                // searchForResult(item.name);
+                print('platform switch statement reached');
+              }
+              break;
+
+              case "publisher": {
+                // followGame(item);
+                // searchForResult(item.name);
+                print('publisher switch statement reached');
+              }
+              break;
+
+              case "store": {
+                // followGame(item);
+                // searchForResult(item.name);
+                print('store switch statement reached');
+              }
+              break;
+
+              default: { print('INVALID CHOICE'); }
+              break;
+            }
+            
+            
+            //searchForAllResults();
+            return !isSelected;
+          },
         )
 
       ],
