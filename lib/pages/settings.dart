@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
 
+import 'package:hud/db/gameDB.dart';
+
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -15,8 +17,21 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       backgroundColor: bgColor,
       body: Center(
-        child: Text('SETTINGS PAGE'),
+        child: IconButton(
+          icon: Icon(Icons.recycling_rounded, size: 69, color: textColor,),
+          onPressed: () {
+            deleteAll();
+          }
+        ),
       )
     );
   }
+
+  Future deleteAll() async {
+    final games = await FollowedGames.instance.readAllResults();
+    for(var i in games){
+      await FollowedGames.instance.delete(i.name);
+    }
+  }
+
 }
