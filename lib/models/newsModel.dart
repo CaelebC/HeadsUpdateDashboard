@@ -38,7 +38,7 @@ class Article {
     required this.source,
     this.author,
     required this.title,
-    required this.description,
+    this.description,
     required this.url,
     this.urlToImage,
     required this.publishedAt,
@@ -48,7 +48,7 @@ class Article {
   Source source;
   String? author;
   String title;
-  String description;
+  String? description;
   String url;
   String? urlToImage;
   DateTime publishedAt;
@@ -56,9 +56,9 @@ class Article {
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
     source: Source.fromJson(json["source"]),
-    author: json["author"],
+    author: json["author"] == null ? null : json["author"],
     title: json["title"],
-    description: json["description"],
+    description: json["description"] == null ? null : json["description"],
     url: json["url"],
     urlToImage: json["urlToImage"] == null ? null : json["urlToImage"],
     publishedAt: DateTime.parse(json["publishedAt"]),
