@@ -21,7 +21,6 @@ class FollowedGames
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-    print(path);
     print('initializing database');
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
@@ -64,13 +63,14 @@ class FollowedGames
         '${GameFields.name}, ${GameFields.backgroundImage}, '
         '${GameFields.genres}, ${GameFields.platforms}, ${GameFields.stores}';
     final values =
-        ['${json[GameFields.name]}, ${json[game.backgroundImage]}, '
-        '$allGenres, $allPlatforms, $allStores'];
+        [json[GameFields.name], json[game.backgroundImage],
+        allGenres, allPlatforms, allStores];
     print(followedGames);
     print(columns);
     print(values);
     final id = await db.rawInsert('INSERT INTO $followedGames($columns) VALUES'
         '(?, ?, ?, ?, ?)', values);
+    print(id);
     print('Game followed');
     return game.copy();
   }
@@ -88,7 +88,7 @@ class FollowedGames
         return GameOutput.fromJson(maps.first);
       }
     else{
-        throw Exception('Title not found');
+        throw Exception('Title $name not found');
       }
   }
 

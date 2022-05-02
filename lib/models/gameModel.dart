@@ -219,10 +219,10 @@ class GameOutput{
         required this.stores
     });
     String name;
-    String backgroundImage;
-    String genres;
-    String platforms;
-    String stores;
+    String? backgroundImage;
+    String? genres;
+    String? platforms;
+    String? stores;
 
     factory GameOutput.fromJson(Map<String, dynamic> json) => GameOutput(
         name: json["name"],
