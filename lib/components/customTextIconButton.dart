@@ -19,8 +19,9 @@ Widget customTextIconButton (bText, bIcon, bFunc, BuildContext context){
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              bIcon,
-              Text(bText, textAlign: TextAlign.center,),
+              Icon(bIcon, color: textColor),
+              SizedBox(height: 4.0),
+              Text(bText, textAlign: TextAlign.center, style: TextStyle(color: textColor)),
             ]
           )
         )

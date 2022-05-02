@@ -34,7 +34,7 @@ class _SaleState extends State<Sale> {
           // Free Games Button
           customTextIconButton(
             'Free Games', 
-            Icon(Icons.redeem_outlined), 
+            Icons.redeem_outlined, 
             FreeGameList(),
             context
           ),
@@ -44,7 +44,7 @@ class _SaleState extends State<Sale> {
           // Steam Sale Countdown button
           customTextIconButton(
             'Steam Sale Countdown', 
-            Icon(Icons.access_alarm_outlined), 
+            Icons.access_alarm_outlined, 
             SteamSaleCountdown(),
             context
           ),
