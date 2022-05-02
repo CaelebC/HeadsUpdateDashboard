@@ -184,7 +184,13 @@ class API_Manager {
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
       //TODO: replace the empty/default news search with follow list based one. if follow list is empty, change default search to news from common gaming sites like polygon, ign, kotaku, etc.
       urlSearchTerms = searchGameNamesConcat.trim().toLowerCase().replaceAll(' ','%20OR%20');
-      finalURL = baseURL + searchParam  + urlSearchTerms + languageParam + newsSortParam + apiKey + pageSize;
+        if (urlSearchTerms == '') {
+          finalURL = baseURL + searchParam + 'overcooked' + languageParam +
+              newsSortParam + apiKey + pageSize;
+        } else {
+          finalURL = baseURL + searchParam + urlSearchTerms + languageParam +
+              newsSortParam + apiKey + pageSize;
+        }
     } else { //otherwise attempt the search
       urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','%20');
       finalURL = baseURL + searchParam + urlSearchTerms + languageParam + newsSortParam + apiKey + pageSize;
