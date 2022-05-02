@@ -75,50 +75,70 @@ class _NewsFeedState extends State<NewsFeed> {
           automaticallyImplyLeading: false,
           centerTitle: true,
 
+          leading: DropdownButton<String>(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            // isDense: true,
+            isExpanded: true,
+            icon: Icon(Icons.sort, color: textColor),
+            iconSize: 26,
+           
+
+            items: newsSortByOptions.map((option) => DropdownMenuItem<String>(
+              value: option,
+              child: Text(option, style: TextStyle(fontSize: 12)),
+            )).toList(),
+            
+            onChanged: (option) {
+              setState(() => newsSortBy = option);
+              callNews();
+            }
+          ),
+
           actions: [
             IconButton(
-                onPressed: (){
-                  setState(() {
-                    if (customIcon.icon == Icons.search) {
-                      customIcon = const Icon(Icons.cancel);
-                      customSearchBar = ListTile(
-                        leading: Icon(
-                          Icons.search,
+              onPressed: (){
+                setState(() {
+                  if (customIcon.icon == Icons.search) {
+                    customIcon = const Icon(Icons.cancel);
+                    customSearchBar = ListTile(
+                      leading: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      title: TextField(
+                        controller: searchInputController,
+                        onSubmitted: (String value) {
+                          searchInputString = value;
+                          callNews();
+                        unfocus();
+                        },
+                        //then call setstate to refresh the games list!
+                        decoration: InputDecoration(
+                          hintText: 'ex. Polygon',
+                          hintStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
                           color: Colors.white,
-                          size: 28,
                         ),
-                        title: TextField(
-                          controller: searchInputController,
-                          onSubmitted: (String value) {
-                            searchInputString = value;
-                            callNews();
-                          unfocus();
-                          },
-                          //then call setstate to refresh the games list!
-                          decoration: InputDecoration(
-                            hintText: 'ex. Polygon',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      );
-                    } else if (customIcon.icon == Icons.cancel){
-                      searchInputController.clear();
-                      unfocus();
-                      //return title to games, swap icon back to search
-                      customSearchBar = Text('News');
-                      customIcon = const Icon(Icons.search);
-                    }
+                      ),
+                    );
+                  } else if (customIcon.icon == Icons.cancel){
+                    searchInputController.clear();
+                    unfocus();
+                    //return title to games, swap icon back to search
+                    customSearchBar = Text('News');
+                    customIcon = const Icon(Icons.search);
                   }
-                  );},
-                icon: customIcon)
+                }
+              );},
+              icon: customIcon
+            )
           ],
       ),
 

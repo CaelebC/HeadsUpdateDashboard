@@ -17,31 +17,45 @@ import 'package:hud/db/storeDB.dart';
 // Currently makes errors because a lot of changes are needed for this to be re-useable.
 // The whole FollowItem class will be commented out until it can be properly used in the follow_pages files
 // This video can be used for reference: https://www.youtube.com/watch?v=jAxNZYX7mHM
-// This as well, though I haven't watched this and it only has 1 like and 500 views: https://youtu.be/TQVzZZnYkTo 
+// This as well, though I haven't watched this and it only has 1 like and 500 views: https://youtu.be/TQVzZZnYkTo
 
 
 // Game DB functions
-Future followGame(var game) async {
-  await FollowedGames.instance.createResult(game);
+Future followGame(var item) async {
+  await FollowedGames.instance.createResult(item);
 }
 
-Future searchForResult(var name) async {
-  final game = await FollowedGames.instance.readResult(name);
-  print(game.name);
+Future searchForResult(var item) async {
+  final name = await FollowedGames.instance.readResult(item);
+  print(name.name);
 }
 Future searchForAllResults() async {
   final games = await FollowedGames.instance.readAllResults();
   print(games);
 }
 
-// // Game DB functions
-// Future followGenre(var game) async {
-//   await FollowedGenres.instance.createResult(game);
-// }
+// Genre DB functions
+Future followGenre(var item) async {
+  await FollowedGenres.instance.followGenre(item);
+}
+
+// Platform DB functions
+Future followPlatform(var item) async {
+  await FollowedPlatforms.instance.followPlatform(item);
+}
+
+// Publisher DB functions
+Future followPublisher(var item) async {
+  await FollowedPublishers.instance.followPublisher(item);
+}
+
+// Platform DB functions
+Future followStore(var item) async {
+  await FollowedStores.instance.followStore(item);
+}
 
 
 Widget followPageItem (item, itemType, BuildContext context){
-
   return Container(
     height: 80,
     margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
@@ -101,7 +115,7 @@ Widget followPageItem (item, itemType, BuildContext context){
           bubblesSize: 0,
           onTap: (isSelected) async{
             print(item.name);
-            
+
             switch(itemType){
               case "game": {
                 followGame(item);
@@ -111,28 +125,28 @@ Widget followPageItem (item, itemType, BuildContext context){
               break;
 
               case "genre": {
-                // followGame(item);
+                // followGenre(item);
                 // searchForResult(item.name);
                 print('genre switch statement reached');
               }
               break;
 
               case "platform": {
-                // followGame(item);
+                // followPlatform(item);
                 // searchForResult(item.name);
                 print('platform switch statement reached');
               }
               break;
 
               case "publisher": {
-                // followGame(item);
+                // followPublisher(item);
                 // searchForResult(item.name);
                 print('publisher switch statement reached');
               }
               break;
 
               case "store": {
-                // followGame(item);
+                // followStore(item);
                 // searchForResult(item.name);
                 print('store switch statement reached');
               }
@@ -141,8 +155,8 @@ Widget followPageItem (item, itemType, BuildContext context){
               default: { print('INVALID CHOICE'); }
               break;
             }
-            
-            
+
+
             //searchForAllResults();
             return !isSelected;
           },

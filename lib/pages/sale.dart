@@ -8,6 +8,7 @@ import 'package:hud/components/customTextIconButton.dart';
 import 'package:http/http.dart' as http;
 import 'package:hud/components/salesPageItem.dart';
 import 'package:hud/pages/sale_pages/freeGames.dart';
+import 'package:hud/pages/sale_pages/subPageSelection.dart';
 import 'dart:core';
 
 
@@ -54,44 +55,27 @@ class _SaleState extends State<Sale> {
         centerTitle: true,
       ),
 
-      body: Flex(
-        direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Free Games Button
-          customTextIconButton(
-            'Free Games',
-            Icons.redeem_outlined,
-            FreeGameList(),
-            context
-          ),
+      body: Visibility(
+        visible: isLoaded,
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: sales?.length,
+          itemBuilder: (context, index){
+            return salesPageItem(sales![index], context);
+          },
+        ),
+        replacement: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
 
-          SizedBox(width: 16.0),
-
-          // Steam Sale Countdown button
-          customTextIconButton(
-            'Steam Sale Countdown',
-            Icons.access_alarm_outlined,
-            SteamSaleCountdown(),
-            context
-          ),
-
-          Visibility(
-            visible: isLoaded,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: sales?.length,
-              itemBuilder: (context, index){
-                return salesPageItem(sales![index], context);
-              },
-            ),
-            replacement: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-
-        ],
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SubSale()));},
+        label: Text('Other Promotions'),
+        icon: Icon(Icons.apps),
+        backgroundColor: accentColor,
       ),
 
     );
