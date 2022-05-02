@@ -9,17 +9,23 @@ import 'package:like_button/like_button.dart';
 
 
 Widget customTextIconButton (bText, bIcon, bFunc, BuildContext context){
-  return ElevatedButton.icon(
-    onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => bFunc));},
-    icon: bIcon,
-    label: Text(
-      bText,
-      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,)
-    ),
-    style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(accentColor),
-    ),
-
+  return SizedBox.fromSize(
+    size: Size(100, 80),
+    child: ClipRect(
+      child: Material(
+        color: accentColor,
+        child: InkWell(
+          onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => bFunc));},
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              bIcon,
+              Text(bText, textAlign: TextAlign.center,),
+            ]
+          )
+        )
+      )
+    )
 
   );
 }

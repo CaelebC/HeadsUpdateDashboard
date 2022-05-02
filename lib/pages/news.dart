@@ -4,7 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:convert';
 import 'dart:core';
-import 'package:flutter/cupertino.dart';  // Might not be necessary to import
 import 'package:http/http.dart' as http;
 import 'package:hud/models/newsModel.dart';
 import 'package:hud/components/newsPageItem.dart';

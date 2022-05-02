@@ -25,7 +25,6 @@ import 'package:hud/db/storeDB.dart';
 // Misc. Imports
 import 'package:hud/config/style.dart';
 import 'package:hud/pages/sale_pages/freeGames.dart';
-import 'package:hud/pages/loading.dart';
 
 
 void main() async{

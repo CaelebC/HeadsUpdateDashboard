@@ -34,9 +34,9 @@ Widget freeGamePageItem (freegame, BuildContext context){
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image of each article
+            // Image of each game
             Container(
-              height: 200.0,
+              height: 140.0,
               width: double.infinity,
               decoration: BoxDecoration(
                   image: DecorationImage(
@@ -48,11 +48,29 @@ Widget freeGamePageItem (freegame, BuildContext context){
 
             SizedBox(height: 8.0),
 
-            // Text of each article
+            // Name of game
             Container(
               child: Text(
                   freegame.title,
                   style: listTextStyle
+              ),
+            ),
+
+            SizedBox(height: 8.0),
+
+            // Platform of game
+            Container(
+              child: Text(
+                  'Available on: ' + freegame.platforms,
+                  style: listSubTextStyle
+              ),
+            ),
+
+            // End date of free game
+            Container(
+              child: Text(
+                  'Grab until: ' + freegame.endDate,
+                  style: listSubTextStyle
               ),
             ),
 
