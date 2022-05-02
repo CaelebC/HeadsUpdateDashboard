@@ -36,31 +36,31 @@ class NewsModel {
 class Article {
   Article({
     required this.source,
-    required this.author,
-    required this.title,
-    required this.description,
+    this.author,
+    this.title,
+    this.description,
     required this.url,
-    required this.urlToImage,
+    this.urlToImage,
     required this.publishedAt,
     required this.content,
   });
 
   Source source;
-  String author;
-  String title;
-  String description;
+  String? author;
+  String? title;
+  String? description;
   String url;
-  String urlToImage;
+  String? urlToImage;
   DateTime publishedAt;
   String content;
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
     source: Source.fromJson(json["source"]),
-    author: json["author"],
-    title: json["title"],
-    description: json["description"],
+    author: json["author"] == null ? null : json["author"],
+    title: json["title"] == null ? null : json["title"],
+    description: json["description"] == null ? null : json["description"],
     url: json["url"],
-    urlToImage: json["urlToImage"],
+    urlToImage: json["urlToImage"] == null ? null : json["urlToImage"],
     publishedAt: DateTime.parse(json["publishedAt"]),
     content: json["content"],
   );

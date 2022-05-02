@@ -46,7 +46,7 @@ class Result {
     required this.name,
     required this.slug,
     required this.gamesCount,
-    required this.imageBackground,
+    required this.backgroundImage,
     this.image,
     this.yearStart,
     this.yearEnd,
@@ -57,7 +57,7 @@ class Result {
   String name;
   String slug;
   int gamesCount;
-  String imageBackground;
+  String backgroundImage;
   dynamic? image;
   int? yearStart;
   dynamic? yearEnd;
@@ -68,7 +68,7 @@ class Result {
     String? name,
     String? slug,
     int? gamesCount,
-    String? imageBackground,
+    String? backgroundImage,
     dynamic? image,
     int? yearStart,
     dynamic? yearEnd,
@@ -78,7 +78,7 @@ class Result {
     name: name ?? this.name,
     slug: slug ?? this.slug,
     gamesCount: gamesCount ?? this.gamesCount,
-    imageBackground: imageBackground ?? this.imageBackground,
+    backgroundImage: backgroundImage ?? this.backgroundImage,
     image: image ?? this.image,
     yearStart: yearStart ?? this.yearStart,
     yearEnd: yearEnd ?? this.yearEnd,
@@ -90,7 +90,7 @@ class Result {
     name: json["name"],
     slug: json["slug"],
     gamesCount: json["games_count"],
-    imageBackground: json["image_background"],
+    backgroundImage: json["image_background"],
     image: json["image"],
     yearStart: json["year_start"] == null ? null : json["year_start"],
     yearEnd: json["year_end"],
@@ -102,7 +102,7 @@ class Result {
     "name": name,
     "slug": slug,
     "games_count": gamesCount,
-    "image_background": imageBackground,
+    "image_background": backgroundImage,
     "image": image,
     "year_start": yearStart == null ? null : yearStart,
     "year_end": yearEnd,

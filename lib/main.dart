@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hud/pages/settings.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -23,8 +24,7 @@ import 'package:hud/db/storeDB.dart';
 
 // Misc. Imports
 import 'package:hud/config/style.dart';
-import 'package:hud/pages/settings.dart';
-import 'package:hud/pages/loading.dart';
+import 'package:hud/pages/sale_pages/freeGames.dart';
 
 
 void main() async{
@@ -74,33 +74,37 @@ class _MainTemplateState extends State<MainTemplate> {
 
             items: [
 
+              // Follow List Icon
               BottomNavigationBarItem(
                 icon: Icon(Icons.dashboard_customize_outlined, color: unselectedColor),
                 activeIcon: Icon(Icons.dashboard_customize),
                 label: 'Follow',
                 backgroundColor: primaryColor,
-              ),  // Follow List Icon
+              ), 
 
+              // News Feed Icon
               BottomNavigationBarItem(
                 icon: Icon(Icons.my_library_books_outlined, color: unselectedColor),
                 activeIcon: Icon(Icons.my_library_books),
                 label: 'News',
                 backgroundColor: primaryColor,
-              ),  // News Feed Icon
+              ),
 
+              // Sale Feed Icon
               BottomNavigationBarItem(
                 icon: Icon(Icons.discount_outlined, color: unselectedColor),
                 activeIcon: Icon(Icons.discount),
                 label: 'Sale',
                 backgroundColor: primaryColor,
-              ),  // Sale Feed Icon
+              ), 
 
+              // Settings Icon
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings_outlined, color: unselectedColor),
                 activeIcon: Icon(Icons.settings),
                 label: 'Settings',
                 backgroundColor: primaryColor,
-              ),  // Settings Icon
+              ),
 
             ]
         )

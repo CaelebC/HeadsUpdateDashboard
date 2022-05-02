@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
+import 'package:hud/components/followPageItem.dart';
 
 import 'dart:convert';
 import 'dart:core';
@@ -135,98 +136,7 @@ class _FollowGamesState extends State<FollowGames> {
                   itemBuilder: (context, index) {
                     var game = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
-                    return Container(
-                      height: 80,
-                      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
-                      
-                      child: Row(
-                        children: <Widget>[
-                          // Card widget displays the image
-                          Card(
-                            clipBehavior: Clip.antiAlias,
-                            
-                            // This changes the shape that the image is in
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),  
-                            
-                            // This displays the image
-                            child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Image.network(
-                                  game.backgroundImage,
-                                  fit: BoxFit.cover,
-                                )),   
-                          ),
-                          
-                          // SizedBox widget acts as a spacer between image and game title
-                          SizedBox(width: 8),
-                          
-                          // Flexible widget to print out game titles
-                          Flexible(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              
-                              // Game Title
-                              children: <Widget>[
-                                Flexible(
-                                  child: Text(
-                                    game.name,                                    
-                                    style: listTextStyle,
-                                  ),
-
-                                ),
-
-                              ],
-                            ),
-                          ),
-
-                          // LikeButton is an imported package widget to make a like/follow button (duh)
-                          LikeButton(
-                            size: 24,
-                            isLiked: isSelected,
-                            animationDuration: const Duration(milliseconds: 500),
-                            bubblesSize: 0,
-                            onTap: (isSelected) async{
-                              print(game.name);
-                              followGame(game);
-                              //searchForResult(game.name);
-                              //#TODO
-                              return !isSelected;
-                            },
-                          )
-
-                          // Follow button using IconButton
-                          // IconButton(
-                          //   color: accentColor,
-                          //   icon: Icon(favoriteStatusIcon),
-                          //   onPressed: () {
-                          //     print(game.name);
-                          //     // print(game.backgroundImage);
-                          //     // for (var x in game.genres){
-                          //     //   print(x.name);
-                          //     // }
-                          //     // for (var x in game.platforms){
-                          //     //   print(x.platform.name);
-                          //     // }
-                          //     // for (var x in game.stores){
-                          //     //   print(x.store.name);
-                          //     // }
-                          //     // print("-----spacer------");
-                          //     // print(game);
-                          //     // followGame(game);
-                          //     setState( () {
-                          //       isSelected = !isSelected;
-                          //       favoriteStatusIcon = isSelected ? Icons.favorite : Icons.favorite_border;
-                          //     });
-                          //   },
-                          // ),
-
-                        ],
-
-                      ),
-
-                    );
+                    return followPageItem(game, 'game', context);
                     
                   });
             
@@ -246,7 +156,11 @@ class _FollowGamesState extends State<FollowGames> {
     await FollowedGames.instance.createResult(game);
   }
 
-  Future searchForResult(var gameName) async {
+  Future searchForResult(var name) async {
+    final game = await FollowedGames.instance.readResult(name);
+    print(game.name);
+  }
+  Future searchForAllResults() async {
     await FollowedGames.instance.readAllResults();
   }
 }
