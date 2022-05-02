@@ -8,13 +8,16 @@ import 'package:hud/models/gameModel.dart';
 import 'package:like_button/like_button.dart';
 
 
-Widget customTextIconButton (bText, bIcon, BuildContext context){
+Widget customTextIconButton (bText, bIcon, bFunc, BuildContext context){
   return ElevatedButton.icon(
-    onPressed: (){},
-    icon: Icon(Icons.access_alarm_outlined),
+    onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => bFunc));},
+    icon: bIcon,
     label: Text(
       bText,
       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,)
+    ),
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(accentColor),
     ),
 
 

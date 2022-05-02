@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
-import 'package:hud/components/steamSaleCountdown.dart';
+import 'package:hud/pages/sale_pages/steamSaleCountdown.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:hud/components/steamSaleCountdown.dart';  // Call using steamSaleCountdown();
+import 'package:hud/pages/sale_pages/steamSaleCountdown.dart';  // Call using steamSaleCountdown();
 import 'package:hud/components/customTextIconButton.dart';
+import 'package:hud/pages/sale_pages/freeGames.dart';
+
 
 
 import 'dart:convert';
@@ -30,12 +32,25 @@ class _SaleState extends State<Sale> {
         centerTitle: true,
       ),
 
-      body: Row(
+      body: Flex(
+        direction: Axis.horizontal,
         children: [
-          customTextIconButton('Free Games', Icon(Icons.access_alarm_outlined), context),
-          IconButton(onPressed: () {}, icon: Icon(Icons.access_alarm_outlined) ),
+          // Free Games Button
+          customTextIconButton(
+            'Free Games', 
+            Icon(Icons.redeem_outlined), 
+            FreeGameList(),
+            context
+          ),
 
-          IconButton(onPressed: () {}, icon: Icon(Icons.redeem_outlined) ),
+          // Steam Sale Countdown button
+          customTextIconButton(
+            'Steam Sale Countdown', 
+            Icon(Icons.access_alarm_outlined), 
+            SteamSaleCountdown(),
+            context
+          ),
+
         ],
       ),
 
