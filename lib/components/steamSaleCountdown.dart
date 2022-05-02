@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:hud/config/style.dart';
+ 
 
-class MyWebView extends StatelessWidget {
-  // final String title;
-  // final String selectedUrl;
-
-  late WebViewController _controller;
-
-  // MyWebView({
-  //   @required this.title,
-  //   @required this.selectedUrl,
-  // });
+class steamSaleCountdown extends StatelessWidget {
+  const steamSaleCountdown({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("titlehere"),
+        title: Text('Steam Sale Countdown'),
+        backgroundColor: primaryColor,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
-      
       body: WebView(
-        initialUrl: "https://steamdb.info/sales/history/",
+        initialUrl: 'https://steamdb.info/sales/history/',
         javascriptMode: JavascriptMode.unrestricted,
       )
     );

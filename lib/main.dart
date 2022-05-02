@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hud/pages/settings.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -58,7 +59,7 @@ class _MainTemplateState extends State<MainTemplate> {
     FollowMenu(),
     NewsFeed(),
     Sale(),
-    FreeGameList(),
+    Settings(),
   ];  
 
   @override
