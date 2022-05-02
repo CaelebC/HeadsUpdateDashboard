@@ -10,7 +10,7 @@ import 'package:like_button/like_button.dart';
 
 Widget customTextIconButton (bText, bIcon, bFunc, BuildContext context){
   return SizedBox.fromSize(
-    size: Size(100, 80),
+    size: Size(180, 100),
     child: ClipRect(
       child: Material(
         color: accentColor,
