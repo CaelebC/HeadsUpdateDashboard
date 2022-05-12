@@ -205,8 +205,7 @@ class API_Manager {
       //TODO: replace the empty/default news search with follow list based one. if follow list is empty, change default search to news from common gaming sites like polygon, ign, kotaku, etc.
       urlSearchTerms = searchGameNamesConcat.trim().toLowerCase().replaceAll(' ','%20OR%20');
         if (urlSearchTerms == '') {
-          finalURL = baseURL + searchParam + 'overcooked' + languageParam +
-              newsSortParam + apiKey + pageSize;
+          finalURL = 'https://newsapi.org/v2/top-headlines?category=technology&language=en&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
         } else {
           finalURL = baseURL + searchParam + urlSearchTerms + languageParam +
               newsSortParam + apiKey + pageSize;
