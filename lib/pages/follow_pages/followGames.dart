@@ -32,7 +32,7 @@ class _FollowGamesState extends State<FollowGames> {
 
   @override
   void initState() {
-    _gameModel = API_Manager().getGames('Halo');
+    _gameModel = API_Manager().getGames('');
     super.initState();
   }
 
@@ -172,16 +172,17 @@ class API_Manager {
     String baseURL = 'https://api.rawg.io/api/games?';
     String searchParam = 'search=';
     String urlSearchTerms = gameName.trim().toLowerCase().replaceAll(' ','-');
-    String pageSize = '&page_size=10';
+    String pageSize = '&page_size=20';
     String apiKey = '&key=88457281eae8421b8395d12d3df566ad';
+    String ordering = '&ordering=name';
     String finalURL = '';
 
     if (gameName == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
       finalURL = baseURL + apiKey + pageSize;
     } else { //otherwise attempt the search
-      finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize;
+      finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize + ordering;
     }
-
+    print(finalURL);
     var uri = Uri.parse(finalURL);
 
     var response = await client.get(uri);

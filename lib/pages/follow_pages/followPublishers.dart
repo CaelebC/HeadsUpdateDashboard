@@ -163,6 +163,7 @@ class API_Manager {
       finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize;
     }
 
+    print(finalURL);
     var uri = Uri.parse(finalURL);
 
     var response = await client.get(uri);

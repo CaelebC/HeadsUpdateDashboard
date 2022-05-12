@@ -70,51 +70,6 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
               );
             },
           ),
-
-          actions: [
-            IconButton(
-                onPressed: (){
-                  setState(() {
-                    //TODO: remove search functionality from followPlatforms, search param doesnt do anything!
-                    if (customIcon.icon == Icons.search) {
-                      customIcon = const Icon(Icons.cancel);
-                      customSearchBar = ListTile(
-                        leading: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                        title: TextField(
-                          controller: searchInputController,
-                          onSubmitted: (String value) { callPlatforms(value);
-                          unfocus();
-                          },
-                          //then call setstate to refresh the games list!
-                          decoration: InputDecoration(
-                            hintText: 'ex. PC',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      );
-                    } else if (customIcon.icon == Icons.cancel){
-                      searchInputController.clear();
-                      unfocus();
-                      //return title to games, swap icon back to search
-                      customSearchBar = Text('Platforms');
-                      customIcon = const Icon(Icons.search);
-                    }
-                  }
-                  );},
-                icon: customIcon),
-          ]
       ),
 
       body: Container(
@@ -154,7 +109,7 @@ class API_Manager {
     String baseURL = 'https://api.rawg.io/api/platforms?';
     String searchParam = 'search=';
     String urlSearchTerms = platformName.trim().toLowerCase().replaceAll(' ','-');
-    String pageSize = '&page_size=10';
+    String pageSize = '&page_size=25';
     String apiKey = '&key=88457281eae8421b8395d12d3df566ad';
     String finalURL = '';
 
@@ -164,6 +119,7 @@ class API_Manager {
       finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize;
     }
 
+    print(finalURL);
     var uri = Uri.parse(finalURL);
 
     var response = await client.get(uri);

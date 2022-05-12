@@ -74,7 +74,7 @@ Widget followPageItem (item, itemType, BuildContext context){
           child: AspectRatio(
               aspectRatio: 1,
               child: Image.network(
-                item.backgroundImage,
+                item.backgroundImage!,
                 fit: BoxFit.cover,
               )),
         ),

@@ -28,12 +28,11 @@ class FollowedPublishers
     await db.execute(
       '''CREATE TABLE $followedPublishers
       (
-        ${PublisherFields.id} $idType,
         ${PublisherFields.name} $textType,
-        ${PublisherFields.games} $textType
       )'''
     );
   }
+  // REMOVED: ${PublisherFields.games} $textType and id field
 
   Future<Result> followPublisher(Result publisher) async{
     final db = await instance.database;

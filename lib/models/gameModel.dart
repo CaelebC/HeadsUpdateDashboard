@@ -20,23 +20,19 @@ class GameModel {
     GameModel({
         required this.count,
         required this.results,
-        required this.userPlatforms,
     });
 
     int count;
     List<Result> results;
-    bool userPlatforms;
 
     factory GameModel.fromJson(Map<String, dynamic> json) => GameModel(
         count: json["count"],
         results: List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-        userPlatforms: json["user_platforms"],
     );
 
     Map<String, dynamic> toJson() => {
         "count": count,
         "results": List<dynamic>.from(results.map((x) => x.toJson())),
-        "user_platforms": userPlatforms,
     };
 }
 
@@ -45,7 +41,7 @@ class Result {
         required this.slug,
         required this.name,
         required this.platforms,
-        required this.stores,
+        this.stores,
         required this.released,
         required this.tba,
         required this.backgroundImage,
@@ -57,7 +53,7 @@ class Result {
     String slug;
     String name;
     List<Platform> platforms;
-    List<Store> stores;
+    List<Store>? stores;
     DateTime released;
     bool tba;
     String backgroundImage;
@@ -93,7 +89,7 @@ class Result {
         slug: json["slug"],
         name: json["name"],
         platforms: List<Platform>.from(json["platforms"].map((x) => Platform.fromJson(x))),
-        stores: List<Store>.from(json["stores"].map((x) => Store.fromJson(x))),
+        stores: json["stores"] == null ? null : List<Store>.from(json["stores"].map((x) => Store.fromJson(x))),
         released: DateTime.parse(json["released"]),
         tba: json["tba"],
         backgroundImage: json["background_image"],
@@ -106,7 +102,7 @@ class Result {
         "slug": slug,
         "name": name,
         "platforms": List<dynamic>.from(platforms.map((x) => x.toJson())),
-        "stores": List<dynamic>.from(stores.map((x) => x.toJson())),
+        "stores": stores == null ? null : List<dynamic>.from(stores!.map((x) => x.toJson())),
         "released": "${released.year.toString().padLeft(4, '0')}-${released.month.toString().padLeft(2, '0')}-${released.day.toString().padLeft(2, '0')}",
         "tba": tba,
         "background_image": backgroundImage,

@@ -54,7 +54,7 @@ class FollowedGames
     for(var i in game.platforms) {
       allPlatforms = allPlatforms + i.platform.name;
     }
-    for(var i in game.stores) {
+    for(var i in game.stores!) {
       allStores = allStores + i.store.name;
     }
 

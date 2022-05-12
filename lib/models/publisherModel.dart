@@ -41,71 +41,64 @@ class PublisherModel {
 
 class Result {
   Result({
-    required this.id,
     required this.name,
     required this.slug,
     required this.gamesCount,
-    required this.backgroundImage,
-    required this.games,
+    this.backgroundImage,
+    //required this.games,
   });
 
-  int id;
   String name;
   String slug;
   int gamesCount;
-  String backgroundImage;
-  List<Game> games;
+  String? backgroundImage;
+  //List<Game> games;
 
   Result copy({
-    int? id,
     String? name,
     String? slug,
     int? gamesCount,
     String? backgroundImage,
-    List<Game>? games
+    //List<Game>? games
   })=>Result(
-      id: id ?? this.id,
       name: name ?? this.name,
       slug: slug ?? this.slug,
       gamesCount: gamesCount ?? this.gamesCount,
       backgroundImage: backgroundImage ?? this.backgroundImage,
-      games: games ?? this.games
+    //games: games ?? this.games
   );
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-    id: json["id"],
     name: json["name"],
     slug: json["slug"],
     gamesCount: json["games_count"],
-    backgroundImage: json["image_background"],
-    games: List<Game>.from(json["games"].map((x) => Game.fromJson(x))),
+    backgroundImage: json["image_background"] == null ? null : json["image_background"],
+    //games: List<Game>.from(json["games"].map((x) => Game.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
     "name": name,
     "slug": slug,
     "games_count": gamesCount,
-    "image_background": backgroundImage,
-    "games": List<dynamic>.from(games.map((x) => x.toJson())),
+    "image_background": backgroundImage == null ? null : backgroundImage,
+    //"games": List<dynamic>.from(games.map((x) => x.toJson())),
   };
 }
 
 class PublisherFields{
   static final List<String> values =
   [
-    id, name, slug,
-    gamesCount, backgroundImage, games
+    name, slug,
+    gamesCount, backgroundImage, //games
   ];
-  static final String id = '_id';
   static final String name = 'name';
   static final String slug = 'slug';
   static final String gamesCount = 'gamesCount';
   static final String backgroundImage = 'backgroundImage';
-  static final String games = 'games';
+//static final String games = 'games';
 }
 
-class Game {
+/* class Game {
   Game({
     required this.id,
     required this.slug,
@@ -131,4 +124,4 @@ class Game {
     "name": name,
     "added": added,
   };
-}
+} */

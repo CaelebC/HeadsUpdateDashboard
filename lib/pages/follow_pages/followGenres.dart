@@ -70,51 +70,6 @@ class _FollowGenreListState extends State<FollowGenreList> {
               );
             },
           ),
-          
-          actions: [
-            IconButton(
-                onPressed: (){
-                  setState(() {
-                    //TODO: remove search functionality from followGenres, search param does nothing!
-                    if (customIcon.icon == Icons.search) {
-                      customIcon = const Icon(Icons.cancel);
-                      customSearchBar = ListTile(
-                        leading: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                        title: TextField(
-                          controller: searchInputController,
-                          onSubmitted: (String value) { callGenres(value);
-                          unfocus();
-                          },
-                          //then call setstate to refresh the games list!
-                          decoration: InputDecoration(
-                            hintText: 'ex. Indie',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      );
-                    } else if (customIcon.icon == Icons.cancel){
-                      searchInputController.clear();
-                      unfocus();
-                      //return title to games, swap icon back to search
-                      customSearchBar = Text('Genres');
-                      customIcon = const Icon(Icons.search);
-                    }
-                  }
-                  );},
-                icon: customIcon),
-          ]
       ),
 
       body: Container(
@@ -164,6 +119,7 @@ class API_Manager {
       finalURL = baseURL + searchParam + urlSearchTerms + apiKey + pageSize;
     }
 
+    print(finalURL);
     var uri = Uri.parse(finalURL);
 
     var response = await client.get(uri);
