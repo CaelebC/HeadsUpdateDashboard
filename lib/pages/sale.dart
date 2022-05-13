@@ -4,7 +4,7 @@ import 'package:hud/pages/sale_pages/steamSaleCountdown.dart';
 import 'package:hud/models/salesModel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:hud/pages/sale_pages/steamSaleCountdown.dart';
-import 'package:hud/components/customTextIconButton.dart';
+import 'package:hud/components/customNavigationButton.dart';
 import 'package:http/http.dart' as http;
 import 'package:hud/components/salesPageItem.dart';
 import 'package:hud/models/saleSearchModel.dart';
