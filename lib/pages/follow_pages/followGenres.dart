@@ -85,7 +85,7 @@ class _FollowGenreListState extends State<FollowGenreList> {
                   itemBuilder: (context, index) {
                     var genre = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
-                    return followPageItem(genre, 'genre', context);
+                    return followPageItem(genre, 'genre', context, false);
 
                   });
 
