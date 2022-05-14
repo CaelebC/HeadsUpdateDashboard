@@ -9,6 +9,12 @@ import 'package:hud/models/newsModel.dart';
 
 
 Widget newsPageItem (news, BuildContext context){
+  var displayImage = news.urlToImage;
+
+  if (displayImage == null){
+    displayImage = 'https://github.com/CaelebC/HeadsUpdateDashboard/blob/main/asset/placeholder.png?raw=true';
+  }
+  
   return InkWell(
     // InkWell is a widget that lets the whole widget be interactable (touched), essentially making whatever the widget holds a button.
     // This is where the links are opened using the 'url_launcher' package
@@ -41,7 +47,7 @@ Widget newsPageItem (news, BuildContext context){
             decoration: BoxDecoration(
               image: DecorationImage(
                 // TODO: The news page breaks if the article has a null urlToImage String! Need to add a placeholder image if null condition, if possible!
-                image: NetworkImage(news.urlToImage),
+                image: NetworkImage(displayImage),
                 fit: BoxFit.cover
               )
             ),

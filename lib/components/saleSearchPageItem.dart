@@ -9,6 +9,12 @@ import 'package:hud/models/newsModel.dart';
 
 
 Widget saleSearchPageItem (sale, BuildContext context){
+  var displayImage = sale.thumb;
+
+  if (displayImage == null){
+    displayImage = 'https://github.com/CaelebC/HeadsUpdateDashboard/blob/main/asset/placeholder.png?raw=true';
+  }
+  
   return InkWell(
     // InkWell is a widget that lets the whole widget be interactable (touched), essentially making whatever the widget holds a button.
     // This is where the links are opened using the 'url_launcher' package
@@ -40,7 +46,7 @@ Widget saleSearchPageItem (sale, BuildContext context){
               width: double.infinity,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(sale.thumb),
+                      image: NetworkImage(displayImage),
                       fit: BoxFit.cover
                   )
               ),

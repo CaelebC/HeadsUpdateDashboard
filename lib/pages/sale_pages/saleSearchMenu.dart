@@ -10,7 +10,6 @@ import 'package:hud/components/saleSearchPageItem.dart';
 import 'package:hud/pages/sale_pages/freeGames.dart';
 import 'package:hud/pages/sale_pages/subPageSelection.dart';
 import 'dart:core';
-import 'package:hud/components/searchWidget.dart';
 
 
 class SaleSearch extends StatefulWidget {
