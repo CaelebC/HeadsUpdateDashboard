@@ -136,7 +136,13 @@ class _FollowGamesState extends State<FollowGames> {
                   itemBuilder: (context, index) {
                     var game = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
-                    return followPageItem(game, 'game', context);
+                    bool? inDB;
+                    checkDB(game.name).then((result) => inDB = false);
+                    //above based off:
+                    //https://stackoverflow.com/questions/60829664/flutter-futurebool-convert-to-bool
+
+                    print(inDB);//keeps returning null, unsure why
+                    return followPageItem(game, 'game', context, false);
                     
                   });
             
@@ -155,10 +161,16 @@ class _FollowGamesState extends State<FollowGames> {
   Future followGame(var game) async {
     await FollowedGames.instance.createResult(game);
   }
-
   Future searchForResult(var name) async {
     final game = await FollowedGames.instance.readResult(name);
     print(game.name);
+  }
+  Future<bool> checkDB(var name) async {
+    bool followed = await FollowedGames.instance.checkForResult(name);
+    //print(followed); // this is correct, commenting out
+    return Future<bool>.value(followed);
+    //return followed;
+    //unsure which of the two to pass in, but both return null
   }
   Future searchForAllResults() async {
     await FollowedGames.instance.readAllResults();

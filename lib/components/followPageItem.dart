@@ -24,7 +24,6 @@ import 'package:hud/db/storeDB.dart';
 Future followGame(var item) async {
   await FollowedGames.instance.createResult(item);
 }
-
 Future searchForResult(var item) async {
   final name = await FollowedGames.instance.readResult(item);
   print(name.name);
@@ -55,7 +54,7 @@ Future followStore(var item) async {
 }
 
 
-Widget followPageItem (item, itemType, BuildContext context){
+Widget followPageItem (item, itemType, BuildContext context, inDB){
   return Container(
     height: 80,
     margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
@@ -111,10 +110,12 @@ Widget followPageItem (item, itemType, BuildContext context){
         // LikeButton is an imported package widget to make a like/follow button (duh)
         LikeButton(
           size: 24,
+          isLiked: inDB,
           animationDuration: const Duration(milliseconds: 500),
           bubblesSize: 0,
-          onTap: (isSelected) async{
+          onTap: (isLiked) async{
             print(item.name);
+            //TODO: if (inDB) deleteRow command instead of follow
 
             switch(itemType){
               case "game": {
@@ -158,7 +159,7 @@ Widget followPageItem (item, itemType, BuildContext context){
 
 
             //searchForAllResults();
-            return !isSelected;
+            return !isLiked;
           },
         )
 

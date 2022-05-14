@@ -85,7 +85,7 @@ class _FollowPlatformListState extends State<FollowPlatformList> {
                   itemBuilder: (context, index) {
                     var platform = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
-                    return followPageItem(platform, 'platform', context);
+                    return followPageItem(platform, 'platform', context, false);
 
                   });
 

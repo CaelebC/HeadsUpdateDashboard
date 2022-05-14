@@ -26,11 +26,10 @@ class FollowedStores
     final idType = 'INTEGER NOT NULL AUTOINCREMENT';
 
     await db.execute(
-        '''CREATE TABLE $followedStores
+      '''CREATE TABLE $followedStores
       (
-        ${StoreFields.id} $idType,
-        ${StoreFields.name} $textType,
-        ${StoreFields.games} $textType
+        name TEXT NOT NULL,
+        backgroundImage TEXT
       )'''
     );
   }
@@ -38,11 +37,18 @@ class FollowedStores
   Future<Result> followStore(Result store) async{
     final db = await instance.database;
 
-    final id = await db.insert(followedStores, store.toJson());
+    final json = store.toJson();
+
+    final columns =
+        '${StoreFields.name}, ${StoreFields.backgroundImage}';
+    final values =
+    [json[StoreFields.name], json[store.backgroundImage]];
+    final id = await db.rawInsert('INSERT INTO $followedStores($columns) VALUES'
+        '(?, ?)', values);
     return store.copy();
   }
 
-  Future<Result> readFollowed(String name) async{
+  Future<StoreOutput> readFollowed(String name) async{
     final db = await instance.database;
     final maps = await db.query(
         followedStores,
@@ -52,18 +58,18 @@ class FollowedStores
     );
 
     if(maps.isNotEmpty){
-      return Result.fromJson(maps.first);
+      return StoreOutput.fromJson(maps.first);
     }
     else{
       throw Exception('Genre not found');
     }
   }
 
-  Future<List<Result>> readAllFollowed() async{
+  Future<List<StoreOutput>> readAllFollowed() async{
     final db = await instance.database;
     final orderBy = '${StoreFields.name} DESC';
     final result = await db.query(followedStores, orderBy: orderBy);
-    return result.map((json)=>Result.fromJson(json)).toList();
+    return result.map((json)=>StoreOutput.fromJson(json)).toList();
   }
 
   Future<int> unfollow(String name) async{

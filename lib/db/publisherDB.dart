@@ -28,7 +28,8 @@ class FollowedPublishers
     await db.execute(
       '''CREATE TABLE $followedPublishers
       (
-        ${PublisherFields.name} $textType,
+        name TEXT NOT NULL,
+        backgroundImage TEXT
       )'''
     );
   }
@@ -37,11 +38,18 @@ class FollowedPublishers
   Future<Result> followPublisher(Result publisher) async{
     final db = await instance.database;
 
-    final id = await db.insert(followedPublishers, publisher.toJson());
+    final json = publisher.toJson();
+
+    final columns =
+        '${PublisherFields.name}, ${PublisherFields.backgroundImage}';
+    final values =
+    [json[PublisherFields.name], json[publisher.backgroundImage]];
+    final id = await db.rawInsert('INSERT INTO $followedPublishers($columns) VALUES'
+        '(?, ?)', values);
     return publisher.copy();
   }
 
-  Future<Result> readFollowed(String name) async{
+  Future<PublisherOutput> readFollowed(String name) async{
     final db = await instance.database;
     final maps = await db.query(
       followedPublishers,
@@ -51,18 +59,18 @@ class FollowedPublishers
     );
 
     if(maps.isNotEmpty){
-      return Result.fromJson(maps.first);
+      return PublisherOutput.fromJson(maps.first);
     }
     else{
       throw Exception('Genre not found');
     }
   }
 
-  Future<List<Result>> readAllFollowed() async{
+  Future<List<PublisherOutput>> readAllFollowed() async{
     final db = await instance.database;
     final orderBy = '${PublisherFields.name} DESC';
     final result = await db.query(followedPublishers, orderBy: orderBy);
-    return result.map((json)=>Result.fromJson(json)).toList();
+    return result.map((json)=>PublisherOutput.fromJson(json)).toList();
   }
 
   Future<int> unfollow(String name) async{

@@ -85,7 +85,7 @@ class _FollowStoreListState extends State<FollowStoreList> {
                   itemBuilder: (context, index) {
                     var store = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
-                    return followPageItem(store, 'store', context);
+                    return followPageItem(store, 'store', context, false);
 
                   });
 
