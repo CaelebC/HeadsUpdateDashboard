@@ -44,7 +44,7 @@ class Result {
         this.stores,
         //this.released,
         required this.tba,
-        required this.backgroundImage,
+        this.backgroundImage,
         required this.rating,
         required this.parentPlatforms,
         required this.genres,
@@ -56,7 +56,7 @@ class Result {
     List<Store>? stores;
     //DateTime? released;
     bool tba;
-    String backgroundImage;
+    String? backgroundImage;
     double rating;
     List<Platform> parentPlatforms;
     List<Genre> genres;
@@ -92,7 +92,7 @@ class Result {
         stores: json["stores"] == null ? null : List<Store>.from(json["stores"].map((x) => Store.fromJson(x))),
         //released: json["released"] == null ? null : DateTime.parse(json["released"]),
         tba: json["tba"],
-        backgroundImage: json["background_image"],
+        backgroundImage: json["background_image"] == null ? null : json["background_image"],
         rating: json["rating"].toDouble(),
         parentPlatforms: List<Platform>.from(json["parent_platforms"].map((x) => Platform.fromJson(x))),
         genres: List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x))),
@@ -105,7 +105,7 @@ class Result {
         "stores": stores == null ? null : List<dynamic>.from(stores!.map((x) => x.toJson())),
        // "released": released == null ? null : "${released.year.toString().padLeft(4, '0')}-${released.month.toString().padLeft(2, '0')}-${released.day.toString().padLeft(2, '0')}",
         "tba": tba,
-        "background_image": backgroundImage,
+        "background_image": backgroundImage == null ? null : backgroundImage,
         "rating": rating,
         "parent_platforms": List<dynamic>.from(parentPlatforms.map((x) => x.toJson())),
         "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
