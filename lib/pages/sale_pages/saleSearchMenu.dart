@@ -37,12 +37,20 @@ class _SaleSearchState extends State<SaleSearch> {
   }
 
   void callSales() async {
-    sales = await API_Manager().searchSales();
+    sales = await API_Manager().searchSales(searchInputString);
     setState(() {
       isLoaded = true;
     });
     // isLoading = true;
     //Refresh or setstate() here to refresh the games list.
+  }
+
+  unfocus() {
+    currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
   }
 
   Widget build(BuildContext context) {
@@ -72,8 +80,28 @@ class _SaleSearchState extends State<SaleSearch> {
         visible: isLoaded,
         child: Column(
           children: [
-            buildSearch(),
-            
+
+            TextField(
+              controller: searchInputController,
+              onSubmitted: (String value) {
+                searchInputString = value;
+                callSales();
+                unfocus();
+              },
+              decoration: InputDecoration(
+                hintText: 'ex. Prey',
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
+                  fontStyle: FontStyle.italic,
+                ),
+                border: InputBorder.none,
+              ),
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+
             Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -92,24 +120,17 @@ class _SaleSearchState extends State<SaleSearch> {
       ),
     );
   }
-
-  Widget buildSearch() => SearchWidget(
-    text: searchInputString,
-    hintText: 'ex. Prey',
-    onChanged: searchGame,
-  );
-
-  void searchGame(String searchInputString) {
-    return print(searchInputString);
-  }
-  
 }
 
 
 class API_Manager {
-  Future<List<SaleSearchModel>?> searchSales() async {
+  Future<List<SaleSearchModel>?> searchSales(String searchTerm) async {
     var client = http.Client();
-    String finalURL ='https://www.cheapshark.com/api/1.0/games?title=batman&limit=60&exact=0';
+    String initialURL = 'https://www.cheapshark.com/api/1.0/games?';
+    String finalSearchTerm = searchTerm.trim().toLowerCase().replaceAll(' ','');
+    String query = 'title=' + finalSearchTerm + '&';
+    String otherParams = 'limit=60&exact=0';
+    String finalURL = initialURL + query + otherParams;
     print(finalURL);
     var uri = Uri.parse(finalURL);
 
