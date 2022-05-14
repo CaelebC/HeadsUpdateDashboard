@@ -42,7 +42,7 @@ class Result {
         required this.name,
         required this.platforms,
         this.stores,
-        required this.released,
+        //this.released,
         required this.tba,
         required this.backgroundImage,
         required this.rating,
@@ -54,7 +54,7 @@ class Result {
     String name;
     List<Platform> platforms;
     List<Store>? stores;
-    DateTime released;
+    //DateTime? released;
     bool tba;
     String backgroundImage;
     double rating;
@@ -66,7 +66,7 @@ class Result {
         String? name,
         List<Platform>? platforms,
         List<Store>? stores,
-        DateTime? released,
+        //DateTime? released,
         bool? tba,
         String? backgroundImage,
         double? rating,
@@ -77,7 +77,7 @@ class Result {
         name: name ?? this.name,
         platforms: platforms ?? this.platforms,
         stores: stores ?? this.stores,
-        released: released ?? this.released,
+        //released: released ?? this.released,
         tba: tba ?? this.tba,
         backgroundImage: backgroundImage ?? this.backgroundImage,
         rating: rating ?? this.rating,
@@ -90,7 +90,7 @@ class Result {
         name: json["name"],
         platforms: List<Platform>.from(json["platforms"].map((x) => Platform.fromJson(x))),
         stores: json["stores"] == null ? null : List<Store>.from(json["stores"].map((x) => Store.fromJson(x))),
-        released: DateTime.parse(json["released"]),
+        //released: json["released"] == null ? null : DateTime.parse(json["released"]),
         tba: json["tba"],
         backgroundImage: json["background_image"],
         rating: json["rating"].toDouble(),
@@ -103,7 +103,7 @@ class Result {
         "name": name,
         "platforms": List<dynamic>.from(platforms.map((x) => x.toJson())),
         "stores": stores == null ? null : List<dynamic>.from(stores!.map((x) => x.toJson())),
-        "released": "${released.year.toString().padLeft(4, '0')}-${released.month.toString().padLeft(2, '0')}-${released.day.toString().padLeft(2, '0')}",
+       // "released": released == null ? null : "${released.year.toString().padLeft(4, '0')}-${released.month.toString().padLeft(2, '0')}-${released.day.toString().padLeft(2, '0')}",
         "tba": tba,
         "background_image": backgroundImage,
         "rating": rating,
