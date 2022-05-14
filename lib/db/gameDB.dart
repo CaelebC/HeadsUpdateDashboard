@@ -50,7 +50,7 @@ class FollowedGames
     for(var i in game.genres) {
       allGenres = allGenres + i.name;
     }
-    for(var i in game.platforms) {
+    for(var i in game.platforms!) {
       allPlatforms = allPlatforms + i.platform.name;
     }
     for(var i in game.stores!) {
