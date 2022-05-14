@@ -171,6 +171,10 @@ class _NewsFeedState extends State<NewsFeed> {
 
 Future<List<String>> searchForAllResults() async {
   final games = await FollowedGames.instance.readAllResults();
+  /*(final genres = await FollowedGenres.instance.readAllFollowed();
+  final platforms = await FollowedPlatforms.instance.readAllFollowed();
+  final publishers = await FollowedPublishers.instance.readAllFollowed(); */
+
   List<String> gameNames = [];
     for (var game in games) {
       String temp = game.name!;
@@ -178,6 +182,36 @@ Future<List<String>> searchForAllResults() async {
       temp = temp.trim().toLowerCase().replaceAll(' ','%20');
       gameNames.add(temp);
     }
+
+  /* List<String> genreNames = [];
+  for (var genre in genres) {
+    String temp = genre.name!;
+    temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
+    temp = temp.trim().toLowerCase().replaceAll(' ','%20');
+    genreNames.add(temp);
+  }
+
+  List<String> platformNames = [];
+  for (var platform in platforms) {
+    String temp = platform.name!;
+    temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
+    temp = temp.trim().toLowerCase().replaceAll(' ','%20');
+    platformNames.add(temp);
+  }
+
+  List<String> publisherNames = [];
+  for (var publisher in publishers) {
+    String temp = publisher.name!;
+    temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
+    temp = temp.trim().toLowerCase().replaceAll(' ','%20');
+    publisherNames.add(temp);
+  }
+  print(publisherNames);
+  print(platformNames);
+  print(genreNames);
+
+  */
+
     List<String> distinctGameNames = gameNames.toSet().toList();
   return distinctGameNames;
 }
