@@ -6,7 +6,7 @@ import 'package:hud/pages/follow_pages/followPublishers.dart';
 import 'package:hud/pages/follow_pages/followGenres.dart';
 import 'package:hud/pages/follow_pages/followPlatforms.dart';
 import 'package:hud/pages/follow_pages/followStores.dart';
-import 'package:hud/pages/follow_pages/followMyList.dart';
+import 'package:hud/pages/follow_pages/followedTopics.dart';
 
 // Declaring routes
 const routeMenu = '/';
@@ -93,7 +93,7 @@ class _FollowMenuState extends State<FollowMenu> {
             ),
 
             ElevatedButton(
-              child: Text('My List'),
+              child: Text('Followed Topics'),
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
               onPressed: () {
                 Navigator.push(

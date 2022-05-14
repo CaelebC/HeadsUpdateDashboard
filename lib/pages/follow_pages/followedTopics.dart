@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
 import 'package:like_button/like_button.dart';
 import 'package:hud/components/followPageItem.dart';
-import 'package:hud/components/myListItem.dart';
+import 'package:hud/components/followedTopicItem.dart';
 
 import 'package:hud/models/gameModel.dart';
 import 'package:hud/models/genreModel.dart';
@@ -34,18 +34,48 @@ class _FollowMyListState extends State<FollowMyList> {
   var favoriteStatusIcon = Icons.favorite_border;
   bool isSelected = false;
   
+  // This funtion is to put all of the names of the items into an array for the UI to use
   Future<List<String>> searchForAllResults() async {
     final games = await FollowedGames.instance.readAllResults();
-    List<String> gameNames = [];
-      // For-loop to read through GameDB
-      for (var game in games) {
-        String temp = game.name!;
-        // temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
-        // temp = temp.trim().toLowerCase().replaceAll(' ','%20');
-        gameNames.add(temp);
-      }
-      List<String> distinctGameNames = gameNames.toSet().toList();
-    return distinctGameNames;
+    final genres = await FollowedGenres.instance.readAllFollowed();
+    final platforms = await FollowedPlatforms.instance.readAllFollowed();
+    final publishers = await FollowedPublishers.instance.readAllFollowed();
+    final stores = await FollowedStores.instance.readAllFollowed();
+
+    List<String> itemNames = [];
+    // GamesDB
+    for (var game in games) {
+      String temp = game.name!;
+      itemNames.add(temp);
+    }
+
+    // Genres
+    for (var genre in genres) {
+      String temp = genre.name!;
+      itemNames.add(temp);
+    }
+
+    // Platforms
+    for (var platform in platforms) {
+      String temp = platform.name!;
+      itemNames.add(temp);
+    }
+
+    // Publisher
+    for (var publisher in publishers) {
+      String temp = publisher.name!;
+      itemNames.add(temp);
+    }
+
+    // Store
+    for (var store in stores) {
+      String temp = store.name!;
+      itemNames.add(temp);
+    }
+
+    List<String> distinctSearchTerms = itemNames.toSet().toList();
+    print(distinctSearchTerms);
+    return distinctSearchTerms;
   }
 
   @override
@@ -60,7 +90,7 @@ class _FollowMyListState extends State<FollowMyList> {
       backgroundColor: bgColor,
       
       appBar: AppBar(
-        title: Text('My List'),
+        title: Text('Followed Topics'),
         backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -97,7 +127,7 @@ class _FollowMyListState extends State<FollowMyList> {
                   itemBuilder: (context, index) {
                     var item = snapshot.data[index];  // This is responsible for going through the querried items from the API
 
-                    return myListItem(item, 'game', context);
+                    return followedTopicItem(item, 'game', context);
                     
                   });
             

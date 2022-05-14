@@ -30,47 +30,9 @@ class _SettingsState extends State<Settings> {
       
       backgroundColor: bgColor,
       body: Center(
-        child: clearDatabaseButton('Clear My List', deleteAll(), context),
+        child: clearDatabaseButton('Clear Followed Topics', context),
       )
     );
   }
 
-}
-
-
-Future deleteAll() async {
-    final games = await FollowedGames.instance.readAllResults();
-    final genres = await FollowedGenres.instance.readAllFollowed();
-    final platforms = await FollowedPlatforms.instance.readAllFollowed();
-    final publishers = await FollowedPublishers.instance.readAllFollowed();
-    final store = await FollowedStores.instance.readAllFollowed();
-    
-    // These for-loop is handling the deletion of every single item in the DBs
-    
-    // Games
-    for(var i in games){
-      await FollowedGames.instance.delete(i.name);
-    }
-
-    // Genres
-    for(var i in genres){
-      await FollowedGenres.instance.unfollow(i.name);
-    }
-
-    // Platforms
-    for(var i in platforms){
-      await FollowedPlatforms.instance.unfollow(i.name);
-    }
-    
-    // Publishers
-    for(var i in publishers){
-      await FollowedPublishers.instance.unfollow(i.name);
-    }
-
-    // Store
-    for(var i in store){
-      await FollowedStores.instance.unfollow(i.name);
-    }
-
-    print('Deleted all DB contents.');
 }

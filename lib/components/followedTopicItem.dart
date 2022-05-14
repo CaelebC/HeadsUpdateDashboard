@@ -46,7 +46,7 @@ Future followStore(var item) async {
 }
 
 
-Widget myListItem (item, itemType, BuildContext context){
+Widget followedTopicItem (item, itemType, BuildContext context){
   return Container(
     height: 80,
     margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item

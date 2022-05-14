@@ -6,10 +6,12 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:hud/models/newsModel.dart';
+import 'package:intl/intl.dart';
 
 
 Widget newsPageItem (news, BuildContext context){
   var displayImage = news.urlToImage;
+  String formattedDate = DateFormat.yMMMMEEEEd().format(news.publishedAt);
 
   if (displayImage == null){
     displayImage = 'https://github.com/CaelebC/HeadsUpdateDashboard/blob/main/asset/placeholder.png?raw=true';
@@ -60,6 +62,14 @@ Widget newsPageItem (news, BuildContext context){
             child: Text(
               news.title,
               style: listTextStyle
+            ),
+          ),
+
+          // Date of the article
+          Container(
+            child: Text(
+                formattedDate,
+                style: listSubTextStyle
             ),
           ),
 
