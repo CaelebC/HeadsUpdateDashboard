@@ -88,14 +88,10 @@ class Result {
 class PublisherFields{
   static final List<String> values =
   [
-    name, slug,
-    gamesCount, backgroundImage, //games
+    name, backgroundImage,
   ];
   static final String name = 'name';
-  static final String slug = 'slug';
-  static final String gamesCount = 'gamesCount';
   static final String backgroundImage = 'backgroundImage';
-//static final String games = 'games';
 }
 
 /* class Game {
@@ -125,3 +121,17 @@ class PublisherFields{
     "added": added,
   };
 } */
+
+class PublisherOutput{
+  PublisherOutput({
+    required this.name,
+    this.backgroundImage
+  });
+  String name;
+  String? backgroundImage;
+
+  factory PublisherOutput.fromJson(Map<String, dynamic> json) => PublisherOutput(
+      name: json['name'],
+      backgroundImage: json['backgroundImage']
+  );
+}

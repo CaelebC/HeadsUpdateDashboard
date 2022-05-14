@@ -22,27 +22,29 @@ class FollowedGenres
   }
 
   Future _createDB(Database db, int version) async{
-    final textType = 'TEXT NOT NULL';
-    final idType = 'INTEGER NOT NULL';
-
     await db.execute(
       '''CREATE TABLE $followedGenres
       (
-        ${GenreFields.id} $idType,
-        ${GenreFields.name} $textType,
-        ${GenreFields.games} $textType
+        name TEXT NOT NULL,
+        backgroundImage TEXT
       )'''
     );
   }
 
   Future<Result> followGenre(Result genre) async{
     final db = await instance.database;
+    final json = genre.toJson();
 
-    final id = await db.insert(followedGenres, genre.toJson());
+    final columns =
+        '${GenreFields.name}, ${GenreFields.backgroundImage}';
+    final values =
+        [json[GenreFields.name], json[genre.backgroundImage]];
+    final id = await db.rawInsert('INSERT INTO $followedGenres($columns) VALUES'
+        '(?, ?)', values);
     return genre.copy();
   }
 
-  Future<Result> readFollowed(String name) async{
+  Future<GenreOutput> readFollowed(String name) async{
     final db = await instance.database;
     final maps = await db.query(
       followedGenres,
@@ -52,18 +54,18 @@ class FollowedGenres
     );
 
     if(maps.isNotEmpty){
-      return Result.fromJson(maps.first);
+      return GenreOutput.fromJson(maps.first);
     }
     else{
       throw Exception('Genre not found');
     }
   }
 
-  Future<List<Result>> readAllFollowed() async{
+  Future<List<GenreOutput>> readAllFollowed() async{
     final db = await instance.database;
     final orderBy = '${GenreFields.name} DESC';
     final result = await db.query(followedGenres, orderBy: orderBy);
-    return result.map((json)=>Result.fromJson(json)).toList();
+    return result.map((json)=>GenreOutput.fromJson(json)).toList();
   }
 
   Future<int> unfollow(String name) async{

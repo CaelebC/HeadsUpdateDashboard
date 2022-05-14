@@ -22,27 +22,29 @@ class FollowedPlatforms
   }
 
   Future _createDB(Database db, int version) async{
-    final textType = 'TEXT NOT NULL';
-    final idType = 'INTEGER NOT NULL';
-
     await db.execute(
       '''CREATE TABLE $followedPlatforms
       (
-      ${PlatformFields.id} $idType,
-      ${PlatformFields.name} $textType,
-      ${PlatformFields.games} $textType
+        name TEXT NOT NULL,
+        backgroundImage TEXT
       )'''
     );
   }
 
   Future<Result> followPlatform(Result platform) async{
     final db = await instance.database;
+    final json = platform.toJson();
 
-    final id = await db.insert(followedPlatforms, platform.toJson());
+    final columns =
+        '${PlatformFields.name}, ${PlatformFields.backgroundImage}';
+    final values =
+    [json[PlatformFields.name], json[platform.backgroundImage]];
+    final id = await db.rawInsert('INSERT INTO $followedPlatforms($columns) VALUES'
+        '(?, ?)', values);
     return platform.copy();
   }
 
-  Future<Result> readFollowed(String name) async{
+  Future<PlatformOutput> readFollowed(String name) async{
     final db = await instance.database;
     final maps = await db.query(
       followedPlatforms,
@@ -52,18 +54,18 @@ class FollowedPlatforms
     );
 
     if(maps.isNotEmpty){
-      return Result.fromJson(maps.first);
+      return PlatformOutput.fromJson(maps.first);
     }
     else{
       throw Exception('Platform not found');
     }
   }
 
-  Future<List<Result>> readAllFollowed() async{
+  Future<List<PlatformOutput>> readAllFollowed() async{
     final db  = await instance.database;
     final orderBy = '${PlatformFields.name} DESC';
     final result = await db.query(followedPlatforms, orderBy: orderBy);
-    return result.map((json)=>Result.fromJson(json)).toList();
+    return result.map((json)=>PlatformOutput.fromJson(json)).toList();
   }
 
   Future<int> unfollow(String name) async{
