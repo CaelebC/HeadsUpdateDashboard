@@ -21,7 +21,7 @@ class SaleSearchModel {
   });
 
   String gameId;
-  String steamAppId;
+  String? steamAppId;
   String cheapest;
   String cheapestDealId;
   String saleSearchModelExternal;

@@ -10,6 +10,7 @@ import 'package:hud/components/salesPageItem.dart';
 import 'package:hud/models/saleSearchModel.dart';
 import 'package:hud/pages/sale_pages/freeGames.dart';
 import 'package:hud/pages/sale_pages/subPageSelection.dart';
+import 'package:hud/pages/sale_pages/saleSearchMenu.dart';
 import 'dart:core';
 
 
@@ -93,50 +94,9 @@ class _SaleState extends State<Sale> {
 
         actions: [
           IconButton(
-              onPressed: (){
-                setState(() {
-                  if (customIcon.icon == Icons.search) {
-                    customIcon = const Icon(Icons.cancel);
-                    customSearchBar = ListTile(
-                      leading: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                      title: TextField(
-                        controller: searchInputController,
-                        onSubmitted: (String value) {
-                          searchInputString = value;
-                          callSearchSales();
-                          // TODO: PASS ^ THIS RESULTING CONTEXT TO THE SALESEARCH MENU PAGE TO LOAD THE RESULTS!
-                          // TODO: WHEN SEARCH IS HIT, CREATE THAT PAGE WITH A FUTURE BUILDER AWAITING THOSE ASYNC RESULTS.
-                          unfocus();
-                        },
-                        //then call setstate to refresh the games list!
-                        decoration: InputDecoration(
-                          hintText: 'ex. Polygon',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  } else if (customIcon.icon == Icons.cancel){
-                    searchInputController.clear();
-                    unfocus();
-                    //return title to games, swap icon back to search
-                    customSearchBar = Text('Sales');
-                    customIcon = const Icon(Icons.search);
-                  }
-                }
-                );},
-              icon: customIcon
+              icon: customIcon,
+              // The search button simply redirects to saleSearchMenu instead of searching on the page itself
+              onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => SaleSearch()));},
           )
         ],
       ),

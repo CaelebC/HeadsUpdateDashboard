@@ -10,6 +10,7 @@ import 'package:hud/components/saleSearchPageItem.dart';
 import 'package:hud/pages/sale_pages/freeGames.dart';
 import 'package:hud/pages/sale_pages/subPageSelection.dart';
 import 'dart:core';
+import 'package:hud/components/searchWidget.dart';
 
 
 class SaleSearch extends StatefulWidget {
@@ -53,26 +54,55 @@ class _SaleSearchState extends State<SaleSearch> {
         backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
         centerTitle: true,
-      ),
 
+        // 'Back' button
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.arrow_back_outlined),
+              onPressed: () {
+                Navigator.pop(context);
+              }
+            );
+          },
+        ),
+      ),
 
       body: Visibility(
         visible: isLoaded,
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: sales?.length,
-          itemBuilder: (context, index){
-            return saleSearchPageItem(sales![index], context);
-          },
+        child: Column(
+          children: [
+            buildSearch(),
+            
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: sales?.length,
+                itemBuilder: (context, index){
+                  return saleSearchPageItem(sales![index], context);
+                },
+              ),
+            ),
+          ],
         ),
         replacement: const Center(
           child: CircularProgressIndicator(),
         ),
       ),
-
     );
   }
+
+  Widget buildSearch() => SearchWidget(
+    text: searchInputString,
+    hintText: 'ex. Prey',
+    onChanged: searchGame,
+  );
+
+  void searchGame(String searchInputString) {
+    return print(searchInputString);
+  }
+  
 }
 
 
