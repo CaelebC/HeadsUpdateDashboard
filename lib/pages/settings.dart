@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
 
 import 'package:hud/db/gameDB.dart';
+import 'package:hud/components/clearDatabaseButton.dart';
 
 
 class Settings extends StatefulWidget {
@@ -15,14 +16,16 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+        backgroundColor: primaryColor,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+      ),
+      
       backgroundColor: bgColor,
       body: Center(
-        child: IconButton(
-          icon: Icon(Icons.recycling_rounded, size: 69, color: textColor,),
-          onPressed: () {
-            deleteAll();
-          }
-        ),
+        child: clearDatabaseButton('Clear My List', deleteAll(), context),
       )
     );
   }

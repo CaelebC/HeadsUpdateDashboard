@@ -129,7 +129,7 @@ class _FollowPublisherListState extends State<FollowPublisherList> {
                   itemBuilder: (context, index) {
                     var publisher = snapshot.data.results[index];  // This is responsible for going through the querried items from the API
 
-                    return followPageItem(publisher, 'publisher', context);
+                    return followPageItem(publisher, 'publisher', context, false);
 
                   });
 

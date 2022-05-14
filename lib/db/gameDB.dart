@@ -14,19 +14,19 @@ class FollowedGames
     if(_database != null) return _database!;
 
     _database = await _initDB('games.db');
-    print('running database');
+    //print('running database');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-    print('initializing database');
+    //print('initializing database');
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async{
-    print('database created');
+    //print('database created');
     await db.execute('''
     CREATE TABLE $followedGames
       (
@@ -46,7 +46,6 @@ class FollowedGames
     String allGenres = "";
     String allPlatforms = "";
     String allStores = "";
-
     //converting to string
     for(var i in game.genres) {
       allGenres = allGenres + i.name;
@@ -58,20 +57,14 @@ class FollowedGames
       allStores = allStores + i.store.name;
     }
 
-    //DOUBLE CHECK VALUES; NOT ENTIRELY CLEAR ON THAT YET
     final columns =
         '${GameFields.name}, ${GameFields.backgroundImage}, '
         '${GameFields.genres}, ${GameFields.platforms}, ${GameFields.stores}';
     final values =
         [json[GameFields.name], json[game.backgroundImage],
         allGenres, allPlatforms, allStores];
-    print(followedGames);
-    print(columns);
-    print(values);
     final id = await db.rawInsert('INSERT INTO $followedGames($columns) VALUES'
         '(?, ?, ?, ?, ?)', values);
-    print(id);
-    print('Game followed');
     return game.copy();
   }
 
@@ -83,13 +76,28 @@ class FollowedGames
       where: '${GameFields.name} = ?',
       whereArgs: [name],
     );
-    print('Looking for game');
     if(maps.isNotEmpty){
         return GameOutput.fromJson(maps.first);
       }
     else{
         throw Exception('Title $name not found');
       }
+  }
+
+  Future<bool> checkForResult(String name) async {
+    final db = await instance.database;
+    final maps = await db.query(
+      followedGames,
+      columns: GameFields.values,
+      where: '${GameFields.name} = ?',
+      whereArgs: [name],
+    );
+    if(maps.isNotEmpty){
+      return Future.value(true);
+    }
+    else{
+      return Future.value(false);
+    }
   }
 
   Future<List<GameOutput>> readAllResults() async {

@@ -113,17 +113,10 @@ class Result {
 class PlatformFields{
   static final List<String> values =
       [
-        id, name, slug, gamesCount,
-        image, yearStart, yearEnd, games
+        name, backgroundImage,
       ];
-  static final String id = '_id';
   static final String name = 'name';
-  static final String slug = 'slug';
-  static final String gamesCount= 'gamesCount';
-  static final String image = 'image';
-  static final String yearStart = 'yearStart';
-  static final String yearEnd = 'yearEnd';
-  static final String games = 'games';
+  static final String backgroundImage = 'backgroundImage';
 }
 
 class Game {
@@ -152,4 +145,18 @@ class Game {
     "name": name,
     "added": added,
   };
+}
+
+class PlatformOutput{
+  PlatformOutput({
+    required this.name,
+    this.backgroundImage
+  });
+  String name;
+  String? backgroundImage;
+
+  factory PlatformOutput.fromJson(Map<String, dynamic> json) => PlatformOutput(
+      name: json['name'],
+      backgroundImage: json['backgorundImage']
+  );
 }

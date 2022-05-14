@@ -94,15 +94,10 @@ class Result {
 class GenreFields{
   static final List<String> values =
       [
-        id, name, slug,
-        gamesCount, backgroundImage, games
+        name, backgroundImage
       ];
-  static final String id = '_id';
   static final String name = 'name';
-  static final String slug = 'slug';
-  static final String gamesCount = 'gamesCount';
   static final String backgroundImage = 'backgroundImage';
-  static final String games = 'games';
 }
 
 class Game {
@@ -131,4 +126,18 @@ class Game {
     "name": name,
     "added": added,
   };
+}
+
+class GenreOutput{
+  GenreOutput({
+    required this.name,
+    this.backgroundImage
+  });
+  String name;
+  String? backgroundImage;
+
+  factory GenreOutput.fromJson(Map<String, dynamic> json) => GenreOutput(
+    name: json['name'],
+    backgroundImage: json['backgorundImage']
+  );
 }

@@ -100,15 +100,10 @@ class Result {
 class StoreFields{
   static final List<String> values =
   [
-    id, name, slug,
-    gamesCount, backgroundImage, games
+    name, backgroundImage
   ];
-  static final String id = '_id';
   static final String name = 'name';
-  static final String slug = 'slug';
-  static final String gamesCount = 'gamesCount';
   static final String backgroundImage = 'backgroundImage';
-  static final String games = 'games';
 }
 
 class Game {
@@ -137,4 +132,18 @@ class Game {
     "name": name,
     "added": added,
   };
+}
+
+class StoreOutput{
+  StoreOutput({
+    required this.name,
+    this.backgroundImage
+  });
+  String name;
+  String? backgroundImage;
+
+  factory StoreOutput.fromJson(Map<String, dynamic> json) => StoreOutput(
+      name: json['name'],
+      backgroundImage: json['backgroundImage']
+  );
 }

@@ -3,7 +3,7 @@ import 'package:hud/config/style.dart';
 import 'package:hud/pages/sale_pages/steamSaleCountdown.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:hud/pages/sale_pages/steamSaleCountdown.dart';
-import 'package:hud/components/customTextIconButton.dart';
+import 'package:hud/components/customNavigationButton.dart';
 import 'package:hud/pages/sale_pages/freeGames.dart';
 import 'dart:core';
 
@@ -34,7 +34,7 @@ class _SubSaleState extends State<SubSale> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Free Games Button
-            customTextIconButton(
+            customNavigationButton(
               'Free Games', 
               Icons.redeem_outlined, 
               FreeGameList(),
@@ -42,7 +42,7 @@ class _SubSaleState extends State<SubSale> {
             ),
 
             // Steam Sale Countdown button
-            customTextIconButton(
+            customNavigationButton(
               'Steam Sale Countdown', 
               Icons.access_alarm_outlined, 
               SteamSaleCountdown(),
