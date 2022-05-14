@@ -173,6 +173,7 @@ Future<List<String>> searchForAllResults() async {
   final games = await FollowedGames.instance.readAllResults();
   final platforms = await FollowedPlatforms.instance.readAllFollowed();
   final publishers = await FollowedPublishers.instance.readAllFollowed();
+  final stores = await FollowedStores.instance.readAllFollowed();
 
   List<String> searchTerms = [];
     for (var game in games) {
@@ -192,6 +193,13 @@ Future<List<String>> searchForAllResults() async {
   }
   for (var publisher in publishers) {
     String temp = publisher.name!;
+    temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
+    temp = temp.trim().toLowerCase().replaceAll(' ','%20');
+    temp = '(' + temp + ')';
+    searchTerms.add(temp);
+  }
+  for (var store in stores) {
+    String temp = store.name!;
     temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
     temp = temp.trim().toLowerCase().replaceAll(' ','%20');
     temp = '(' + temp + ')';

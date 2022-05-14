@@ -105,13 +105,6 @@ class _FollowMyListState extends State<FollowMyList> {
             );
           },
         ),
-        
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {}
-          )
-        ]
       ),
 
       body: Container(
@@ -127,7 +120,7 @@ class _FollowMyListState extends State<FollowMyList> {
                   itemBuilder: (context, index) {
                     var item = snapshot.data[index];  // This is responsible for going through the querried items from the API
 
-                    return followedTopicItem(item, 'game', context);
+                    return followedTopicItem(item, context);
                     
                   });
             
