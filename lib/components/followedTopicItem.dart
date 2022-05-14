@@ -68,7 +68,7 @@ Future deleteItem(String item) async {
 }
 
 
-Widget followedTopicItem (item, BuildContext context){
+Widget followedTopicItem (item, isLoading, BuildContext context){
   return Container(
     height: 80,
     margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
@@ -103,10 +103,11 @@ Widget followedTopicItem (item, BuildContext context){
 
         // Delete button
         IconButton(
-          icon: Icon(Icons.do_disturb_rounded, size: 28),
+          icon: Icon(Icons.delete, size: 28),
           color: Colors.redAccent,
           onPressed: () {
             deleteItem(item);
+            Navigator.pop(context);
           }, 
         ),
         

@@ -118,9 +118,9 @@ class _FollowMyListState extends State<FollowMyList> {
                   itemCount: snapshot.data.length,
                   
                   itemBuilder: (context, index) {
-                    var item = snapshot.data[index];  // This is responsible for going through the querried items from the API
+                    var item = snapshot.data[index];  // This is responsible for going through the items in the _myListItem
 
-                    return followedTopicItem(item, context);
+                    return followedTopicItem(item, isLoading, context);
                     
                   });
             
