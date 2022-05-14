@@ -24,14 +24,6 @@ import 'package:hud/db/storeDB.dart';
 Future followGame(var item) async {
   await FollowedGames.instance.createResult(item);
 }
-Future searchForResult(var item) async {
-  final name = await FollowedGames.instance.readResult(item);
-  print(name.name);
-}
-Future searchForAllResults() async {
-  final games = await FollowedGames.instance.readAllResults();
-  print(games);
-}
 
 // Genre DB functions
 Future followGenre(var item) async {
@@ -120,35 +112,31 @@ Widget followPageItem (item, itemType, BuildContext context, inDB){
             switch(itemType){
               case "game": {
                 followGame(item);
-                searchForResult(item.name);
                 print('game switch statement reached');
               }
               break;
 
               case "genre": {
-                // followGenre(item);
-                // searchForResult(item.name);
+                followGenre(item);
+
                 print('genre switch statement reached');
               }
               break;
 
               case "platform": {
-                // followPlatform(item);
-                // searchForResult(item.name);
+                followPlatform(item);
                 print('platform switch statement reached');
               }
               break;
 
               case "publisher": {
-                // followPublisher(item);
-                // searchForResult(item.name);
+                followPublisher(item);
                 print('publisher switch statement reached');
               }
               break;
 
               case "store": {
-                // followStore(item);
-                // searchForResult(item.name);
+                followStore(item);
                 print('store switch statement reached');
               }
               break;
