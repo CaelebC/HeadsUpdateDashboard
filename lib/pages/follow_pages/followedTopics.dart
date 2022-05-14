@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hud/config/style.dart';
 import 'package:like_button/like_button.dart';
 import 'package:hud/components/followPageItem.dart';
-import 'package:hud/components/myListItem.dart';
+import 'package:hud/components/followedTopicItem.dart';
 
 import 'package:hud/models/gameModel.dart';
 import 'package:hud/models/genreModel.dart';
@@ -127,7 +127,7 @@ class _FollowMyListState extends State<FollowMyList> {
                   itemBuilder: (context, index) {
                     var item = snapshot.data[index];  // This is responsible for going through the querried items from the API
 
-                    return myListItem(item, 'game', context);
+                    return followedTopicItem(item, 'game', context);
                     
                   });
             
