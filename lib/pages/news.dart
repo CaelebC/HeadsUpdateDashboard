@@ -171,9 +171,9 @@ class _NewsFeedState extends State<NewsFeed> {
 
 Future<List<String>> searchForAllResults() async {
   final games = await FollowedGames.instance.readAllResults();
-  /*(final genres = await FollowedGenres.instance.readAllFollowed();
+  final genres = await FollowedGenres.instance.readAllFollowed();
   final platforms = await FollowedPlatforms.instance.readAllFollowed();
-  final publishers = await FollowedPublishers.instance.readAllFollowed(); */
+  final publishers = await FollowedPublishers.instance.readAllFollowed();
 
   List<String> gameNames = [];
     for (var game in games) {
@@ -183,7 +183,7 @@ Future<List<String>> searchForAllResults() async {
       gameNames.add(temp);
     }
 
-  /* List<String> genreNames = [];
+  List<String> genreNames = [];
   for (var genre in genres) {
     String temp = genre.name!;
     temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
@@ -210,7 +210,6 @@ Future<List<String>> searchForAllResults() async {
   print(platformNames);
   print(genreNames);
 
-  */
 
     List<String> distinctGameNames = gameNames.toSet().toList();
   return distinctGameNames;
