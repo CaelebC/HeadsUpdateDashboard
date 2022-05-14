@@ -47,6 +47,12 @@ Future followStore(var item) async {
 
 
 Widget followPageItem (item, itemType, BuildContext context, inDB){
+  var displayImage = item.backgroundImage;
+
+  if (displayImage == null){
+    displayImage = 'https://github.com/CaelebC/HeadsUpdateDashboard/blob/main/asset/placeholder.png?raw=true';
+  }
+  
   return Container(
     height: 80,
     margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),  // Space between each list item
@@ -65,7 +71,7 @@ Widget followPageItem (item, itemType, BuildContext context, inDB){
           child: AspectRatio(
               aspectRatio: 1,
               child: Image.network(
-                item.backgroundImage!,
+                displayImage,
                 fit: BoxFit.cover,
               )),
         ),
