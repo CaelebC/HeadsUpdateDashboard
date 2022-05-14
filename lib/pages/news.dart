@@ -171,48 +171,38 @@ class _NewsFeedState extends State<NewsFeed> {
 
 Future<List<String>> searchForAllResults() async {
   final games = await FollowedGames.instance.readAllResults();
-  final genres = await FollowedGenres.instance.readAllFollowed();
   final platforms = await FollowedPlatforms.instance.readAllFollowed();
   final publishers = await FollowedPublishers.instance.readAllFollowed();
 
-  List<String> gameNames = [];
+  List<String> searchTerms = [];
     for (var game in games) {
       String temp = game.name!;
       temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
       temp = temp.trim().toLowerCase().replaceAll(' ','%20');
-      gameNames.add(temp);
+      temp = '(' + temp + ')';
+      searchTerms.add(temp);
+
     }
-
-  List<String> genreNames = [];
-  for (var genre in genres) {
-    String temp = genre.name!;
-    temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
-    temp = temp.trim().toLowerCase().replaceAll(' ','%20');
-    genreNames.add(temp);
-  }
-
-  List<String> platformNames = [];
   for (var platform in platforms) {
     String temp = platform.name!;
     temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
     temp = temp.trim().toLowerCase().replaceAll(' ','%20');
-    platformNames.add(temp);
+    temp = '(' + temp + ')';
+    searchTerms.add(temp);
   }
-
-  List<String> publisherNames = [];
   for (var publisher in publishers) {
     String temp = publisher.name!;
     temp = temp.replaceAll(new RegExp(r'[^\w\s]+'),'');
     temp = temp.trim().toLowerCase().replaceAll(' ','%20');
-    publisherNames.add(temp);
+    temp = '(' + temp + ')';
+    searchTerms.add(temp);
   }
-  print(publisherNames);
-  print(platformNames);
-  print(genreNames);
 
+  searchTerms.shuffle();
 
-    List<String> distinctGameNames = gameNames.toSet().toList();
-  return distinctGameNames;
+  List<String> distinctSearchTerms = searchTerms.toSet().toList();
+  print(distinctSearchTerms);
+  return distinctSearchTerms;
 }
 
 
@@ -232,20 +222,21 @@ class API_Manager {
     String apiKey = '&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
     String languageParam = '&language=en';
     String newsSortParam = '&sortBy=' + newsSortBy!;
+    String searchIn = '&searchIn=title,content';
     String finalURL = '';
 
     if (searchTerm == ''){ //if theres no game searched, just return a list of popular games, DOES NOT CURRENTLY WORK
       //TODO: replace the empty/default news search with follow list based one. if follow list is empty, change default search to news from common gaming sites like polygon, ign, kotaku, etc.
-      urlSearchTerms = searchGameNamesConcat.trim().toLowerCase().replaceAll(' ','%20OR%20');
+      urlSearchTerms = searchGameNamesConcat.trim().toLowerCase().replaceAll(' ','OR');
         if (urlSearchTerms == '') {
           finalURL = 'https://newsapi.org/v2/top-headlines?category=technology&language=en&apiKey=d4baf1f0866e4cf4931479d8dedfadf1';
         } else {
           finalURL = baseURL + searchParam + urlSearchTerms + languageParam +
-              newsSortParam + apiKey + pageSize;
+              searchIn + newsSortParam + apiKey + pageSize;
         }
     } else { //otherwise attempt the search
       urlSearchTerms = searchTerm.trim().toLowerCase().replaceAll(' ','%20');
-      finalURL = baseURL + searchParam + urlSearchTerms + languageParam + newsSortParam + apiKey + pageSize;
+      finalURL = baseURL + searchParam + urlSearchTerms + languageParam + searchIn+ newsSortParam + apiKey + pageSize;
     }
 
     var uri = Uri.parse(finalURL);
