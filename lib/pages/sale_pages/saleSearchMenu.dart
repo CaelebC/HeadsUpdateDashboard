@@ -80,24 +80,37 @@ class _SaleSearchState extends State<SaleSearch> {
         child: Column(
           children: [
 
-            TextField(
-              controller: searchInputController,
-              onSubmitted: (String value) {
-                searchInputString = value;
-                callSales();
-                unfocus();
-              },
-              decoration: InputDecoration(
-                hintText: 'ex. Prey',
-                hintStyle: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18,
-                  fontStyle: FontStyle.italic,
-                ),
-                border: InputBorder.none,
+            Container(
+              height: 42,
+              margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: bgAccentColor,
+                border: Border.all(color: Colors.black26),
               ),
-              style: TextStyle(
-                color: Colors.white,
+
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              
+              child: TextField(
+                controller: searchInputController,
+                onSubmitted: (String value) {
+                  searchInputString = value;
+                  callSales();
+                  unfocus();
+                },
+                decoration: InputDecoration(
+                  hintText: 'ex. Prey',
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
 

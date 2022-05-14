@@ -119,7 +119,7 @@ class _FollowMyListState extends State<FollowMyList> {
                   
                   itemBuilder: (context, index) {
                     var item = snapshot.data[index];  // This is responsible for going through the items in the _myListItem
-
+                    
                     return followedTopicItem(item, isLoading, context);
                     
                   });

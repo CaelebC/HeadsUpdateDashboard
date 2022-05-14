@@ -59,16 +59,16 @@ class _FollowMenuState extends State<FollowMenu> {
               }
             ),
 
-            ElevatedButton(
-              child: Text('Genres'),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FollowGenreList())
-                );
-              }
-            ),
+            // ElevatedButton(
+            //   child: Text('Genres'),
+            //   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(accentColor)),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => FollowGenreList())
+            //     );
+            //   }
+            // ),
 
             ElevatedButton(
               child: Text('Platforms'),
