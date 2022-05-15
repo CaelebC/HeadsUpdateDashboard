@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.headsupdatedashboard.hud">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="hud"
+        android:label="HeadsUp!date Dashboard"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
